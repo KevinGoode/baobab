@@ -1,0 +1,63 @@
+import { NgModule } from '@angular/core';
+import { CommonModule} from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { PanelModule } from 'primeng/primeng';
+import { TabViewModule} from 'primeng/tabview';
+import { FormsModule } from '@angular/forms';
+import { FlexLayoutModule } from "@angular/flex-layout";
+import { SharedModule} from 'primeng/primeng'
+import { SplitButtonModule} from 'primeng/splitbutton';
+import { GrowlModule} from 'primeng/growl';
+import { CodeHighlighterModule} from 'primeng/codehighlighter'
+import { OverlayPanelModule} from 'primeng/overlaypanel';
+import { ToolbarModule} from 'primeng/toolbar';
+import { ButtonModule} from 'primeng/button';
+import { DialogModule} from 'primeng/primeng'
+import { SidebarModule} from 'primeng/sidebar';
+import { CardModule} from 'primeng/card';
+import { AccordionModule} from 'primeng/accordion';
+import { TreeModule} from 'primeng/tree';
+import { ContextMenuModule} from 'primeng/contextmenu';
+import { TreeNode} from 'primeng/api';
+import { InputTextareaModule} from 'primeng/inputtextarea';
+import { AppComponent } from './app.component';
+import { TopPanelComponent } from './top-panel/top-panel.component';
+import { HelpDialogComponent } from './help-dialog/help-dialog.component';
+import { AppRoutingModule } from './/app-routing.module';
+import { HelpBarComponent } from './help-bar/help-bar.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { FilesViewComponent } from './files-view/files-view.component';
+import { FilesTreeComponent } from './files-tree/files-tree.component';
+import { FileDetailComponent } from './file-detail/file-detail.component';
+import { FilesServiceService } from './files-service.service'
+
+@NgModule({
+  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent],
+  imports: [
+    CommonModule,
+    BrowserModule,
+    BrowserAnimationsModule,
+    OverlayPanelModule,
+    PanelModule,
+    TabViewModule,
+    FormsModule,
+    FlexLayoutModule,
+    SharedModule,
+    SplitButtonModule,
+    ToolbarModule,
+    ButtonModule,
+    DialogModule,
+    SidebarModule,
+    CardModule,
+    AccordionModule,
+    AppRoutingModule,
+    TreeModule,
+    ContextMenuModule,
+    TabViewModule,
+    InputTextareaModule
+  ],
+  providers: [FilesServiceService],
+  bootstrap: [AppComponent]
+})
+export class AppModule {}

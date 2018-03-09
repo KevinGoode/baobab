@@ -1,0 +1,53 @@
+
+<p-overlayPanel #readingdocs [showCloseIcon]="true">
+        <p-card title="Help" subtitle="Reading Documents" styleClass="ui-card-shadow">
+            BaoBab supports the reading of any content under the /var/www/html/content directory with the following restrictions:<br/>
+            <br/>
+            1.) Only one level of sub-directory is supported<br/>
+            2.) Sub-directories can only be reconfigured by system administrators. <br/>
+                (They can be reconfigured by simply renaming the directory names)<br/>
+            3.) All documents must be written in HTML.<br/> 
+            <br/>
+            Documents can be read in one of 2 ways:<br/>
+            <br/>
+            1.) Open the navigation tree and click on a document.<br/>
+            2.) From the main menu select 'File/Read' and in the 'Read' dialog enter<br/>
+                a Resource URI starting<br/>
+            'content/SUBDIRNAME/FILENAME' and click the 'OK' button <br/>      
+        </p-card>
+</p-overlayPanel>
+<p-overlayPanel #editingdocs [showCloseIcon]="true">
+        <p-card title="Help" subtitle="Editing Documents" styleClass="ui-card-shadow">
+            All BaoBab content is readable by all users, but only registered users<br/> 
+            can modify site material.Before editing documents you must login to the site.<br/>
+            To edit a document:<br/>
+            1.) View a document by selecting it in the navigation tree or from the 'File/Read' menu<br/>
+            2.) Select 'File/Update' from the main menu and inline edit the document<br/>
+            3.) Press the 'Update' button to save edits or the 'Cancel' button to lose edits<br/>
+        </p-card>
+</p-overlayPanel>
+<p-overlayPanel #creatingdocs [showCloseIcon]="true">
+        <p-card title="Help" subtitle="Creating Documents" styleClass="ui-card-shadow">
+            All BaoBab content is readable by all users, but only registered users can modify<br/>
+            site material. Before creating new documents you must login to the site. <br/>
+            To create a new document:<br/>
+            1.) Select 'File/Create' from the main menu.<br/>
+            2.) Enter the path of the document in the edit box<br/>
+            3.) Enter the content of the document in the text box.<br/>
+            4.) Press 'Create' to create the new document or 'Cancel' to lose edits<br/>
+        </p-card>
+</p-overlayPanel> 
+<p-sidebar [(visible)]="display" position="right">
+    <p-card title="Help" subtitle="Topics" styleClass="ui-card-shadow">
+        <p-header>
+            <img  src="assets/books.jpg">
+        </p-header>
+        <p>1.) Reading Documents <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>2.) Editing Documents <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>3.) Creating Documents <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+    <p-footer>
+        <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
+        <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>
+    </p-footer>
+</p-card>
+</p-sidebar>

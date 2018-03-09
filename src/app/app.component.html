@@ -1,0 +1,40 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+
+<div class="container"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0">
+  <div fxFlex="100%">
+      <div class="content-section app-header">
+          <div>
+              <app-top-panel [helpDialog]="help1" [helpBar]="helpBar1"></app-top-panel>
+              <span class="feature-title"><h1>BaoBab</h1></span>
+              <span>Never knowingly understood</span>
+          </div>
+      </div>
+    <app-help-dialog #help1></app-help-dialog>
+    <app-help-bar #helpBar1></app-help-bar>  
+  </div>
+</div>
+<router-outlet></router-outlet>
+<div class="container"
+     fxLayout
+     fxLayout.xs="column"
+     fxLayoutAlign="center"
+     fxLayoutGap="10px"
+     fxLayoutGap.xs="0">
+      <div fxFlex="100%">
+      <div class="content-section app-header">
+          <div>
+          <span>Powered by PrimeNG</span>   
+          </div>
+          
+      </div>
+</div>
+</div>
+
+
+

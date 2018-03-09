@@ -1,0 +1,13 @@
+<p-dialog header="About" [draggable]="true" [(visible)]="display" modal="modal" width="300" [responsive]="true">
+    <br/>
+    <b>BaoBab Version 2.0</b>
+    <br/>
+    <p>BaoBab is a a lightweight website which allows its users to add, modify, or delete its content via a web browser.
+        All content is written in HTML. Resources such as zip files, images, documents can be uploaded and made available
+        for subsequent download. All content is readable by all users, although only registered users can modify site material</p>
+        <p-footer>
+            <button type="button" pButton icon="fa-check" (click)="display=false" label="Ok"></button>
+            <button type="button" pButton icon="fa-close" (click)="display=false" class="ui-button-secondary" label="Cancel"></button>
+        </p-footer>
+</p-dialog>
+

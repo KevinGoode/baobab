@@ -1,0 +1,13 @@
+.wallpaper .introduction {
+    font-family: Roboto,Trebuchet MS,Arial,Helvetica,sans-serif;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    font-size: 1em;
+    background-color: #1976d2;
+    background: url("../../assets/posters.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    padding: 80px 30px 80px 50px;
+    height: 700px;
+}
