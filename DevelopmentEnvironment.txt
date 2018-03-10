@@ -1,0 +1,171 @@
+Baobab Development Environment
+------------------------------
+
+Baobab is currently being developed on Ubuntu (14.04 LTS)
+using Visual Studio Code as IDE. This document contains notes about setting up a development environment
+for baobab development and build (section 1.)) and getting and running code obtained from git hub (section 2.)
+The 'Appendix' contains more general notes about creating projects similar to baobab IE using angular 5 and primeng.
+
+################################################################
+Contents:
+---------
+1.) Setting up Development Environment
+-->1.1) Installing Visual Studio Code
+-->1.2) Installing node js adn typescript
+2.) Getting current baobab code (from Git hub) and running project
+---2.1) Install git
+---2.2) Get code
+---2.3) Running code 
+
+Appendix - Creating primeng projects (such as baobab) and angular tips and tricks
+--------------------------------------
+A.) Installing angular and generating an angular project
+B.) Installing primeng
+C.) Angular/primeng tips and tricks
+
+##############################################################
+
+1.) Setting up Development Environment
+######################################
+-->1.1) Installing Visual Studio Code
+######################################
+
+1.) Follow the first 2 steps here to install .Net Core 
+https://www.microsoft.com/net/learn/get-started/linuxubuntu"
+2.) Now go to https://code.visualstudio.com/Download"
+ and download the .deb file.
+3.) Install it by double-clicking or by running:
+sudo dpkg -i ~/Downloads/code.....deb
+Start Visual Studio Code IDE by typing 'code' on the commandline
+4.) In the left hand vertical toolbar click on extensions and install c#
+5.) On command line create a new directory and create a new console app:
+ dotnet new console
+6.) In Visual Studio Code open project folder
+7.) In Visual Studio Code go to 'Debug/Start Debuggin' to run the application
+
+
+-->1.2) Installing node js and typescript
+#########################################
+
+1.) Install Visual Studio Code (Previous section)
+2.) sudo apt-get install npm (NOTE NEED MORE RECENT VERSION OF NODEJS FOR ANGUALR - See APPENDIX A)
+3.) sudo npm install -g typescript 
+4.) sudo ln -s /usr/bin/nodejs /usr/bin/node
+5.) tsc --version
+6.) Create a file tsconfig.json in project directory {
+"compilerOptions": {
+"target": "es5",
+"module": "commonjs",
+"sourceMap": true
+}}
+7.) Create HelloWorld.ts 
+class Startup {
+public static main(): number {
+console.log('Hello World');
+return 0;}}
+Startup.main();
+8.) tsc HelloWorld.ts
+9.) node HelloWorld.js
+
+
+2.) Getting current baobab code (from Git hub) and running project
+##################################################################
+---2.1) Install git
+sudo apt-get install git
+---2.2) Get code
+git clone  https://github.com/KevinGoode/baobab
+cd baobab
+git checkout master
+npm install
+---2.3) Running code
+In baobab directory: ng serve --host 0.0.0.0
+In browser (Recommend Chromium): http://localhost:4200/
+
+
+
+
+
+
+
+
+##################################################################
+Appendix - Creating primeng projects (such as baobab) and angular tips and tricks
+##################################################################
+A.) Installing angular and creating project
+###########################################
+1.) Angular requires a recent version of node.js. To increse version on Ubuntu 14.04 to v 8.x
+sudo apt-get install python-software-properties
+curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+sudo apt-get install nodejs
+2.) sudo npm install -g @angular/cli (-G installs globally)
+3.) Use angular CLI to create new project: 
+ng new my-app
+4.) Start webserver
+cd my-app 
+ng serve --host 0.0.0.0
+5.) In webbrowser:
+http://localhost:4200/
+
+B.) Installing primeng
+#######################
+Good links
+Main Getting Started https://www.primefaces.org/primeng/#/setup"
+Prime NG Getting Started <a href="https://alligator.io/angular/primeng"
+Flex Layout <a href="https://alligator.io/angular/flex-layout/"
+
+Getting started 
+
+These instructions assume you have already created a Angular app using CLI .Shell
+commands add components to current app and are executed in top level dir
+1.) npm install primeng --save
+2.) npm install primeng font-awesome --save
+3.) npm install @angular/flex-layout --save
+4.) In file .angular-cli.json
+"styles": [
+  "styles.css",
+  "../node_modules/font-awesome/css/font-awesome.min.css",
+  "../node_modules/primeng/resources/primeng.min.css",
+  "../node_modules/primeng/resources/themes/omega/theme.css"
+],
+5.) In app.module.ts add Components https://alligator.io/angular/primeng
+6.) In file app.component.html create a layout https://alligator.io/angular/primeng"
+7.) Inside divs in layout add some components some such as accordians, radio buttons etc https://www.primefaces.org/primeng/#/setup
+8.) Run server : ng serve --host 0.0.0.0  and inspect in chromium http://localhost:4200/
+
+C.) Angular/primeng tips and tricks
+###################################
+###############################
+# TIP-1-Generate new component
+ng generate component TopPanel
+###############################
+# TIP-2-Parent
+Parent can talk to child via unique id # 
+eg
+<p-button label="Help" (onClick)="help1.showDialog()"></p-button>
+<app-help-dialog #help1></app-help-dialog>
+
+OR 
+
+can be passed down by setting attribute
+in parent:
+<app-help-dialog #help1></app-help-dialog>
+<app-top-panel [helpDialog]="help1"></app-top-panel> 
+in toppanel component:
+@Input() helpDialog ;
+###############################
+# TIP-3-splitButton needs routing mode defined
+ng generate module app-routing --flat --module=app
+###############################
+# TIP-4 Icons
+https://www.primefaces.org/showcase/ui/misc/fa.xhtml
+#################################
+# Tip-5 Tip about Styles
+The component styles file takes precedence because it is last. However, this style is modifed at compiletime to contain something like [_ng_componentxx].
+In general this attribute is added to all html elements in the component so the net effect is that these styles only apply to the component itself which is a good thing.However, if the component contains child elements without these attributes set then the component css file i uselss and you need to apply styles in top level styles.css file of project. 
+#################################
+
+
+
+
+
+
