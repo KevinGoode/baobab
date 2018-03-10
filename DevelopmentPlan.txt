@@ -1,0 +1,68 @@
+What is Baobab? 
+--------------
+Baobab is a front end rewrite (and partial backend rewrite) of a basic
+wikipedia like project using primeng and angular
+
+What is this document?
+---------------------
+This document contains the development plan for the baobab project
+
+Release Version : Pre-Release
+
+Overview
+-------
+Project currently under devlopment . Release cycle as follows
+
+##################################################################
+Theme for v 0.1
+###############
+ 
+Display and navigation of existing content
+------------------------------------------
+TODO For v 0.1:
+1.) Add files.php php script (similar to server side script) and execute locally in mock server
+2.) Add test html docs
+3.) Add RxJs and observables to files service
+4.) Install quill and change first tab in rhs to use editor in read only mode. Make sure html docs displayed ok
+5.) Implement unit test suite
+6.) Populate first tab with contents list when directory is selected
+7.) Update help
+8.) Deploy and bench test using real files.php script
+9.) Create release branch
+##################################################################
+Theme for v 0.2
+###############
+Edit and create new files
+
+TODO For v 0.2
+1.) Implement logging on off dialogs and passing of auth tokens
+2.) Implement edit & create buttons that launches editor in edit dialog
+3.) Update files service to support update/create
+4.) Update unit tests
+5.) Update help
+6.) Implement growl messages for create and edit operations
+7.) Deploy and bench using existing php script
+8.) Create release branch
+##################################################################
+Theme for v 0.3
+###############
+Create new folders, delete files, delete folder
+
+TODO For v 0.3
+1.) Implement php code for Create new folders, delete files, delete folder operations (original code does not support this)
+2.) Implement create folder dialog and delete warning dialogs and growl messages
+3.) Update unit tests
+4.) Update help
+5.) Deploy using new php script
+6.) Create release branch
+##################################################################
+Theme for v 0.4
+###############
+Add time graph for read /write activity. Add storage pie chart 
+
+TODO For v 0.4 ....
+##################################################################
+
+KNOWN BUGS:
+When navigating back to dashboard and back down again (using browser forward and back buttons)
+the navigation tree is not automatically opened to display the selected file in tree
