@@ -6,7 +6,7 @@
 </div>
 <p-tabView >
     <p-tabPanel leftIcon="fa-file-text" header="File Content">
-        <textarea disabled="true" [rows]="30" [cols]="100" [(ngModel)]="tabContentText" ></textarea>
+        <p-editor #editor [(ngModel)]="tabContentText" [style]="{'height':'640px'}"></p-editor>
     </p-tabPanel>
     <p-tabPanel  leftIcon="fa-info" header="File Info">
         <textarea disabled="true" [rows]="30" [cols]="100" [(ngModel)]="tabInfoText"></textarea>

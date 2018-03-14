@@ -1,4 +1,5 @@
-import { Component, OnInit,Input} from '@angular/core';
+import { Component, OnInit,Input, ViewChild} from '@angular/core';
+import {Editor} from 'primeng/editor';
 import { ServerFile } from '../server-file';
 @Component({
   selector: 'app-file-detail',
@@ -6,6 +7,7 @@ import { ServerFile } from '../server-file';
   styleUrls: ['./file-detail.component.css']
 })
 export class FileDetailComponent implements OnInit {
+  @ViewChild('editor') editor: Editor;
   tabContentText: string;
   tabInfoText: string;
   title: string
@@ -15,6 +17,11 @@ export class FileDetailComponent implements OnInit {
   ngOnInit() {
     this.tabContentText = this.NO_FILE;
     this.tabInfoText = this.NO_FILE;
+
+  }
+  ngAfterViewInit() {
+        //Disable editor
+        this.editor.quill.disable();
   }
   public setContent(content:string){
     this.tabContentText=content;

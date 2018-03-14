@@ -32,6 +32,7 @@ import { FilesTreeComponent } from './files-tree/files-tree.component';
 import { FileDetailComponent } from './file-detail/file-detail.component';
 import { FilesServiceService } from './files-service.service'
 import { HttpClientModule } from '@angular/common/http';
+import {EditorModule} from 'primeng/editor';
 @NgModule({
   declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent],
   imports: [
@@ -56,7 +57,8 @@ import { HttpClientModule } from '@angular/common/http';
     ContextMenuModule,
     TabViewModule,
     InputTextareaModule,
-    HttpClientModule
+    HttpClientModule,
+    EditorModule
     
   ],
   providers: [FilesServiceService],

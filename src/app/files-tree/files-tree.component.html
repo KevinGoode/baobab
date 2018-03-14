@@ -1,4 +1,4 @@
-<p-panel header="Files">
-<p-tree selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm"></p-tree>
+<p-panel  header="Files">
+<p-tree [style]="{'height':'750px', 'width': '100%'}" selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm"></p-tree>
 <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 </p-panel>
