@@ -1,19 +1,9 @@
 
 <p-overlayPanel #readingdocs [showCloseIcon]="true">
         <p-card title="Help" subtitle="Reading Documents" styleClass="ui-card-shadow">
-            BaoBab supports the reading of any content under the /var/www/html/content directory with the following restrictions:<br/>
-            <br/>
-            1.) Only one level of sub-directory is supported<br/>
-            2.) Sub-directories can only be reconfigured by system administrators. <br/>
-                (They can be reconfigured by simply renaming the directory names)<br/>
-            3.) All documents must be written in HTML.<br/> 
-            <br/>
-            Documents can be read in one of 2 ways:<br/>
-            <br/>
-            1.) Open the navigation tree and click on a document.<br/>
-            2.) From the main menu select 'File/Read' and in the 'Read' dialog enter<br/>
-                a Resource URI starting<br/>
-            'content/SUBDIRNAME/FILENAME' and click the 'OK' button <br/>      
+            BaoBab supports the reading of any content under the /var/www/html/api/content directory<br/>
+            Documents can be read by opening the navigation tree and clicking on a document.<br/>
+            Use the browser forward and back buttons to navigate between selected items.<br/>
         </p-card>
 </p-overlayPanel>
 <p-overlayPanel #editingdocs [showCloseIcon]="true">
@@ -43,8 +33,10 @@
             <img  src="assets/books.jpg">
         </p-header>
         <p>1.) Reading Documents <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <!--
         <p>2.) Editing Documents <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>3.) Creating Documents <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        -->
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>
