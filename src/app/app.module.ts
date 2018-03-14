@@ -21,6 +21,7 @@ import { TreeModule} from 'primeng/tree';
 import { ContextMenuModule} from 'primeng/contextmenu';
 import { TreeNode} from 'primeng/api';
 import { InputTextareaModule} from 'primeng/inputtextarea';
+import { OrderListModule} from 'primeng/orderlist';
 import { AppComponent } from './app.component';
 import { TopPanelComponent } from './top-panel/top-panel.component';
 import { HelpDialogComponent } from './help-dialog/help-dialog.component';
@@ -57,6 +58,7 @@ import {EditorModule} from 'primeng/editor';
     ContextMenuModule,
     TabViewModule,
     InputTextareaModule,
+    OrderListModule,
     HttpClientModule,
     EditorModule
     

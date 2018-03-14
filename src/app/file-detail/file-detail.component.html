@@ -1,14 +1,35 @@
 
-<p-panel header="Selected File Details">
+<p-panel header="Details">
 <div style="border-style: outset;border-width: 5px 5px 5px 5px">
-<label for="title-file">File: </label>
+<label for="title-file">Current Selection: </label>
 <input style="border-style: none; background: white" id= "title-file" type="text" size="64" disabled="true" pInputText [(ngModel)]="title"/>
 </div>
 <p-tabView >
-    <p-tabPanel leftIcon="fa-file-text" header="File Content">
-        <p-editor #editor [(ngModel)]="tabContentText" [style]="{'height':'640px'}"></p-editor>
+    <p-tabPanel leftIcon="fa-file-text" header="Contents" >
+      
+        <div [style.display]="editorVisible" >
+            <p-editor #editor [(ngModel)]="tabContentText" [style]="{'height':'640px'}"></p-editor>
+        </div>
+        
+        <div [style.display]="directoryContentsVisible"  >
+            <p-orderList (onSelectionChange)="onSelectionChange($event)" [value]="directoryContents" [listStyle]="{'height':'640px'}" responsive="true" header="Articles in this Section" filterBy="name" filterPlaceholder="Search by name">
+                    <ng-template let-file pTemplate="item">
+                            <div class="ui-helper-clearfix">
+                    
+                                <div *ngIf="file.isDir; else elseBlock" style="font-size:18px;float:left;margin:15px 5px 0 0">
+                                    <i class="fa fa-folder">  {{file.name}}</i>
+                                </div>
+                                 <ng-template #elseBlock>
+                                        <div style="font-size:18px;float:left;margin:15px 5px 0 0">
+                                    <i class="fa fa-file">  {{file.name}}</i>
+                                    </div>
+                                 </ng-template>
+                            </div>
+                        </ng-template>
+            </p-orderList>
+       </div>
     </p-tabPanel>
-    <p-tabPanel  leftIcon="fa-info" header="File Info">
+    <p-tabPanel  leftIcon="fa-info" header="Information">
         <textarea disabled="true" [rows]="30" [cols]="100" [(ngModel)]="tabInfoText"></textarea>
     </p-tabPanel>
 </p-tabView>

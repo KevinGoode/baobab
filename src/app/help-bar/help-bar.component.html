@@ -1,9 +1,10 @@
 
 <p-overlayPanel #readingdocs [showCloseIcon]="true">
         <p-card title="Help" subtitle="Reading Documents" styleClass="ui-card-shadow">
-            BaoBab supports the reading of any content under the /var/www/html/api/content directory<br/>
-            Documents can be read by opening the navigation tree and clicking on a document.<br/>
-            Use the browser forward and back buttons to navigate between selected items.<br/>
+            BaoBab supports the reading of any content under the /var/www/html/api/content directory.<br/>
+            1.) To read a single article open the navigation tree and select the article in the tree. <br/>
+            2.) Alternatively select a group of articles in the tree, and select a single article from the section list<br/>
+            3.) Use the browser forward and back buttons to navigate between selected items.<br/>
         </p-card>
 </p-overlayPanel>
 <p-overlayPanel #editingdocs [showCloseIcon]="true">
@@ -32,10 +33,10 @@
         <p-header>
             <img  src="assets/books.jpg">
         </p-header>
-        <p>1.) Reading Documents <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>1.) Reading Articles <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <!--
-        <p>2.) Editing Documents <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>3.) Creating Documents <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>2.) Editing Articles <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         -->
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>

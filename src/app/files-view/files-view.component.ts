@@ -69,11 +69,16 @@ export class FilesViewComponent implements OnInit{
     this.selectItemInTree(id);
     this.showSelectedNodeInTree();
   }
-  private setSingleFileDetail(id:string, file){
+  private setSingleFileDetail(id:string, file:ServerFile){
     this.filesService.getFile(id).subscribe(content=>{
     this.detail.setTitle(id);
-    this.detail.setContent(content);
-    this.detail.setSummary(file);
+    if(!file.isDir){
+      this.detail.setFileContent(content);
+      this.detail.setFileSummary(file);
+    }else{
+      this.detail.setDirContents(file);
+      this.detail.setDirSummary(file);
+    }
     this.navTree.setContextMenu()}
     );
   }
