@@ -23,7 +23,7 @@ TODO For v 0.1:
 1.) DONE- Add files.php php script (similar to server side script) and execute locally in mock server
 2.) DONE- Add test html docs
 3.) DONE- Add RxJs and observables to files service
-4.) Install quill and change first tab in rhs to use editor in read only mode. Make sure html docs displayed ok
+4.) DONE -Install quill and change first tab in rhs to use editor in read only mode. Make sure html docs displayed ok
 5.) Implement unit test suite
 6.) Populate first tab with contents list when directory is selected
 7.) Update help
