@@ -14,8 +14,9 @@ Contents:
 -->1.2) Installing node js adn typescript
 2.) Getting current baobab code (from Git hub) and running project
 ---2.1) Install git
----2.2) Get code
----2.3) Running code 
+---2.2) Install php
+---2.3) Get code
+---2.4) Running code 
 
 Appendix - Creating primeng projects (such as baobab) and angular tips and tricks
 --------------------------------------
@@ -72,13 +73,17 @@ Startup.main();
 ##################################################################
 ---2.1) Install git
 sudo apt-get install git
----2.2) Get code
+---2.2) Install php
+sudo apt-get install php5 (etc)
+---2.3) Get code
 git clone  https://github.com/KevinGoode/baobab
 cd baobab
 git checkout master
 npm install
----2.3) Running code
-In baobab directory: ng serve --host 0.0.0.0
+---2.4) Running code
+Run angular server proxying rest calls to php script
+In baobab directory: ng serve --host 0.0.0.0 --proxy-config proxy.conf.json
+In baobab/test directory: php -S localhost:8000
 In browser (Recommend Chromium): http://localhost:4200/
 
 

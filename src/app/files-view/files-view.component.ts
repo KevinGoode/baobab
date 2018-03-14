@@ -70,15 +70,18 @@ export class FilesViewComponent implements OnInit{
     this.showSelectedNodeInTree();
   }
   private setSingleFileDetail(id:string, file){
-    var content:string =this.filesService.getFile(id);
+    this.filesService.getFile(id).subscribe(content=>{
     this.detail.setTitle(id);
     this.detail.setContent(content);
     this.detail.setSummary(file);
-    this.navTree.setContextMenu();
+    this.navTree.setContextMenu()}
+    );
   }
   private setFileTree(){
-    var serverFiles: ServerFile[] = this.filesService.getAllFiles();
-    this.navTree.setAllFiles(serverFiles);
+    this.filesService.getAllFiles().subscribe(serverFiles=>{
+    var fileRoot: ServerFile = this.getChild(serverFiles);
+    this.navTree.setAllFiles([fileRoot])
+    });
   }
   private selectItemInTree(id:string){
     this.navTree.selectItemInTree(id);
@@ -89,4 +92,11 @@ export class FilesViewComponent implements OnInit{
   private getFileDataById(id:string): ServerFile{
     return this.navTree.getFileDataById(id);
   }
+  protected getChild(child: any): ServerFile{
+    var childFile :ServerFile = new ServerFile(child);
+    for(var i=0;i<child.children.length;i++){
+       childFile.addChild(this.getChild(child.children[i]));
+    }
+    return childFile;
+}
 }

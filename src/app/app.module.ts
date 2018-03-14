@@ -31,7 +31,7 @@ import { FilesViewComponent } from './files-view/files-view.component';
 import { FilesTreeComponent } from './files-tree/files-tree.component';
 import { FileDetailComponent } from './file-detail/file-detail.component';
 import { FilesServiceService } from './files-service.service'
-
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent],
   imports: [
@@ -55,7 +55,9 @@ import { FilesServiceService } from './files-service.service'
     TreeModule,
     ContextMenuModule,
     TabViewModule,
-    InputTextareaModule
+    InputTextareaModule,
+    HttpClientModule
+    
   ],
   providers: [FilesServiceService],
   bootstrap: [AppComponent]

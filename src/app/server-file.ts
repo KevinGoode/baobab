@@ -5,7 +5,7 @@ export class ServerFile {
         this.isDir = all.isDir;
         this.sizeOnDisk = all.sizeOnDisk;
         this.lastReadAt = new Date(all.lastReadAt);
-        this.lastUpdated = new Date(all.updatedAt);
+        this.lastUpdated = new Date(all.lastUpdated);
         this.children = new Array<ServerFile>();
     }
     public addChild(child: ServerFile){

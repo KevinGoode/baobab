@@ -1,0 +1,152 @@
+<h2>Overview</h2>
+<p>This guide explains how to use the 'git' version control system using an svn style workflow.  IE 
+The GIT local staging area is by-passed.Commits are always followed by a push to the main server. Since GIT is a 'distributed' version control system there is no real notion
+of client and server. However, since we are using an svn style workflow, in this guide a 'GIT Server' is a GIT host that is solely used as a server to store the repository
+IE No development is done on this node. In this guide a 'GIT Client' is any GIT host where changes to the project are made. A usual summary of GIT commands can be found at:</p>
+<a href="http://www.git-tower.com/blog/git-cheat-sheet-detail/"> Click Here</a>
+<h2>Setting up GIT Server</h2>
+<p>To set up a GIT server over ssh you need to create a GIT user on a machine then generate public private keys using ssh-keygen (choosing default options)
+for each user. To create master (trunk) on main server (origin) change directory to project directory and type 'git --bare init'. This creates an empty project</p>
+
+<p>For full description on how to setup a linux GIT server using ssh and GIT project creation :</p>
+<a href="http://git-scm.com/book/en/Git-on-the-Server-Setting-Up-the-Server"> Click Here</a>
+<h2>Setup for Examples in Basic Use Cases</h2>
+<p>The following use cases contain examples to illustrate the workflow. To run these examples create a git server following instructions in the link above</p>
+<br>
+On GIT Server :<br>
+$sudo mkdir /opt/git-project1<br>
+$sudo chmod a rwx opt/git-project1<br>
+$cd /opt/git-project1<br>
+<b>$git --bare init</b><br>
+<br>
+On GIT Client : generate a public key and add to authorized_keys on GIT server as described in link above. If using git for the first time on client:<br>
+<b>
+$git config --global user.name "Kevin Goode"<br>
+$git config --global user.email kevin.goode@hp.com<br>
+$git config --global core.editor gedit<br>
+$git config --global diff.tool meld<br>
+</b>
+Note the --global option puts settings in the user .gitconfig file. Use --system option (/etc/gitconfig) to apply system wide settings<br>
+<br>
+NOTE: It is good to configue an alias to a project residing on a server.To create the alias 'proj1'<br>
+<b>$git remote add proj1 git@IPADDRESS:/opt/git-project1<br></b>
+However, in the rest of this guide the fully qualified project name shall be used.<br>
+<br>
+To populate project:<br>
+<b>$git clone git@IPADDRESS:/opt/git-project1<br></b>
+$cd git-project1<br>
+Create a file:file1 (containing text 'Rain in spain falls') and file2 (containing text 'Hickory'): .<br>
+echo "Rain in spain falls" > file1<br>
+echo "Hickory" > file2 <br>
+<b>
+$git add file1</b>#NB add on a directory will recursively add subdirectories as it does in svn<br>
+<b>
+$git add file2<br>
+$git -a -m commit "Project first commit" (NB -a FLAG IS VERY IMPORTANT FLAG TO BY PASS STAGING AREA)<br>
+$git push git@IPADDRESS:/opt/git-project1 master<br>
+</b>
+To check commit worked:<br>
+
+$cd ..<br>
+$rm -rf git-project1<br>
+<b>
+$git clone git@IPADDRESS:/opt/git-project1<br>
+</b>
+$cd git-project1<br>
+$ls (should show file1 file2) <br>
+<h2>Basic Use Cases</h2>
+Unless mentioned assume code executed on GIT CLIENT<br>
+<h3>1.) Checkout a project. Edit some files. Look at diff between local files and server files. Check files in</h3>
+<b>
+$git clone git@IPADDRESS:/opt/git-project1<br>
+</b>
+$cd git-project1<br>
+$ls<br>
+ file1 file2<br>
+$echo " mainly" >> file1<br>
+<b>$git status <br></b>
+...<br>
+modified: file1<br>
+...<br>
+<b>
+$git commit -a -m "Changed file"<br>
+$git difftool master origin/master<br>
+$git push git@IPADDRESS:/opt/git-project1 master<br>
+</b>
+<h3>2.) Look at difference between versions</h3>
+Assuming 'Use Case 1.)' has been run OR 'Use Case 1.)' has been run on another machine and the project has been cloned<br>
+<b>
+$ git log<br>
+</b>
+commit f6d96516949080d774c25441d9d1c7a426371487<br>
+...<br>
+    Changed file1<br>
+...<br>
+commit 3ea769628679cfb0e497d48fe32af93a1909de96<br>
+...<br>
+<b>
+$ git difftool f6d96516949080d774c25441d9d1c7a426371487 3ea769628679cfb0e497d48fe32af93a1909de96<br>
+</b>
+<h3>3.) Creating a branch. Commit branch to server. Merge branch back into master</h3>
+<b>$git checkout -b dock </b># This is a shortcut for 'git branch dock' followed by 'git checkout dock'<br>
+Switched to a new branch 'dock'<br>
+$echo " dickory dock" >> file2<br>
+<b>$git commit -a -m "Changed file2 in branch" </b># Commit changes locally<br>
+<b>$git push git@IPADDRESS:/opt/git-project1 dock </b># Push local changes to server<br>
+<b>$git checkout master </b>#Switch to master branch<br>
+Switched to branch 'master'<br>
+<b>$git merge dock </b>#This does merge locally<b>$git checkout -b myFeature  # Creates branch 'myFeature' from 'dev' branch</b><br>
+<b>$git push git@IPADDRESS:/opt/git-project1 master </b>#Push merge onto server<br>
+<h3>4.) Creating a branch from a particular version</h3>
+<b>$git log</b>
+<b>$git branch branchname <sha1-of-commit></sha1-of-commit></b>
+<h3>5.) Update code from server (with merge)</h3>
+NB to pull changes without merge use 'fetch'<br>
+<b>$git pull git@IPADDRESS:/opt/git-project1 branchname</b>
+<h3>6.) Creating a branch. Make changes in branch . Make changes in master. Merge changes from master into branch</h3>
+<b>$git checkout -b newbranch </b>#Create new branch (and switch to it)<br>
+$echo " branch only fix" >> file2<br>
+<b>$git commit -a -m "Changed file2 in branch" </b># Commit changes locally<br>
+<b>$git push git@IPADDRESS:/opt/git-project1 newbranch </b># Push local changes to server<br>
+<b>$git checkout master</b>
+$echo " master only fix" >> file2<br>
+<b>$git commit -a -m "Changed file1 in master</b># Commit changes locally<br>
+<b>$git push git@IPADDRESS:/opt/git-project1 newbranch </b># Push local changes to server<br>
+<b>$git checkout newbranch</b> #Switch to new branch<br>
+<b>$git merge master</b> #Merge from master<br>
+<b>$git push git@IPADDRESS:/opt/git-project1 newbranch </b># Push local changes to server<br>
+<h3>7.) Resolving Merge conflicts</h3>
+Change file2 in both branch newbranch and master then try and merge newbranch into master<br>
+<b>$git checkout master</b><br>
+<b>$ git merge newbranch</b><br>
+Auto-merging file2<br>
+CONFLICT (content): Merge conflict in file2<br>
+Automatic merge failed; fix conflicts and then commit the result.<br>
+Need to resolve conflict manaully then <b>'git add'</b> <br>
+$gedit file1<br>
+<b>$git add file1</b><br>
+<b>$git commit -a -m"Resolved merge conflict"</b><br>
+<b>$git push git@IPADDRESS:/opt/git-project1 master</b><br>
+<h3>8.) Making branch from branch</h3>
+Assuming you have cloned repository and dev branch already exists. In project directory:<br>
+<b>$git checkout dev</b>  # Switch to dev branch<br>
+<b>$git checkout -b myFeature</b>  # Creates branch 'myFeature' from 'dev' branch<br>
+#Make changes<br>
+<b>$git commit -a -m "Your message" </b># Commit changes to 'myFeature' branch<br>
+<b>$git push git@IPADDRESS:/opt/git-project1 myFeature </b>#Backup changes to server<br>
+#Now time to merge<br>
+<b>$git checkout dev </b><br> 
+<b>$git merge --no-ff myFeature </b>#Now merge your changes to dev without a <a href="http://ariya.ofilabs.com/2013/09/fast-forward-git-merge.html">fast-forward</a><br>
+<b>$git push git@IPADDRESS:/opt/git-project1 dev </b><br>
+<h3>9.) Reverting a commit</h3>
+Using the svn workflow whereby commits are always followed by a push, it is important to always use 'git revert' to <br>
+revert changes. Note the use of --no-commit stops multiple commits if a number of commits are reverted in one go <br>
+<b>$git log  </b># Do this to get sha1 id (XXXXX) of commit you want to revert<br>
+<b>$git revert --no-commit XXXXXX</b>  # Switch to dev branch<br>
+<b>$git commit -a -m "Reverted XXX"</b><br> 
+<b>$git push git@IPADDRESS:/opt/git-project1 branchname </b><br> 
+<h3>10.) Log history</h3>
+<b>git checkout NAME</b> #switch to branch NAME<br>
+<b>$git log --since=2.weeks </b>#Logs checkins in last 2 weeks <br>
+
+
