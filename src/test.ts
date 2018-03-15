@@ -14,7 +14,15 @@ getTestBed().initTestEnvironment(
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting()
 );
-// Then we find all the tests.
-const context = require.context('./', true, /\.spec\.ts$/);
+// Run all tests:
+//const context = require.context('./', true, /\.spec\.ts$/);
+
+// OR
+//Run inidividual tests by commenting out line above and replacing with following
+//const context = require.context('./', true, /help-panel\.component\.spec\.ts/);
+//const context = require.context('./', true, /help-dialog\.component\.spec\.ts/);
+//const context = require.context('./', true, /dashboard\.component\.spec\.ts/);
+//const context = require.context('./', true, /top-panel\.component\.spec\.ts/);
+const context = require.context('./', true, /file-detail\.component\.spec\.ts/);
 // And load the modules.
 context.keys().map(context);

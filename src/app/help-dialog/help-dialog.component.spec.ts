@@ -1,14 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HelpDialogComponent } from './help-dialog.component';
-
+import { DialogModule} from 'primeng/primeng'
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 describe('HelpDialogComponent', () => {
   let component: HelpDialogComponent;
   let fixture: ComponentFixture<HelpDialogComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HelpDialogComponent ]
+      declarations: [ HelpDialogComponent ],
+      imports: [BrowserAnimationsModule, DialogModule]
     })
     .compileComponents();
   }));

@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MenuModule} from 'primeng/menu';
 import { MenuItem } from 'primeng/primeng'
+import { HelpBarComponent } from '../help-bar/help-bar.component';
+import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 @Component({
   providers: [],
   selector: 'app-top-panel',
@@ -13,8 +15,8 @@ export class TopPanelComponent implements OnInit {
   logMenuItems: MenuItem[];
   helpMenuItems: MenuItem[];
   display: boolean =false;
-  @Input() helpDialog ;
-  @Input() helpBar ;
+  @Input() helpDialog :HelpDialogComponent;
+  @Input() helpBar :HelpBarComponent;
   ngOnInit() {
     this.logMenuItems = [
       {label: 'Log On' , icon: 'fa-user', command: () => {
@@ -39,9 +41,6 @@ export class TopPanelComponent implements OnInit {
   }
   showFiles(){
 
-  }
-  setHelpDialog(helpDialog){
-    this.helpDialog = helpDialog;
   }
   help(){
     this.helpDialog.showDialog();
