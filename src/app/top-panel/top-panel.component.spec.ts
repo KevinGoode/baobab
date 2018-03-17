@@ -1,4 +1,4 @@
-import { Component,} from '@angular/core';
+import { Component} from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopPanelComponent } from './top-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';

@@ -23,6 +23,11 @@ getTestBed().initTestEnvironment(
 //const context = require.context('./', true, /help-dialog\.component\.spec\.ts/);
 //const context = require.context('./', true, /dashboard\.component\.spec\.ts/);
 //const context = require.context('./', true, /top-panel\.component\.spec\.ts/);
-const context = require.context('./', true, /file-detail\.component\.spec\.ts/);
+//const context = require.context('./', true, /file-detail\.component\.spec\.ts/);
+//const context = require.context('./', true, /files-tree\.component\.spec\.ts/);
+//const context = require.context('./', true, /files-service\.service\.spec\.ts/);
+const context = require.context('./', true, /files-view\.component\.spec\.ts/);
+
+// A
 // And load the modules.
 context.keys().map(context);
