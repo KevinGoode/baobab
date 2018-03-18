@@ -15,7 +15,7 @@ getTestBed().initTestEnvironment(
   platformBrowserDynamicTesting()
 );
 // Run all tests:
-//const context = require.context('./', true, /\.spec\.ts$/);
+const context = require.context('./', true, /\.spec\.ts$/);
 
 // OR
 //Run inidividual tests by commenting out line above and replacing with following
@@ -26,8 +26,8 @@ getTestBed().initTestEnvironment(
 //const context = require.context('./', true, /file-detail\.component\.spec\.ts/);
 //const context = require.context('./', true, /files-tree\.component\.spec\.ts/);
 //const context = require.context('./', true, /files-service\.service\.spec\.ts/);
-const context = require.context('./', true, /files-view\.component\.spec\.ts/);
-
+//const context = require.context('./', true, /files-view\.component\.spec\.ts/);
+//const context = require.context('./', true, /app\.component\.spec\.ts/);
 // A
 // And load the modules.
 context.keys().map(context);
