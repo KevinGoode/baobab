@@ -7,7 +7,12 @@ import { OrderListModule} from 'primeng/orderlist';
 import { PanelModule } from 'primeng/primeng';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { ServerFile } from '../server-file';
+const  file1: ServerFile =  new ServerFile({id: './content/folder1/file1', name: 'file1', isDir:false,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
+                                          lastUpdated: "2018-03-14T08:01:03+0000"});
+const  folder1: ServerFile =  new ServerFile({id: './content/folder1', name: 'folder1', isDir:true,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
+                                          lastUpdated: "2018-03-14T08:01:03+0000"});
+folder1.addChild(file1);
 describe('FileDetailComponent', () => {
   let component: FileDetailComponent;
   let fixture: ComponentFixture<FileDetailComponent>;
@@ -29,4 +34,19 @@ describe('FileDetailComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set file details', () => {
+    component.setTitle('Some title');
+    component.setFileContent("Some file content");
+    component.setFileSummary(file1);
+  });
+
+  it('should set folder details', () => {
+    component.setTitle('Some title');
+    component.setDirContents(folder1);
+    component.setDirSummary(folder1);
+  });
 });
+
+
+

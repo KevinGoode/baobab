@@ -30,22 +30,21 @@ export class FilesViewComponent implements OnInit{
   }
   routerOnActivate(event){
     if (event instanceof NavigationEnd) {
-    this.route();
+    this.route(decodeURIComponent(this.router.url));
     }
   }
   ngOnInit() {
     console.log("INIT");
     this.activatedRoute.url.subscribe(url =>{
-      this.route();
+      this.route(decodeURIComponent(this.router.url));
     });
   }
   ngAfterViewInit() {
     
   }
   
-  route(){
+  route(url){
     var ID_IDENTIFIER = "/files?detail=";
-    var url: string =  decodeURIComponent(this.router.url);
     if (url.includes(ID_IDENTIFIER)){
       var encodedId=url.replace(ID_IDENTIFIER,"");
       var id = atob(encodedId);

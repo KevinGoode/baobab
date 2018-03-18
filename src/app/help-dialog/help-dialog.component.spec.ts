@@ -24,4 +24,8 @@ describe('HelpDialogComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('show dialog', () => {
+    component.showDialog();
+    expect(component.display).toEqual(true);
+  });
 });

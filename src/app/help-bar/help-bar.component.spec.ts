@@ -26,4 +26,8 @@ describe('HelpBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+  it('show side bar', () => {
+    component.showSideBar();
+    expect(component.display).toEqual(true);
+  });
 });

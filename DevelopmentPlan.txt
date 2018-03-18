@@ -27,7 +27,7 @@ TODO For v 0.1:
 5.) Implement unit test suite
 6.) DONE- Populate first tab with contents list when directory is selected
 7.) DONE - Update help
-8.) Deploy and bench test using real files.php script
+8.) DONE - Deploy and bench test using real files.php script
 9.) Create release branch
 ##################################################################
 Theme for v 0.2

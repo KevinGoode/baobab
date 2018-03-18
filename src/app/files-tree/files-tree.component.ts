@@ -67,22 +67,22 @@ export class FilesTreeComponent implements OnInit {
   }
   new_file()
   {
-    alert("New file - Not yet implemented");
+    console.log("New file - Not yet implemented")
   }
   new_directory(){
-    alert("New dir  - Not yet implemented");
+    console.log("New dir  - Not yet implemented");
   }
   delete_directory(){
-    alert("Delete  dir - Not yet implemented");
+    console.log("Delete  dir - Not yet implemented");
   }
   copy_file(){
-    alert("Copy file - Not yet implemented");
+    console.log("Copy file - Not yet implemented");
   }
   edit_file(){
-    alert("Edit file - Not yet implemented");
+    console.log("Edit file - Not yet implemented");
   }
   delete_file(){
-    alert("Delete file - Not yet implemented");
+    console.log("Delete file - Not yet implemented");
   }
   fileSelect(event){
     var encoded :string = btoa(event.node.data.id);
