@@ -43,7 +43,10 @@ export class FileDetailComponent implements OnInit {
     this.directoryContents=dir.children;
   }
   public setDirSummary(file:ServerFile){
-    this.tabInfoText = "TBD";
+    var display = "File Name: " + file.name + "\n";
+    display +=  "Size On Disk: " + String(file.sizeOnDisk) + "\n";
+    display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
+    this.tabInfoText = display;
   }
   public onSelectionChange(event:any){
     var encoded :string = btoa(event.value[0].id);
@@ -53,7 +56,6 @@ export class FileDetailComponent implements OnInit {
   public setFileSummary(file:ServerFile){
       var display = "File Name: " + file.name + "\n";
       display +=  "Size On Disk: " + String(file.sizeOnDisk) + "\n";
-      display += "Last Read At: " + file.lastReadAt.toLocaleString('en-GB') + "\n";
       display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
       this.tabInfoText = display;
   }
