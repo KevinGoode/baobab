@@ -42,10 +42,14 @@ export class FileDetailComponent implements OnInit {
     this.showDirectory();
     this.directoryContents=dir.children;
   }
-  public setDirSummary(file:ServerFile){
-    var display = "File Name: " + file.name + "\n";
-    display +=  "Size On Disk: " + String(file.sizeOnDisk) + "\n";
-    display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
+  public setDirSummary(dir:ServerFile){
+    var timeStr: string = "N\A - No Files"
+    if (dir.lastUpdated.getTime() !=0){
+      timeStr=dir.lastUpdated.toLocaleString('en-GB')
+    }
+    var display = "Directory Name: " + dir.name + "\n";
+    display +=  "Size Of Files: " + this.storageToString(dir.sizeOnDisk) + "\n";
+    display += "Last Updated At: " +  timeStr + "\n";
     this.tabInfoText = display;
   }
   public onSelectionChange(event:any){
@@ -55,7 +59,7 @@ export class FileDetailComponent implements OnInit {
   }
   public setFileSummary(file:ServerFile){
       var display = "File Name: " + file.name + "\n";
-      display +=  "Size On Disk: " + String(file.sizeOnDisk) + "\n";
+      display +=  "Size Of File: " + this.storageToString(file.sizeOnDisk) + "\n";
       display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
       this.tabInfoText = display;
   }
@@ -67,5 +71,19 @@ export class FileDetailComponent implements OnInit {
     this.editorVisible='none';
     this.directoryContentsVisible='block';
   }
-
+  private storageToString(num:number){
+      var precision =2 ;
+      var megaBytes:number = 2 << 20;
+      var kiloBytes:number = 2 << 10;
+      var convertedNumber:String = new Number(num).toPrecision(); //No rounding
+      var units = " Bytes"
+      if (num/megaBytes > 1){
+          convertedNumber = new Number(num/megaBytes).toPrecision(precision);
+          units = " MB";
+      }else if (num/kiloBytes > 1){
+          convertedNumber = new Number(num/kiloBytes).toPrecision(precision);
+          units = " KB";
+      }
+      return convertedNumber + units;
+  }
 }

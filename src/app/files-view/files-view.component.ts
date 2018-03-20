@@ -98,6 +98,8 @@ export class FilesViewComponent implements OnInit{
   }
   private getSubStorage(dir:ServerFile):ServerFile{
     var stats = dir.clone();
+    stats.lastUpdated = new Date(0);
+    stats.lastReadAt = new Date(0);
     stats.sizeOnDisk = 0;
     this.getDirStats(dir, stats);
     return stats
@@ -105,17 +107,18 @@ export class FilesViewComponent implements OnInit{
   private getDirStats(dir:ServerFile, stats:ServerFile){
     for (var i=0;i<dir.children.length;i++){
       if (!dir.children[i].isDir){
-        //Increment size of dir with size of file
+        //All directory statisitics relate to files inside folder or subfolders
          stats.sizeOnDisk += dir.children[i].sizeOnDisk;
+        if (dir.children[i].lastReadAt.getTime()>stats.lastReadAt.getTime()){
+          stats.lastReadAt = new Date(dir.children[i].lastReadAt.getTime());
+        }
+        if (dir.children[i].lastUpdated.getTime()>stats.lastUpdated.getTime()){
+          stats.lastUpdated = new Date(dir.children[i].lastUpdated.getTime());
+        }
       }else{
         this.getDirStats(dir.children[i], stats);
       }
-      if (dir.children[i].lastReadAt.getTime()>stats.lastReadAt.getTime()){
-        stats.lastReadAt = new Date(dir.children[i].lastReadAt.getTime());
-      }
-      if (dir.children[i].lastUpdated.getTime()>stats.lastUpdated.getTime()){
-        stats.lastUpdated = new Date(dir.children[i].lastUpdated.getTime());
-      }
+     
     }
 
   }
