@@ -169,11 +169,11 @@ The component styles file takes precedence because it is last. However, this sty
 In general this attribute is added to all html elements in the component so the net effect is that these styles only apply to the component itself which is a good thing.However, if the component contains child elements without these attributes set then the component css file i uselss and you need to apply styles in top level styles.css file of project. 
 #################################
 ###############################
-# TIP-5 Tests
+# TIP-5 Tests (unit using karma and e2e using protractor)
 1.) Set env variable export CHROME_HOME=PATH_OF_CHROMIUM
 (export CHROME_BIN=/usr/lib/chromium-browser/chromium-browser) best put this in ~/.bashrc file
-2.) Run tests using: npm test
-3.) To run individual tests comment out this line in test.ts and replace with:
+2.) Run unit tests using: npm test
+3.) To run individual unit tests comment out this line in test.ts and replace with:
 //const context = require.context('./', true, /\.spec\.ts$/);
 const context = require.context('./', true, /help-bar\.component\.spec\.ts/);
 4.) Most test (*.spec.ts) files will need to include these 2 lines:
@@ -185,3 +185,4 @@ imports: [BrowserAnimationsModule]
 EG typical component may have  imports:[BrowserAnimationsModule, OverlayPanelModule, CardModule, SidebarModule],
 6.) If youur component routerLink then need to import: import { RouterTestingModule } from '@angular/router/testing';
 7.) Running tests with coverage (producing index.html in coverage directory) :ng test --code-coverage
+8.) To run e2e tests: ng e2e. (Tests are in e2e dir)
