@@ -75,12 +75,14 @@ Startup.main();
 sudo apt-get install git
 ---2.2) Install php
 sudo apt-get install php5 (etc)
----2.3) Get code
+---2.3) To get login/logoff to work need read access to /etc/shadow (eg sudo chmod a+r /etc/shadow)
+and need to install mkpasswd (on ubuntu this is sudo apt-get install whois) 
+---2.4) Get code
 git clone  https://github.com/KevinGoode/baobab
 cd baobab
 git checkout master
 npm install
----2.4) Running code
+---2.5) Running code
 Run angular server proxying rest calls to php script
 In baobab directory: ng serve --host 0.0.0.0 --proxy-config proxy.conf.json
 In baobab/test directory: php -S localhost:8000
