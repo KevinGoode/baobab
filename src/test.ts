@@ -28,6 +28,9 @@ const context = require.context('./', true, /\.spec\.ts$/);
 //const context = require.context('./', true, /files-service\.service\.spec\.ts/);
 //const context = require.context('./', true, /files-view\.component\.spec\.ts/);
 //const context = require.context('./', true, /app\.component\.spec\.ts/);
+//const context = require.context('./', true, /authenticator\.service\.spec\.ts/);
+//const context = require.context('./', true, /login-dialog\.component\.spec\.ts/);
+//const context = require.context('./', true, /authenticator\.component\.spec\.ts/);
 // A
 // And load the modules.
 context.keys().map(context);

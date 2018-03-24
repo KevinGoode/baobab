@@ -134,10 +134,11 @@ commands add components to current app and are executed in top level dir
   "../node_modules/primeng/resources/primeng.min.css",
   "../node_modules/primeng/resources/themes/omega/theme.css"
 ],
-5.) In app.module.ts add Components https://alligator.io/angular/primeng
-6.) In file app.component.html create a layout https://alligator.io/angular/primeng"
-7.) Inside divs in layout add some components some such as accordians, radio buttons etc https://www.primefaces.org/primeng/#/setup
-8.) Run server : ng serve --host 0.0.0.0  and inspect in chromium http://localhost:4200/
+5.) In app.module.ts add Components https://angular.io/tutorial/toh-pt1
+6.) Geenrate service in app dir:ng generate service authenticator --module=app
+7.) In file app.component.html create a layout https://alligator.io/angular/primeng"
+8.) Inside divs in layout add some components some such as accordians, radio buttons etc https://www.primefaces.org/primeng/#/setup
+9.) Run server : ng serve --host 0.0.0.0  and inspect in chromium http://localhost:4200/
 
 C.) Angular/primeng tips and tricks
 ###################################
@@ -174,7 +175,7 @@ In general this attribute is added to all html elements in the component so the 
 # TIP-5 Tests (unit using karma and e2e using protractor)
 1.) Set env variable export CHROME_HOME=PATH_OF_CHROMIUM
 (export CHROME_BIN=/usr/lib/chromium-browser/chromium-browser) best put this in ~/.bashrc file
-2.) Run unit tests using: npm test
+2.) Run unit tests using: npm test (with coverage: ng test --code-coverage)
 3.) To run individual unit tests comment out this line in test.ts and replace with:
 //const context = require.context('./', true, /\.spec\.ts$/);
 const context = require.context('./', true, /help-bar\.component\.spec\.ts/);

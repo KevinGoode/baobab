@@ -1,0 +1,26 @@
+<p-dialog header="Login" [resizable]="false" [draggable]="true" [(visible)]="display" modal="modal" width="300" [responsive]="true">
+  <br/>
+  <b>Enter username and password</b>
+  <br/>
+  
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-user"></i></span>
+            <input [(ngModel)]="userName" size="20" placeholder="Username"/>  
+                         
+        </div>
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-lock"></i></span>
+              <input type="password" [(ngModel)]="password" size="20" placeholder="Password"/> 
+        </div>
+    </div>
+  </div>
+  
+ 
+
+  <p-footer>
+        <button type="button" pButton icon="fa-check" (click)="OnOk()" label="Ok"></button>
+        <button type="button" pButton icon="fa-close" (click)="OnCancel()" class="ui-button-secondary" label="Cancel"></button>
+  </p-footer>
+</p-dialog>

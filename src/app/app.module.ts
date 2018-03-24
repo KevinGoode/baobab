@@ -34,8 +34,13 @@ import { FileDetailComponent } from './file-detail/file-detail.component';
 import { FilesServiceService } from './files-service.service'
 import { HttpClientModule } from '@angular/common/http';
 import {EditorModule} from 'primeng/editor';
+import {PasswordModule} from 'primeng/password';
+import { AuthenticatorComponent } from './authenticator/authenticator.component';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { AuthenticatorService } from './authenticator.service';
+import { AuthenticatorServiceBase} from "./authenticator/service.model";
 @NgModule({
-  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent],
+  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -60,10 +65,11 @@ import {EditorModule} from 'primeng/editor';
     InputTextareaModule,
     OrderListModule,
     HttpClientModule,
-    EditorModule
+    EditorModule,
+    PasswordModule
     
   ],
-  providers: [FilesServiceService],
+  providers: [FilesServiceService, {provide: AuthenticatorServiceBase, useClass: AuthenticatorService}],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

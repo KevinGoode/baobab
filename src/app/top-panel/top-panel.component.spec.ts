@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { TopPanelComponent } from './top-panel.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -12,7 +12,7 @@ describe('TopPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopPanelComponent , HelpDialogComponent, HelpBarComponent],
+      declarations: [ TopPanelComponent , HelpDialogComponent, HelpBarComponent,LoginDialogComponent, AuthenticatorComponent],
       imports: [BrowserAnimationsModule, RouterTestingModule, SplitButtonModule, ButtonModule]
     })
     .compileComponents();
@@ -34,14 +34,11 @@ describe('TopPanelComponent', () => {
       component.helpMenuItems[i].command();
     }
   });
-  it('should call all log menu items', () => {
-    for (var i=0;i<component.logMenuItems.length;i++){
-      component.logMenuItems[i].command();
-    }
-  });
+  
 });
 
 //Mock new components in this project
+interface LoginCredentialsProvider{}
 @Component({
   selector: 'app-help-dialog',
   template: ''
@@ -59,4 +56,21 @@ class HelpBarComponent implements OnInit{
   display: boolean = false;
   ngOnInit() {}
   public showSideBar() {}
+}
+@Component({
+  selector: 'app-login-dialog',
+  template: ''
+})
+class LoginDialogComponent implements OnInit, LoginCredentialsProvider{
+  display: boolean = false;
+  ngOnInit() {}
+}
+@Component({
+  selector: 'app-authenticator',
+  template: ''
+})
+class AuthenticatorComponent implements OnInit{
+  constructor() { }
+  @Input() credentialsGatherer:LoginCredentialsProvider;
+  ngOnInit() {}
 }

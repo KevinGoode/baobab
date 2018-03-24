@@ -12,19 +12,12 @@ import { HelpDialogComponent } from '../help-dialog/help-dialog.component';
 export class TopPanelComponent implements OnInit {
 
   constructor( ) { }
-  logMenuItems: MenuItem[];
   helpMenuItems: MenuItem[];
   display: boolean =false;
   @Input() helpDialog :HelpDialogComponent;
   @Input() helpBar :HelpBarComponent;
   ngOnInit() {
-    this.logMenuItems = [
-      {label: 'Log On' , icon: 'fa-user', command: () => {
-          this.logon();
-      }},
-      {label: 'Log Off', icon: 'fa-user-times', command: () => {
-          this.logoff();
-      }}];
+
       this.helpMenuItems =  [
         {label: 'Help' , icon: 'fa-book', command: () => {
             this.helpSideBar();
@@ -33,12 +26,7 @@ export class TopPanelComponent implements OnInit {
             this.help();
         }}];
   }
-  logon(){
 
-  }
-  logoff(){
-
-  }
   showFiles(){
 
   }

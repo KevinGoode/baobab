@@ -7,13 +7,14 @@ class SimpleSessionManager
 {
     public function __construct()
     {
-
+        
     }
 
     function IsUserLoggedIn($reset)
     {
         $okay=FALSE;
         $currenttime=0;
+        if (!array_key_exists('id', $_COOKIE)) return $okay;
         $cookie=$_COOKIE['id'];
         $client=$_SERVER["REMOTE_ADDR"];
         if((!$cookie) || (!$client)) return FALSE;
@@ -58,6 +59,7 @@ class SimpleSessionManager
     }
     function IsValidUser( )
     {
+        $_POST = json_decode(file_get_contents('php://input'), true);
        if(!$_POST["id"]) return FALSE;
        $credentials=explode(":",$_POST["id"]);
        if(count($credentials) !=2) return FALSE;
@@ -98,6 +100,7 @@ class SimpleSessionManager
     }
     function CredentialsPassed()
     {
+       $_POST = json_decode(file_get_contents('php://input'), true);
        if(!$_POST["id"]) return FALSE;
        $credentials=explode(":",$_POST["id"]);
        return (count($credentials) ==2);   
