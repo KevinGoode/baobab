@@ -29,9 +29,9 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
   /*
   Callback when credentials have been gathered
   */
-  gotCredentials(){
-    var userName: string =this.credentialsGatherer.userName;
-    var passWord: string =this.credentialsGatherer.password;
+  gotCredentials(userName: string, password: string){
+    var userName: string = userName;
+    var passWord: string = password;
     var serviceCall:Observable<string> =this.authenticatorService.login(userName,passWord);
     serviceCall.subscribe(data=>{
       alert("Login Succeeded");

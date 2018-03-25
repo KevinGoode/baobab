@@ -21,7 +21,7 @@ export class LoginDialogComponent implements OnInit, LoginCredentialsProvider {
       console.debug("Showing dialog...");
   }
   public OnOk(){
-    this.subscriber.gotCredentials();
+    this.subscriber.gotCredentials(this.userName,this.password);
     this.OnCancel();
   }
   public OnCancel(){

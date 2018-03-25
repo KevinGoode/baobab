@@ -4,5 +4,5 @@ export interface LoginCredentialsProvider {
     getCredentials(subcriber:LoginCredentialsSubscriber);
 }
 export interface LoginCredentialsSubscriber {
-    gotCredentials();
+    gotCredentials(userName: string, password: string);
 }

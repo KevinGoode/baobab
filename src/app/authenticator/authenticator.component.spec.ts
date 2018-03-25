@@ -62,7 +62,7 @@ export class MockCredentialsGather implements LoginCredentialsProvider {
   ngOnInit() {
   }
   public getCredentials(subscriber: LoginCredentialsSubscriber) {
-    subscriber.gotCredentials();
+    subscriber.gotCredentials(this.userName, this.password);
   }
  
 }
