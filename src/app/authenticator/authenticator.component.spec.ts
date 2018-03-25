@@ -3,11 +3,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AuthenticatorComponent } from './authenticator.component';
 import { SplitButtonModule} from 'primeng/splitbutton';
-import { AuthenticatorServiceBase} from "./service.model";
+import { GrowlModule} from 'primeng/growl';
+import { AuthenticatorServiceBase} from "./authenticatorservice.model";
 import { LoginCredentialsProvider, LoginCredentialsSubscriber} from './login-credentials.interface';
+import { AuthorisationService } from './authorisation.service'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import {MessageService} from 'primeng/components/common/messageservice';
+
 describe('AuthenticatorComponent', () => {
   let component: AuthenticatorComponent;
   let fixture: ComponentFixture<AuthenticatorComponent>;
@@ -15,8 +19,8 @@ describe('AuthenticatorComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AuthenticatorComponent ],
-      providers:[{provide: AuthenticatorServiceBase, useClass: AuthenticatorServiceMock}],
-      imports: [BrowserAnimationsModule, SplitButtonModule, RouterTestingModule]
+      providers:[MessageService, {provide: AuthenticatorServiceBase, useClass: AuthenticatorServiceMock}, {provide: AuthorisationService, useClass: AuthorisationServiceMock}],
+      imports: [BrowserAnimationsModule, SplitButtonModule, GrowlModule,RouterTestingModule]
     })
     .compileComponents();
   }));
@@ -65,4 +69,14 @@ export class MockCredentialsGather implements LoginCredentialsProvider {
     subscriber.gotCredentials(this.userName, this.password);
   }
  
+}
+@Injectable()
+export class AuthorisationServiceMock {
+  constructor() { }
+  sendLoginEvent(userName: string) {
+    //Do nothing
+  }
+  sendLogoutEvent() {
+    //Do nothing
+  }
 }

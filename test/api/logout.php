@@ -6,7 +6,6 @@
 if($man->IsUserLoggedIn(true))
 {
     $man->Logout();
-    $man->ReturnError();
 }
 
 ?>

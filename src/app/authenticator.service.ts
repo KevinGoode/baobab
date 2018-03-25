@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { AuthenticatorServiceBase} from './authenticator/service.model';
+import { AuthenticatorServiceBase} from './authenticator/authenticatorservice.model';
 @Injectable()
 export class AuthenticatorService implements AuthenticatorServiceBase{
 
