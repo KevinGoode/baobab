@@ -9,8 +9,8 @@ export class AuthorisationService {
   private loginEvent = new BehaviorSubject<string>("");
   private logoutEvent = new BehaviorSubject<string>("");
   private currentUser: string = undefined;
-  currentloginEvent = this.loginEvent.asObservable();
-  currentlogutEvent = this.logoutEvent.asObservable();
+  loginEvents = this.loginEvent.asObservable();
+  logoutEvents = this.logoutEvent.asObservable();
   constructor() { }
   sendLoginEvent(userName: string) {
     if (!this.currentUser){
@@ -20,7 +20,7 @@ export class AuthorisationService {
   }
   sendLogoutEvent() {
       if (this.currentUser){
-      this.loginEvent.next(this.currentUser);
+      this.logoutEvent.next("");
       this.currentUser=undefined;
       }
   }

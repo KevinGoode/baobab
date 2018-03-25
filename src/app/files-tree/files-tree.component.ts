@@ -3,21 +3,30 @@ import { Router } from '@angular/router';
 import { TreeNode} from 'primeng/api';
 import { MenuItem} from 'primeng/api';
 import { ServerFile } from '../server-file';
-
+import { AuthorisationService } from '../authenticator/authorisation.service';
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
   styleUrls: ['./files-tree.component.css']
 })
 export class FilesTreeComponent implements OnInit {
-  constructor(private router:Router) {
+  constructor(private router:Router, private loginlogoutEvents:AuthorisationService) {
     this.router = router;
    }
   files : TreeNode[];
   selectedFile : TreeNode;
   contextMenuItems: MenuItem[];
+  private loggedIn: boolean = false;
   ngOnInit() {
     this.contextMenuItems = [];
+    this.loginlogoutEvents.loginEvents.subscribe(userName=>{
+      this.loggedIn = true;
+      this.setContextMenu();
+    });
+    this.loginlogoutEvents.logoutEvents.subscribe(()=>{
+      this.loggedIn = false;
+      this.setContextMenu();
+    });
   }  
  
   setAllFiles(serverFiles: ServerFile[]){
@@ -36,9 +45,17 @@ export class FilesTreeComponent implements OnInit {
       var currentFile: ServerFile = this.selectedFile.data;
       if (currentFile){
         if(currentFile.isDir){
-          this.contextMenuItems =this.DIRECTORY_MENU_ITEMS;
+          if(this.loggedIn){
+              this.contextMenuItems =this.DIRECTORY_MENU_ITEMS;
+          }else{
+            this.contextMenuItems =this.DIRECTORY_MENU_ITEMS_DISABLED;
+          }
         }else{
-          this.contextMenuItems =this.FILE_MENU_ITEMS;
+          if(this.loggedIn){
+              this.contextMenuItems =this.FILE_MENU_ITEMS;
+          }else{
+            this.contextMenuItems = this.FILE_MENU_ITEMS_DISBABLED;
+          }
         }
       }
     }
@@ -125,8 +142,14 @@ export class FilesTreeComponent implements OnInit {
   DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: 'New File', icon: 'fa-file', command:this.new_file},
                                           {label: 'New Directory', icon: 'fa-plus', command:this.new_directory},
                                           {label: 'Delete Directory', icon: 'fa-trash', command:this.delete_directory}];
+  DIRECTORY_MENU_ITEMS_DISABLED: MenuItem[]=[{label: 'New File', icon: 'fa-file', command:this.new_file ,disabled:true}, 
+                                          {label: 'New Directory', icon: 'fa-plus', command:this.new_directory ,disabled:true},
+                                          {label: 'Delete Directory', icon: 'fa-trash', command:this.delete_directory ,disabled:true}];
   FILE_MENU_ITEMS: MenuItem[]=[{label: 'Copy File', icon: 'fa-copy', command:this.copy_file},
                                {label: 'Edit File', icon: 'fa-edit', command:this.edit_file},
                                {label: 'Delete File', icon: 'fa-trash', command:this.delete_file}];
+  FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: 'Copy File', icon: 'fa-copy', command:this.copy_file, disabled:true},
+                               {label: 'Edit File', icon: 'fa-edit', command:this.edit_file, disabled:true},
+                               {label: 'Delete File', icon: 'fa-trash', command:this.delete_file, disabled:true}];
 }
 

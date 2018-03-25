@@ -7,7 +7,9 @@ import { PanelModule } from 'primeng/primeng';
 import { TreeNode} from 'primeng/api';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ServerFile } from '../server-file';
-
+import { Injectable } from '@angular/core';
+import { AuthorisationService } from '../authenticator/authorisation.service';
+import { of } from 'rxjs/observable/of';
 const  file1: ServerFile =  new ServerFile({id: './content/folder1/file1', name: 'file1', isDir:false,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
                                           lastUpdated: "2018-03-14T08:01:03+0000"});
 const  folder1: ServerFile =  new ServerFile({id: './content/folder1', name: 'folder1', isDir:true,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
@@ -27,7 +29,8 @@ describe('FilesTreeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilesTreeComponent ],
-       imports: [BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule]
+       imports: [BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule],
+       providers:[{provide: AuthorisationService, useClass: AuthorisationServiceMock}],
     })
     .compileComponents();
   }));
@@ -104,3 +107,9 @@ describe('FilesTreeComponent', () => {
 
 
 });
+@Injectable()
+export class AuthorisationServiceMock {
+  constructor() { }
+  loginEvents = of('');
+  logoutEvents = of('');
+}
