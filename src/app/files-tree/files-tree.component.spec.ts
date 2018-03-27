@@ -3,6 +3,7 @@ import { TreeModule} from 'primeng/tree';
 import { BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { FilesTreeComponent } from './files-tree.component';
 import { ContextMenuModule} from 'primeng/contextmenu';
+import { OverlayPanelModule} from 'primeng/primeng';
 import { PanelModule } from 'primeng/primeng';
 import { TreeNode} from 'primeng/api';
 import { RouterTestingModule } from '@angular/router/testing';
@@ -29,7 +30,7 @@ describe('FilesTreeComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilesTreeComponent ],
-       imports: [BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule],
+       imports: [BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule, OverlayPanelModule],
        providers:[{provide: AuthorisationService, useClass: AuthorisationServiceMock}],
     })
     .compileComponents();

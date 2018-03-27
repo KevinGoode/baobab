@@ -22,7 +22,7 @@ describe('my-app App', () => {
     expect(page.getTopPanelSplitButtonCount()).toEqual(2);
     expect(page.getAttributeOfTopPanelButton('Home','icon')).toEqual('fa fa-home');
     expect(page.getAttributeOfTopPanelButton('Articles','icon')).toEqual('fa fa-file-text');
-    expect(page.getAttributeOfTopPanelSplitButton('Login','icon')).toEqual('fa-user');
+    expect(page.getAttributeOfTopPanelSplitButton('Logon','icon')).toEqual('fa-user');
     expect(page.getAttributeOfTopPanelSplitButton('Help','icon')).toEqual('fa-book');
 
 

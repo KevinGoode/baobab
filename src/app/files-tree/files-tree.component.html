@@ -2,3 +2,19 @@
 <p-tree [style]="{'height':'750px', 'width': '100%'}" selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm"></p-tree>
 <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 </p-panel>
+<p-overlayPanel #helpEnableEditing [showCloseIcon]="true" [style]="{'background-color' : '#ffff66'}">
+      <b>Logon to enable all editing features.</b><br/>
+        To logon:<br/>
+        a.) From the 'Logon' menu select the menu item 'Logon'<br/>
+        b.) In the 'Login' dialog enter the user name<br/>
+            and password of a registered user.<br/>
+        c.) Press the 'Ok' button<br/>
+        <br/>
+</p-overlayPanel>
+<p-overlayPanel #helpDisableEditing  [showCloseIcon]="true" [style]="{'background-color' : '#ffff66'}">
+        <b>Select a menu item.</b><br/>
+        Alternatively, logoff to disable all editing features.<br/>
+        To logoff:<br/>
+        a.) From the 'Logon' menu select the menu item 'Logoff'<br/>
+        <br/>
+</p-overlayPanel>

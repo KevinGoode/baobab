@@ -20,13 +20,7 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
   private userName: string = "";
   @Input() credentialsGatherer:LoginCredentialsProvider;
   ngOnInit() {
-    this.logMenuItems = [
-      {label: 'Log On' , icon: 'fa-user', command: () => {
-          this.logon();
-      }},
-      {label: 'Log Off', icon: 'fa-user-times', command: () => {
-          this.logoff();
-      }}];
+    this.logMenuItems = this.logOnMenuItems;
   }
   logon(){
     this.credentialsGatherer.getCredentials(this);
@@ -40,6 +34,7 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
     this.authenticatorService.login(userName,passWord).subscribe(data=>{
       this.loginLogoutEvents.sendLoginEvent(userName);
       this.messageService.add({severity:'success', summary:'Authentication', detail:'User ' + userName + " logged in"})
+      this.logMenuItems = this.logOffMenuItems;
     },err=>{
       this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging in user ' + userName + " . Check username and password and try again"})
     });
@@ -50,10 +45,14 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
       this.loginLogoutEvents.sendLogoutEvent();
       this.messageService.add({severity:'success', summary:'Authentication', detail:'User ' + this.userName + " logged out"})
       this.userName = "";
+      this.logMenuItems = this.logOnMenuItems;
     },err=>{
      this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging outuser ' + this.userName})
     });
 
   }
-
+  private logOnMenuItems =[{label: 'Logon' , icon: 'fa-user', command: () => {this.logon();}},
+                           {label: 'Logoff', icon: 'fa-user-times', disabled:true, command: () => {this.logoff();}}];
+  private logOffMenuItems =[{label: 'Logon' , icon: 'fa-user', disabled:true, command: () => {this.logon();}},
+                           {label: 'Logoff', icon: 'fa-user-times',  command: () => {this.logoff();}}];
 }

@@ -1,18 +1,21 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TreeNode} from 'primeng/api';
 import { MenuItem} from 'primeng/api';
 import { ServerFile } from '../server-file';
 import { AuthorisationService } from '../authenticator/authorisation.service';
+import {OverlayPanel} from 'primeng/overlaypanel'
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
   styleUrls: ['./files-tree.component.css']
 })
 export class FilesTreeComponent implements OnInit {
-  constructor(private router:Router, private loginlogoutEvents:AuthorisationService) {
+  constructor(private router:Router, private loginlogoutEvents:AuthorisationService, ) {
     this.router = router;
    }
+  @ViewChild('helpEnableEditing') helpEnableEditing :OverlayPanel;
+  @ViewChild('helpDisableEditing') helpDisableEditing :OverlayPanel;
   files : TreeNode[];
   selectedFile : TreeNode;
   contextMenuItems: MenuItem[];
@@ -106,6 +109,12 @@ export class FilesTreeComponent implements OnInit {
     var url: string= "files?detail=" + encodeURIComponent(encoded);
     this.router.navigateByUrl(url);
   }
+  disable_editing(event:any){
+    this.helpDisableEditing.show(event.originalEvent);
+  }
+  enable_editing(event:any){
+    this.helpEnableEditing.show(event.originalEvent);
+  }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
     var treeNode = {label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
     treeNode.label = serverFile.name;
@@ -138,18 +147,24 @@ export class FilesTreeComponent implements OnInit {
       this.expandFromSelectedNodeUp(node.parent);
     }
   }
-
-  DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: 'New File', icon: 'fa-file', command:this.new_file},
-                                          {label: 'New Directory', icon: 'fa-plus', command:this.new_directory},
-                                          {label: 'Delete Directory', icon: 'fa-trash', command:this.delete_directory}];
-  DIRECTORY_MENU_ITEMS_DISABLED: MenuItem[]=[{label: 'New File', icon: 'fa-file', command:this.new_file ,disabled:true}, 
-                                          {label: 'New Directory', icon: 'fa-plus', command:this.new_directory ,disabled:true},
-                                          {label: 'Delete Directory', icon: 'fa-trash', command:this.delete_directory ,disabled:true}];
-  FILE_MENU_ITEMS: MenuItem[]=[{label: 'Copy File', icon: 'fa-copy', command:this.copy_file},
+  DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
+                                    {label: 'New File', icon: 'fa-file', command:()=>{this.new_file();}},
+                                    {label: 'New Directory', icon: 'fa-plus', command:()=>{this.new_directory();}},
+                                    {label: 'Delete Directory', icon: 'fa-trash', command:()=>{this.delete_directory();}}
+                                    ]
+  DIRECTORY_MENU_ITEMS_DISABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
+                                             {label: 'New File', icon: 'fa-file', command:(event)=>{this.new_file();} ,disabled:true}, 
+                                             {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();},disabled:true},
+                                             {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();},disabled:true}]
+  FILE_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
+                               {label: 'Copy File', icon: 'fa-copy', command:this.copy_file},
                                {label: 'Edit File', icon: 'fa-edit', command:this.edit_file},
-                               {label: 'Delete File', icon: 'fa-trash', command:this.delete_file}];
-  FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: 'Copy File', icon: 'fa-copy', command:this.copy_file, disabled:true},
-                               {label: 'Edit File', icon: 'fa-edit', command:this.edit_file, disabled:true},
-                               {label: 'Delete File', icon: 'fa-trash', command:this.delete_file, disabled:true}];
+                               {label: 'Delete File', icon: 'fa-trash', command:this.delete_file},
+                               ]
+  FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
+                                         {label: 'Copy File', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
+                                         {label: 'Edit File', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
+                                         {label: 'Delete File', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
+                                        ]
 }
 
