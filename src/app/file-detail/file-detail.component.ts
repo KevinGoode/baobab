@@ -2,6 +2,7 @@ import { Component, OnInit,Input, ViewChild} from '@angular/core';
 import {Editor} from 'primeng/editor';
 import { Router } from '@angular/router';
 import { ServerFile } from '../server-file';
+import { AuthorisationService } from '../authenticator/authorisation.service';
 @Component({
   selector: 'app-file-detail',
   templateUrl: './file-detail.component.html',
@@ -15,20 +16,25 @@ export class FileDetailComponent implements OnInit {
   tabInfoText: string;
   dirPanelText:string;
   directoryContents: ServerFile[];
-  title: string
+  title: string;
   private NO_FILE: string = "No file Selected";
-  constructor(private router:Router) { this.router= router}
+  constructor(private router:Router, private loginlogoutEvents:AuthorisationService) { this.router= router}
 
   ngOnInit() {
     this.showFile();
     this.tabContentText = this.NO_FILE;
     this.tabInfoText = this.NO_FILE;
     this.directoryContents = [];
-
+    
   }
   ngAfterViewInit() {
-        //Disable editor
-        this.editor.quill.disable();
+    this.loginlogoutEvents.loginEvents.subscribe(userName=>{
+      this.enableEditor(true);
+    });
+    this.loginlogoutEvents.logoutEvents.subscribe(()=>{
+      this.enableEditor(false);
+    });
+
   }
 
   public setFileContent(content:string){
@@ -62,6 +68,13 @@ export class FileDetailComponent implements OnInit {
       display +=  "Size Of File: " + this.storageToString(file.sizeOnDisk) + "\n";
       display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
       this.tabInfoText = display;
+  }
+  private enableEditor(enable:boolean){
+    if(enable){
+      this.editor.quill.enable();
+    }else{
+      this.editor.quill.disable();
+    }
   }
   private showFile(){
     this.editorVisible='block';

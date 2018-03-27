@@ -5,13 +5,15 @@ import { MenuItem} from 'primeng/api';
 import { ServerFile } from '../server-file';
 import { AuthorisationService } from '../authenticator/authorisation.service';
 import {OverlayPanel} from 'primeng/overlaypanel'
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ConfirmationService} from 'primeng/api';
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
   styleUrls: ['./files-tree.component.css']
 })
 export class FilesTreeComponent implements OnInit {
-  constructor(private router:Router, private loginlogoutEvents:AuthorisationService, ) {
+  constructor(private router:Router, private loginlogoutEvents:AuthorisationService, private confirmationService: ConfirmationService) {
     this.router = router;
    }
   @ViewChild('helpEnableEditing') helpEnableEditing :OverlayPanel;
@@ -85,6 +87,16 @@ export class FilesTreeComponent implements OnInit {
     }
     return serverFile;
   }
+  save_file()
+  {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to save article?',
+      accept: () => {
+          //Actual logic to perform a confirmation
+          console.log("Save file - Not yet implemented")
+      }
+  });
+  }
   new_file()
   {
     console.log("New file - Not yet implemented")
@@ -157,11 +169,13 @@ export class FilesTreeComponent implements OnInit {
                                              {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();},disabled:true},
                                              {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();},disabled:true}]
   FILE_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
+                               {label: 'Save File', icon: 'fa-save', command:(event)=>{this.save_file();}},
                                {label: 'Copy File', icon: 'fa-copy', command:this.copy_file},
                                {label: 'Edit File', icon: 'fa-edit', command:this.edit_file},
                                {label: 'Delete File', icon: 'fa-trash', command:this.delete_file},
                                ]
   FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
+                                         {label: 'Save File', icon: 'fa-save', command:(event)=>{this.save_file();}, disabled:true},
                                          {label: 'Copy File', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
                                          {label: 'Edit File', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
                                          {label: 'Delete File', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
