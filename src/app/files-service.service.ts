@@ -19,6 +19,9 @@ export class FilesServiceService {
   editFile(id:string, body:string):Observable<string>{
     return this.http.put(this.getUrlFromid(id), body, {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }
+  createFile(id:string, body:string):Observable<string>{
+    return this.http.post(this.getUrlFromid(id), body, {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
+  }
   private getUrlFromid(id:string):string{
     var url : string ="api/files.php?detail=" + btoa(id);
     return url;

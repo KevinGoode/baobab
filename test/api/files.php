@@ -117,7 +117,20 @@ if ( $verb == 'GET')
         }
         else if ($verb=='POST')
         {
-
+            if(!file_exists($id))
+            {
+                echo 'IN';
+                $handle = fopen($id, "w+");
+                $file_contents = file_get_contents("php://input");
+                echo 'Received:**'.$file_contents.'**';
+                fwrite($handle,$file_contents);
+                fclose($handle);
+                header("HTTP/1.1 200 OK");
+            }
+            else
+            {   echo 'OUT';
+                return $bad_http_request;
+            }
         }
         else if ($verb=='DELETE')
         {

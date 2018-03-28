@@ -8,6 +8,7 @@ import {OverlayPanel} from 'primeng/overlaypanel'
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {FilesViewManager } from '../files-view/files-manager.interface'
+import {CreateDialogComponent } from '../create-dialog/create-dialog.component'
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
@@ -19,7 +20,9 @@ export class FilesTreeComponent implements OnInit {
    }
   @ViewChild('helpEnableEditing') helpEnableEditing :OverlayPanel;
   @ViewChild('helpDisableEditing') helpDisableEditing :OverlayPanel;
+  @ViewChild('createDialog') createDialog: CreateDialogComponent;
   @Input() parent : FilesViewManager;
+
   files : TreeNode[];
   selectedFile : TreeNode;
   contextMenuItems: MenuItem[];
@@ -102,7 +105,7 @@ export class FilesTreeComponent implements OnInit {
   }
   new_file()
   {
-    console.log("New file - Not yet implemented")
+    this.createDialog.showDialog(this.parent);
   }
   new_directory(){
     console.log("New dir  - Not yet implemented");

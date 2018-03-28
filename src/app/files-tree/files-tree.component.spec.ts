@@ -13,6 +13,9 @@ import { AuthorisationService } from '../authenticator/authorisation.service';
 import { of } from 'rxjs/observable/of';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import { DialogModule} from 'primeng/primeng'
+import { FormsModule } from '@angular/forms'
+import {CreateDialogComponent} from '../create-dialog/create-dialog.component';
 const  file1: ServerFile =  new ServerFile({id: './content/folder1/file1', name: 'file1', isDir:false,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
                                           lastUpdated: "2018-03-14T08:01:03+0000"});
 const  folder1: ServerFile =  new ServerFile({id: './content/folder1', name: 'folder1', isDir:true,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
@@ -31,8 +34,8 @@ describe('FilesTreeComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ FilesTreeComponent ],
-       imports: [ConfirmDialogModule, BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule, OverlayPanelModule],
+      declarations: [ FilesTreeComponent ,CreateDialogComponent],
+       imports: [FormsModule,DialogModule,ConfirmDialogModule, BrowserAnimationsModule, RouterTestingModule, TreeModule, ContextMenuModule, PanelModule, OverlayPanelModule],
        providers:[ConfirmationService, {provide: AuthorisationService, useClass: AuthorisationServiceMock}]
     })
     .compileComponents();

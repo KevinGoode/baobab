@@ -43,8 +43,9 @@ import { AuthorisationService } from "./authenticator/authorisation.service";
 import { MessageService} from 'primeng/components/common/messageservice';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 @NgModule({
-  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent],
+  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent, CreateDialogComponent],
   imports: [
     CommonModule,
     BrowserModule,

@@ -14,7 +14,7 @@ import { MessageService} from 'primeng/components/common/messageservice';
 export class FilesViewComponent implements OnInit, FilesViewManager{
   @ViewChild('fileTree') navTree: FilesTreeComponent;
   @ViewChild('fileDetail') detail: FileDetailComponent;
-  private currentId:string;
+  private currentId:string="";
   constructor(private messageService: MessageService, private filesService: FilesServiceService, private router:Router,  private activatedRoute: ActivatedRoute) { 
 
     console.log("CONSTRUCTOR");
@@ -58,12 +58,23 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
         //In this case get file tree and then set stuff
         //TODO When get here then navigate forwards using browser buttons tree is not updated correctly
         this.setFileTree();
-        file =this.getFileDataById(this.currentId);
-        if (file) this.setAllSingleFileDetails(this.currentId ,file);
       }
     }else{
         this.setFileTree();
      }
+  }
+  createFile(fileName:string){
+    this.currentId=this.currentId+"/"+fileName;
+    this.filesService.createFile(this.currentId, "<p>Empty File</p>").subscribe(output=>{
+      //Send message and refresh tree
+      this.messageService.add({severity:'success', summary:'New File', detail:'Successfully create file'});
+      this.setFileTree();
+         }), err=>{
+          this.currentId="";
+          this.messageService.add({severity:'error', summary:'New File', detail:'Error creating file'});}
+  }
+  creatDirectory(folderName:string){
+
   }
   saveFile(){
     this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
@@ -92,7 +103,10 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   private setFileTree(){
     this.filesService.getAllFiles().subscribe(serverFiles=>{
     var fileRoot: ServerFile = this.getChild(serverFiles);
-    this.navTree.setAllFiles([fileRoot])
+    this.navTree.setAllFiles([fileRoot]);
+    //If can find currentId then set 
+    var  file:ServerFile =this.getFileDataById(this.currentId);
+    if (file) this.setAllSingleFileDetails(this.currentId ,file);
     });
   }
   private selectItemInTree(id:string){

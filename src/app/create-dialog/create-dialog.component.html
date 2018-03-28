@@ -1,0 +1,21 @@
+<p-dialog header="Create" [resizable]="false" [draggable]="true" [(visible)]="display" modal="modal" width="300" [responsive]="true">
+  <br/>
+  <b>{{message}}</b>
+  <br/>
+  
+  <div class="ui-g ui-fluid">
+    <div class="ui-g-12 ui-md-4">
+        <div class="ui-inputgroup">
+            <span class="ui-inputgroup-addon"><i class="fa fa-file"></i></span>
+            <input [(ngModel)]="name" size="20" placeholder="name"/>               
+        </div>
+    </div>
+  </div>
+  
+ 
+
+  <p-footer>
+        <button type="button" pButton icon="fa-check" (click)="OnOk()" label="Ok"></button>
+        <button type="button" pButton icon="fa-close" (click)="OnCancel()" class="ui-button-secondary" label="Cancel"></button>
+  </p-footer>
+</p-dialog>
