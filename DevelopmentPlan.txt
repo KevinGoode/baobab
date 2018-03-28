@@ -28,20 +28,20 @@ TODO For v 0.1:
 6.) DONE- Populate first tab with contents list when directory is selected
 7.) DONE - Update help
 8.) DONE - Deploy and bench test using real files.php script
-9.) Create release branch
+9.) DONE Create release branch
 ##################################################################
 Theme for v 0.2
 ###############
 Edit and create new files
 
 TODO For v 0.2
-1.) Implement logging on off dialogs and passing of auth tokens
-2.) Implement edit & create buttons that launches editor in edit dialog
-3.) Update files service to support update/create
+1.) DONE Implement logging on off dialogs and passing of auth tokens
+2.) DONE-EDIT Implement edit & create buttons that launches editor in edit dialog
+3.) DONE-EDIT Update files service to support update/create
 4.) Update unit tests
 5.) Update help
-6.) Implement growl messages for create and edit operations
-7.) Deploy and bench using existing php script
+6.) DONE-EDIT Implement growl messages for create and edit operations
+7.) DONE-EDIT Deploy and bench using existing php script
 8.) Create release branch
 ##################################################################
 Theme for v 0.3

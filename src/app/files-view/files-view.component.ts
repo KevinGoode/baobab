@@ -3,17 +3,19 @@ import { Router, RouterEvent, NavigationEnd, ActivatedRoute } from '@angular/rou
 import { FilesServiceService } from '../files-service.service'
 import { FilesTreeComponent } from '../files-tree/files-tree.component'
 import { FileDetailComponent } from '../file-detail/file-detail.component'
+import {FilesViewManager } from './files-manager.interface'
 import { ServerFile } from '../server-file';
-
+import { MessageService} from 'primeng/components/common/messageservice';
 @Component({
   selector: 'app-files-view',
   templateUrl: './files-view.component.html',
   styleUrls: ['./files-view.component.css']
 })
-export class FilesViewComponent implements OnInit{
+export class FilesViewComponent implements OnInit, FilesViewManager{
   @ViewChild('fileTree') navTree: FilesTreeComponent;
   @ViewChild('fileDetail') detail: FileDetailComponent;
-  constructor(private filesService: FilesServiceService, private router:Router,  private activatedRoute: ActivatedRoute) { 
+  private currentId:string;
+  constructor(private messageService: MessageService, private filesService: FilesServiceService, private router:Router,  private activatedRoute: ActivatedRoute) { 
 
     console.log("CONSTRUCTOR");
     /*
@@ -47,21 +49,27 @@ export class FilesViewComponent implements OnInit{
     var ID_IDENTIFIER = "/files?detail=";
     if (url.includes(ID_IDENTIFIER)){
       var encodedId=url.replace(ID_IDENTIFIER,"");
-      var id = atob(encodedId);
-      var  file:ServerFile =this.getFileDataById(id);
+      this.currentId = atob(encodedId);
+      var  file:ServerFile =this.getFileDataById(this.currentId);
       if (file){
-        this.setAllSingleFileDetails(id ,file);
+        this.setAllSingleFileDetails(this.currentId ,file);
       }else{
         //Tree is either empty (User presses f5 with detail set) or file added or deleted
         //In this case get file tree and then set stuff
         //TODO When get here then navigate forwards using browser buttons tree is not updated correctly
         this.setFileTree();
-        file =this.getFileDataById(id);
-        if (file) this.setAllSingleFileDetails(id ,file);
+        file =this.getFileDataById(this.currentId);
+        if (file) this.setAllSingleFileDetails(this.currentId ,file);
       }
     }else{
         this.setFileTree();
      }
+  }
+  saveFile(){
+    this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
+      this.messageService.add({severity:'success', summary:'Saved File', detail:'Successfully saved file'})
+         }), err=>{
+          this.messageService.add({severity:'error', summary:'Saved File', detail:'Error saving file'});}
   }
   private setAllSingleFileDetails(id:string, file:ServerFile){
     this.setSingleFileDetail(id,file);

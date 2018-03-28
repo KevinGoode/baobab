@@ -14,8 +14,14 @@ export class FilesServiceService {
     return this.http.get(url);
   }
   getFile(id:string ):Observable<string>{
+    return this.http.get(this.getUrlFromid(id), {responseType: 'text'});
+  }
+  editFile(id:string, body:string):Observable<string>{
+    return this.http.put(this.getUrlFromid(id), body, {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
+  }
+  private getUrlFromid(id:string):string{
     var url : string ="api/files.php?detail=" + btoa(id);
-    return this.http.get(url, {responseType: 'text'});
+    return url;
   }
 }
 

@@ -156,7 +156,7 @@ class SimpleSessionManager
         setcookie ("user", "", time() - 3600);
     }
     private $User="";
-    private $SimpleSessionTimeout = 180 ; //3 minutes
+    private $SimpleSessionTimeout = 3600 ; //1 hour
 }
 
 ?>

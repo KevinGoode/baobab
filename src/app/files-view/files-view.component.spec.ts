@@ -1,13 +1,16 @@
 import { async, ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { GrowlModule} from 'primeng/growl';
+import {MessageService} from 'primeng/components/common/messageservice';
 import { FilesViewComponent } from './files-view.component';
 import { FilesServiceService } from '../files-service.service'
-import { Injectable } from '@angular/core';
+import { Injectable, Input } from '@angular/core';
 import { Component} from '@angular/core';
 import { ServerFile } from '../server-file';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
+import {FilesViewManager } from './files-manager.interface'
 var dummyFile = {id: './content/file2', name:'file2', isDir:false,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[]};
 var dummyFolder = {id: './content', name:'content', isDir:true,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[]};
 describe('FilesViewComponent', () => {
@@ -17,8 +20,8 @@ describe('FilesViewComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ FilesViewComponent , FilesTreeComponent, FileDetailComponent],
-       providers:[{provide: FilesServiceService, useClass: MockFilesServiceService}],
-       imports: [RouterTestingModule.withRoutes(
+       providers:[MessageService,{provide: FilesServiceService, useClass: MockFilesServiceService}],
+       imports: [GrowlModule,RouterTestingModule.withRoutes(
         [{path:'files',component: FilesViewComponent}]
       )], 
     })
@@ -58,7 +61,7 @@ describe('FilesViewComponent', () => {
   template: ''
 })
 class FilesTreeComponent {
-
+  @Input() parent : FilesViewManager;
   serverFiles: ServerFile[];
   setContextMenu(){}
   showSelectedNodeInTree(){}

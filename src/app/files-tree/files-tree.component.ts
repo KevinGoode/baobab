@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { TreeNode} from 'primeng/api';
 import { MenuItem} from 'primeng/api';
@@ -7,6 +7,7 @@ import { AuthorisationService } from '../authenticator/authorisation.service';
 import {OverlayPanel} from 'primeng/overlaypanel'
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
+import {FilesViewManager } from '../files-view/files-manager.interface'
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
@@ -18,6 +19,7 @@ export class FilesTreeComponent implements OnInit {
    }
   @ViewChild('helpEnableEditing') helpEnableEditing :OverlayPanel;
   @ViewChild('helpDisableEditing') helpDisableEditing :OverlayPanel;
+  @Input() parent : FilesViewManager;
   files : TreeNode[];
   selectedFile : TreeNode;
   contextMenuItems: MenuItem[];
@@ -93,6 +95,7 @@ export class FilesTreeComponent implements OnInit {
       message: 'Are you sure that you want to save article?',
       accept: () => {
           //Actual logic to perform a confirmation
+          this.parent.saveFile();
           console.log("Save file - Not yet implemented")
       }
   });

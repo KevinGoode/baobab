@@ -1,4 +1,5 @@
 <?php
+include_once 'SimpleSessionManager.php';
 $DETAIL_VAR='detail';
 $ROOT_PATH = './content';
 //$bad_http_request = 'Bad request';
@@ -70,19 +71,66 @@ function get_all_files()
 }
 
 $id=get_id($request_variables);
-if($id)
+$verb = $_SERVER['REQUEST_METHOD'];
+if ( $verb == 'GET')
 {
-   if (!file_exists($id)) return $bad_http_request;
-   //Note json_encode escapes characters
-   header("Access-Control-Allow-Origin: *");
-   header("HTTP/1.1 200 OK");
-   echo get_single_file($id, false, true)->data;
-}
-else
-{
-  //Note json_encode escapes characters
-  header("Access-Control-Allow-Origin: *");
-  header("HTTP/1.1 200 OK");
-  echo stripslashes(json_encode(get_all_files()));
+    if($id)
+    {
+    if (!file_exists($id)) return $bad_http_request;
+    //Note json_encode escapes characters
+    header("Access-Control-Allow-Origin: *");
+    header("HTTP/1.1 200 OK");
+    echo get_single_file($id, false, true)->data;
+    }
+    else
+    {
+    //Note json_encode escapes characters
+    header("Access-Control-Allow-Origin: *");
+    header("HTTP/1.1 200 OK");
+    echo stripslashes(json_encode(get_all_files()));
+    }
+}else{
+    //All edit operations need a file or directory name so return error if missing
+    if (!$id) return $bad_http_request;
+    //For all non GET calls, a user needs to be logged in
+    $man = new SimpleSessionManager();
+    if($man->IsUserLoggedIn(true))
+    {
+        if ($verb=='PUT')
+        {
+            if(is_dir($id))
+            {
+            }
+            else if(file_exists($id))
+            {
+                $handle = fopen($id, "w");
+                $file_contents = file_get_contents("php://input");
+                echo 'Received:**'.$file_contents.'**';
+                fwrite($handle,$file_contents);
+                fclose($handle);
+                header("HTTP/1.1 200 OK");
+            }
+            else
+            {
+                return $bad_http_request;
+            }
+        }
+        else if ($verb=='POST')
+        {
+
+        }
+        else if ($verb=='DELETE')
+        {
+            
+        }
+        else
+        {
+            return $bad_http_request;
+        }
+    }
+    else
+    {
+        $man->ReturnError();
+    }
 }
 ?>
