@@ -57,5 +57,7 @@ export class AuthorisationServiceMock {
   constructor() { }
   loginEvents = of('');
   logoutEvents = of('');
+  isUserLoggedIn(){return true;};
+  getCurrentUserName(){return "";};
 }
 

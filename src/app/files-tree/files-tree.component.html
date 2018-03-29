@@ -1,5 +1,5 @@
 <p-panel  header="Articles">
-<p-tree [style]="{'height':'750px', 'width': '100%'}" selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm"></p-tree>
+<p-tree [style]="{'height':'750px', 'width': '100%'}" selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeContextMenuSelect)="fileSelect($event)" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm"></p-tree>
 <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 </p-panel>
 <p-overlayPanel #helpEnableEditing [showCloseIcon]="true" [style]="{'background-color' : '#ffff66'}">

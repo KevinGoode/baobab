@@ -15,7 +15,7 @@ import {CreateDialogComponent } from '../create-dialog/create-dialog.component'
   styleUrls: ['./files-tree.component.css']
 })
 export class FilesTreeComponent implements OnInit {
-  constructor(private router:Router, private loginlogoutEvents:AuthorisationService, private confirmationService: ConfirmationService) {
+  constructor(private router:Router, private loginlogoutService:AuthorisationService, private confirmationService: ConfirmationService) {
     this.router = router;
    }
   @ViewChild('helpEnableEditing') helpEnableEditing :OverlayPanel;
@@ -29,14 +29,18 @@ export class FilesTreeComponent implements OnInit {
   private loggedIn: boolean = false;
   ngOnInit() {
     this.contextMenuItems = [];
-    this.loginlogoutEvents.loginEvents.subscribe(userName=>{
+    //Register interest in future login/logout events
+    this.loginlogoutService.loginEvents.subscribe(userName=>{
       this.loggedIn = true;
       this.setContextMenu();
     });
-    this.loginlogoutEvents.logoutEvents.subscribe(()=>{
+    this.loginlogoutService.logoutEvents.subscribe(()=>{
       this.loggedIn = false;
       this.setContextMenu();
     });
+    //Get current login status
+    this.loggedIn = this.loginlogoutService.isUserLoggedIn();
+    this.setContextMenu();
   }  
  
   setAllFiles(serverFiles: ServerFile[]){
@@ -134,7 +138,7 @@ export class FilesTreeComponent implements OnInit {
     this.helpEnableEditing.show(event.originalEvent);
   }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
-    var treeNode = {label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
+    var treeNode :TreeNode = { label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
     treeNode.label = serverFile.name;
     treeNode.data = serverFile;
     if(serverFile.isDir){

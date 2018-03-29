@@ -18,7 +18,7 @@ export class FileDetailComponent implements OnInit {
   directoryContents: ServerFile[];
   title: string;
   private NO_FILE: string = "No file Selected";
-  constructor(private router:Router, private loginlogoutEvents:AuthorisationService) { this.router= router}
+  constructor(private router:Router, private loginlogoutService:AuthorisationService) { this.router= router}
 
   ngOnInit() {
     this.showFile();
@@ -28,13 +28,15 @@ export class FileDetailComponent implements OnInit {
     
   }
   ngAfterViewInit() {
-    this.loginlogoutEvents.loginEvents.subscribe(userName=>{
+    //Register interest in future login/logout events
+    this.loginlogoutService.loginEvents.subscribe(userName=>{
       this.enableEditor(true);
     });
-    this.loginlogoutEvents.logoutEvents.subscribe(()=>{
+    this.loginlogoutService.logoutEvents.subscribe(()=>{
       this.enableEditor(false);
     });
-
+    //Set using login/logout state
+    this.enableEditor(this.loginlogoutService.isUserLoggedIn());
   }
 
   public setFileContent(content:string){
