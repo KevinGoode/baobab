@@ -52,7 +52,7 @@ export class FilesTreeComponent implements OnInit {
    
   }
   showSelectedNodeInTree(){
-    this.expandFromSelectedNodeUp(this.selectedFile);
+    this.expandFromRootNodeDown(this.selectedFile);
   }
   setContextMenu(){
     if(this.selectedFile){
@@ -163,12 +163,54 @@ export class FilesTreeComponent implements OnInit {
      }
     return null;
  }
-  private expandFromSelectedNodeUp(node){
-    if(node){
-      node.expanded=true;
-      this.expandFromSelectedNodeUp(node.parent);
+ /*
+ This functions assumes node has aready been found in tree so goes directly down
+ tree expanding items. NOTE Expand up does not work on a fresh tree because node parent is
+ not set internally until after navigate down tree
+ */
+ private expandFromRootNodeDown(targetNode:TreeNode){
+   if(targetNode){
+    //Get trimmed Id
+    var targetId=this.removeRootNodeFromId(targetNode.data.id);
+    //Expand root node
+    this.files[0].expanded=true;
+    //Now expand down
+    this.findChild(this.files[0],targetId, true)
+   }
+ }
+ /*
+    Finds child by noting that fullChildName is path of child in tree
+    and name is unique name of node at that level. Code searches from currentNode's children
+    down checking that name is equal to oldest ancestor. If finds oldest ancestor, code removes
+    oldest ancestor from fullChildName and finds the next oldest ancestor and so on.
+ */
+ private findChild(currentNode:TreeNode, fullChildName:string, withExpansion:boolean):TreeNode{
+    var childNode:TreeNode =undefined;
+    var allAncestors:string[]=fullChildName.split("/");
+    for(var i=0;i<currentNode.children.length;i++){
+        if(currentNode.children[i].data.name==allAncestors[0]){
+          childNode=currentNode.children[i];
+           if(withExpansion) childNode.expanded=true;
+           if(allAncestors.length>1){
+             childNode = this.findChild(childNode,this.removeOldestAncestor(fullChildName), withExpansion);
+           }
+        }
     }
-  }
+    return childNode;
+ }
+ private removeRootNodeFromId(id:string):string{
+    //Remove leading "./" then root node
+    var newId=this.removeOldestAncestor(id);
+    newId=this.removeOldestAncestor(newId);
+    return newId;
+ }
+ /* 
+ For example "grandparent/parent/child" returns "parent/child"
+ */
+ private removeOldestAncestor(fullChildName:string):string{
+    var index=fullChildName.indexOf("/");
+    return fullChildName.slice(index+1);
+ }
   DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
                                     {label: 'New File', icon: 'fa-file', command:()=>{this.new_file();}},
                                     {label: 'New Directory', icon: 'fa-plus', command:()=>{this.new_directory();}},
