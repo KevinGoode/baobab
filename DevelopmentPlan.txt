@@ -36,12 +36,12 @@ Edit and create new files
 
 TODO For v 0.2
 1.) DONE Implement logging on off dialogs and passing of auth tokens
-2.) DONE-EDIT Implement edit & create buttons that launches editor in edit dialog
-3.) DONE-EDIT Update files service to support update/create
+2.) DONE Implement edit & create buttons that launches editor in edit dialog
+3.) DONE Update files service to support update/create
 4.) Update unit tests
 5.) Update help
-6.) DONE-EDIT Implement growl messages for create and edit operations
-7.) DONE-EDIT Deploy and bench using existing php script
+6.) DONE Implement growl messages for create and edit operations
+7.) DONE Deploy and bench using existing php script
 8.) Create release branch
 ##################################################################
 Theme for v 0.3

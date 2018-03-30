@@ -67,11 +67,11 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     this.currentId=this.currentId+"/"+fileName;
     this.filesService.createFile(this.currentId, "<p>Empty File</p>").subscribe(output=>{
       //Send message and refresh tree
-      this.messageService.add({severity:'success', summary:'New File', detail:'Successfully create file'});
+      this.messageService.add({severity:'success', summary:'New File', detail:'Successfully created new file'});
       this.setFileTree();
-         }), err=>{
+         }, error=>{
           this.currentId="";
-          this.messageService.add({severity:'error', summary:'New File', detail:'Error creating file'});}
+          this.messageService.add({severity:'error', summary:'New File', detail:'Error creating new file'});});
   }
   creatDirectory(folderName:string){
 
@@ -79,8 +79,8 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   saveFile(){
     this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
       this.messageService.add({severity:'success', summary:'Saved File', detail:'Successfully saved file'})
-         }), err=>{
-          this.messageService.add({severity:'error', summary:'Saved File', detail:'Error saving file'});}
+         }, error=>{
+          this.messageService.add({severity:'error', summary:'Saved File', detail:'Error saving file'});});
   }
   private setAllSingleFileDetails(id:string, file:ServerFile){
     this.setSingleFileDetail(id,file);
@@ -89,25 +89,30 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   }
   private setSingleFileDetail(id:string, file:ServerFile){
     this.filesService.getFile(id).subscribe(content=>{
-    this.detail.setTitle(id);
-    if(!file.isDir){
-      this.detail.setFileContent(content);
-      this.detail.setFileSummary(file);
-    }else{
-      this.detail.setDirContents(file);
-      this.detail.setDirSummary(this.getSubStorage(file));
-    }
-    this.navTree.setContextMenu()}
-    );
+      this.detail.setTitle(id);
+      if(!file.isDir){
+        this.detail.setFileContent(content);
+        this.detail.setFileSummary(file);
+      }else{
+        this.detail.setDirContents(file);
+        this.detail.setDirSummary(this.getSubStorage(file));
+      }
+      this.navTree.setContextMenu()}
+      , err=>{
+        this.messageService.add({severity:'error', summary:'Error getting file', detail:'Is file server down?'});}
+      );
+    
   }
   private setFileTree(){
     this.filesService.getAllFiles().subscribe(serverFiles=>{
-    var fileRoot: ServerFile = this.getChild(serverFiles);
-    this.navTree.setAllFiles([fileRoot]);
-    //If can find currentId then set 
-    var  file:ServerFile =this.getFileDataById(this.currentId);
-    if (file) this.setAllSingleFileDetails(this.currentId ,file);
-    });
+      var fileRoot: ServerFile = this.getChild(serverFiles);
+      this.navTree.setAllFiles([fileRoot]);
+      //If can find currentId then set 
+      var  file:ServerFile =this.getFileDataById(this.currentId);
+      if (file) this.setAllSingleFileDetails(this.currentId ,file);
+      },err=>{
+        this.messageService.add({severity:'error', summary:'Error getting file list', detail:'Is file server down?'});}
+      );
   }
   private selectItemInTree(id:string){
     this.navTree.selectItemInTree(id);

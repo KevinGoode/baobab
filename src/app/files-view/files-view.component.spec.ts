@@ -12,7 +12,10 @@ import { of } from 'rxjs/observable/of';
 import { Router } from '@angular/router';
 import {FilesViewManager } from './files-manager.interface'
 var dummyFile = {id: './content/file2', name:'file2', isDir:false,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[]};
-var dummyFolder = {id: './content', name:'content', isDir:true,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[]};
+var dummySubFile = {id: './content/subdir/subfile', name:'subfile', isDir:false,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[]};
+var dummySubFolder = {id: './content/subdir', name:'subdir', isDir:true,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[dummySubFile]};
+var dummyFolder = {id: './content', name:'content', isDir:true,sizeOnDisk:0,lastReadAt: new Date().toLocaleString(), lastUpdated: new Date().toLocaleString(), children:[dummyFile, dummySubFolder]};
+
 describe('FilesViewComponent', () => {
   let component: FilesViewComponent;
   let fixture: ComponentFixture<FilesViewComponent>;
@@ -53,6 +56,12 @@ describe('FilesViewComponent', () => {
     var url:string = "/files?detail=" + btoa("./content/file1");
     component.route(url);
   });
+  it('should save file', () =>{
+    component.saveFile();
+  });
+  it('should create file', () =>{
+    component.createFile('newfilename');
+  });
 });
 
 //Mock new components in this project
@@ -70,10 +79,21 @@ class FilesTreeComponent {
     this.serverFiles = serverFiles;
   }
    getFileDataById(id:string):ServerFile{
+    var dFile = new ServerFile(dummyFile);
+    var dFolder = new ServerFile(dummyFolder);
+    var dSubFolder = new ServerFile(dummySubFolder);
+    var dSubFile = new ServerFile(dummySubFolder);
+    dSubFolder.addChild(dSubFile);
+    dFolder.addChild(dSubFolder);
+    dFolder.addChild(dFile);
     if(dummyFile.id == id){
-      return new ServerFile(dummyFile);
+      return dFile;
     }else if (dummyFolder.id == id){
-      return new ServerFile(dummyFolder);
+      return dFolder;
+    }else if (dummySubFolder.id == id){
+      return dSubFolder;
+    }else if (dummySubFile.id == id){
+      return dSubFile;
     }
     return null;
   }
@@ -100,6 +120,12 @@ export class MockFilesServiceService{
     return of(folder);
   }
   getFile(id:string ):Observable<string>{
+    return of('');
+  }
+  editFile(id:string, body:string):Observable<string>{
+    return of('');
+  }
+  createFile(id:string, body:string):Observable<string>{
     return of('');
   }
 }

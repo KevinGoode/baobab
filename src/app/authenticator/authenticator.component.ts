@@ -47,7 +47,7 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
       this.userName = "";
       this.logMenuItems = this.logOnMenuItems;
     },err=>{
-     this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging outuser ' + this.userName})
+     this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging out user ' + this.userName})
     });
 
   }
