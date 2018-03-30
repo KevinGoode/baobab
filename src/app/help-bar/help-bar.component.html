@@ -1,31 +1,32 @@
 
 <p-overlayPanel #readingdocs [showCloseIcon]="true">
-        <p-card title="Help" subtitle="Reading Documents" styleClass="ui-card-shadow">
-            BaoBab supports the reading of any content under the /var/www/html/api/content directory.<br/>
+        <p-card title="Help" subtitle="Reading Articles" styleClass="ui-card-shadow">
+            BaoBab supports the reading of any content under a top level content directory.<br/>
             1.) To read a single article open the navigation tree and select the article in the tree. <br/>
             2.) Alternatively select a group of articles in the tree, and select a single article from the section list<br/>
             3.) Use the browser forward and back buttons to navigate between selected items.<br/>
         </p-card>
 </p-overlayPanel>
 <p-overlayPanel #editingdocs [showCloseIcon]="true">
-        <p-card title="Help" subtitle="Editing Documents" styleClass="ui-card-shadow">
+        <p-card title="Help" subtitle="Editing Articles" styleClass="ui-card-shadow">
             All BaoBab content is readable by all users, but only registered users<br/> 
-            can modify site material.Before editing documents you must login to the site.<br/>
-            To edit a document:<br/>
-            1.) View a document by selecting it in the navigation tree or from the 'File/Read' menu<br/>
-            2.) Select 'File/Update' from the main menu and inline edit the document<br/>
-            3.) Press the 'Update' button to save edits or the 'Cancel' button to lose edits<br/>
+            can modify site material. Before editing articles you must login to the site.<br/>
+            To edit an article:<br/>
+            1.) View an article by selecting it in the navigation tree<br/>
+            2.) Edit the article<br/>
+            3.) Right click on the article in the tree view and select the  menu item 'Save Article'<br/>
+            3.) Press 'Yes' in the confirmation dialog to save the article<br/>
         </p-card>
 </p-overlayPanel>
 <p-overlayPanel #creatingdocs [showCloseIcon]="true">
-        <p-card title="Help" subtitle="Creating Documents" styleClass="ui-card-shadow">
+        <p-card title="Help" subtitle="Creating Articles" styleClass="ui-card-shadow">
             All BaoBab content is readable by all users, but only registered users can modify<br/>
-            site material. Before creating new documents you must login to the site. <br/>
-            To create a new document:<br/>
-            1.) Select 'File/Create' from the main menu.<br/>
-            2.) Enter the path of the document in the edit box<br/>
-            3.) Enter the content of the document in the text box.<br/>
-            4.) Press 'Create' to create the new document or 'Cancel' to lose edits<br/>
+            site material. Before creating new articles you must login to the site. <br/>
+            To create a new article:<br/>
+            1.) Right click on a directory and select menu item 'New Article'<br/>
+            2.) In the 'Create' dialog enter a unique name of the new article and press 'Ok'<br/>
+            3.) The new article is created straightaway and highlighted in the tree.<br/>
+            4.) Start editing the new article and save details regularly (See help topic 'Editing Articles')<br/>
         </p-card>
 </p-overlayPanel> 
 <p-sidebar [(visible)]="display" position="right">
@@ -34,10 +35,8 @@
             <img  src="assets/books.jpg">
         </p-header>
         <p>1.) Reading Articles <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <!--
         <p>2.) Editing Articles <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        -->
+        <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p> 
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>

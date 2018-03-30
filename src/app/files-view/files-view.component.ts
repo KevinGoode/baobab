@@ -65,22 +65,22 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   }
   createFile(fileName:string){
     this.currentId=this.currentId+"/"+fileName;
-    this.filesService.createFile(this.currentId, "<p>Empty File</p>").subscribe(output=>{
+    this.filesService.createFile(this.currentId, "<p>Empty Article</p>").subscribe(output=>{
       //Send message and refresh tree
-      this.messageService.add({severity:'success', summary:'New File', detail:'Successfully created new file'});
+      this.messageService.add({severity:'success', summary:'New Article', detail:'Successfully created new article'});
       this.setFileTree();
          }, error=>{
           this.currentId="";
-          this.messageService.add({severity:'error', summary:'New File', detail:'Error creating new file'});});
+          this.messageService.add({severity:'error', summary:'New Article', detail:'Error creating new article'});});
   }
   creatDirectory(folderName:string){
 
   }
   saveFile(){
     this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
-      this.messageService.add({severity:'success', summary:'Saved File', detail:'Successfully saved file'})
+      this.messageService.add({severity:'success', summary:'Saved Article', detail:'Successfully saved article'})
          }, error=>{
-          this.messageService.add({severity:'error', summary:'Saved File', detail:'Error saving file'});});
+          this.messageService.add({severity:'error', summary:'Saved Article', detail:'Error saving article'});});
   }
   private setAllSingleFileDetails(id:string, file:ServerFile){
     this.setSingleFileDetail(id,file);
@@ -99,7 +99,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
       }
       this.navTree.setContextMenu()}
       , err=>{
-        this.messageService.add({severity:'error', summary:'Error getting file', detail:'Is file server down?'});}
+        this.messageService.add({severity:'error', summary:'Error getting article', detail:'Is file server down?'});}
       );
     
   }
@@ -111,7 +111,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
       var  file:ServerFile =this.getFileDataById(this.currentId);
       if (file) this.setAllSingleFileDetails(this.currentId ,file);
       },err=>{
-        this.messageService.add({severity:'error', summary:'Error getting file list', detail:'Is file server down?'});}
+        this.messageService.add({severity:'error', summary:'Error getting article list', detail:'Is file server down?'});}
       );
   }
   private selectItemInTree(id:string){

@@ -17,7 +17,7 @@ export class FileDetailComponent implements OnInit {
   dirPanelText:string;
   directoryContents: ServerFile[];
   title: string;
-  private NO_FILE: string = "No file Selected";
+  private NO_FILE: string = "No Article Selected";
   constructor(private router:Router, private loginlogoutService:AuthorisationService) { this.router= router}
 
   ngOnInit() {
@@ -51,12 +51,12 @@ export class FileDetailComponent implements OnInit {
     this.directoryContents=dir.children;
   }
   public setDirSummary(dir:ServerFile){
-    var timeStr: string = "N\A - No Files"
+    var timeStr: string = "N\A - No Articles"
     if (dir.lastUpdated.getTime() !=0){
       timeStr=dir.lastUpdated.toLocaleString('en-GB')
     }
     var display = "Directory Name: " + dir.name + "\n";
-    display +=  "Size Of Files: " + this.storageToString(dir.sizeOnDisk) + "\n";
+    display +=  "Size Of Articles: " + this.storageToString(dir.sizeOnDisk) + "\n";
     display += "Last Updated At: " +  timeStr + "\n";
     this.tabInfoText = display;
   }
@@ -66,8 +66,8 @@ export class FileDetailComponent implements OnInit {
     this.router.navigateByUrl(url);
   }
   public setFileSummary(file:ServerFile){
-      var display = "File Name: " + file.name + "\n";
-      display +=  "Size Of File: " + this.storageToString(file.sizeOnDisk) + "\n";
+      var display = "Article Name: " + file.name + "\n";
+      display +=  "Size Of Article: " + this.storageToString(file.sizeOnDisk) + "\n";
       display += "Last Updated At: " + file.lastUpdated.toLocaleString('en-GB') + "\n";
       this.tabInfoText = display;
   }

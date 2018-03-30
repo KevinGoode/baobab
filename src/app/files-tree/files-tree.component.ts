@@ -212,25 +212,25 @@ export class FilesTreeComponent implements OnInit {
     return fullChildName.slice(index+1);
  }
   DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
-                                    {label: 'New File', icon: 'fa-file', command:()=>{this.new_file();}},
+                                    {label: 'New Article', icon: 'fa-file', command:()=>{this.new_file();}},
                                     {label: 'New Directory', icon: 'fa-plus', command:()=>{this.new_directory();}},
                                     {label: 'Delete Directory', icon: 'fa-trash', command:()=>{this.delete_directory();}}
                                     ]
   DIRECTORY_MENU_ITEMS_DISABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
-                                             {label: 'New File', icon: 'fa-file', command:(event)=>{this.new_file();} ,disabled:true}, 
+                                             {label: 'New Article', icon: 'fa-file', command:(event)=>{this.new_file();} ,disabled:true}, 
                                              {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();},disabled:true},
                                              {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();},disabled:true}]
   FILE_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
-                               {label: 'Save File', icon: 'fa-save', command:(event)=>{this.save_file();}},
-                               {label: 'Copy File', icon: 'fa-copy', command:this.copy_file},
-                               {label: 'Edit File', icon: 'fa-edit', command:this.edit_file},
-                               {label: 'Delete File', icon: 'fa-trash', command:this.delete_file},
+                               {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}},
+                               {label: 'Copy Article', icon: 'fa-copy', command:this.copy_file},
+                               {label: 'Edit Article', icon: 'fa-edit', command:this.edit_file},
+                               {label: 'Delete Article', icon: 'fa-trash', command:this.delete_file},
                                ]
   FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
-                                         {label: 'Save File', icon: 'fa-save', command:(event)=>{this.save_file();}, disabled:true},
-                                         {label: 'Copy File', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
-                                         {label: 'Edit File', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
-                                         {label: 'Delete File', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
+                                         {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}, disabled:true},
+                                         {label: 'Copy Article', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
+                                         {label: 'Edit Article', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
+                                         {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
                                         ]
 }
 
