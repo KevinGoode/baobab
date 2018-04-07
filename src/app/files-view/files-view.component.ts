@@ -73,14 +73,21 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
           this.currentId="";
           this.messageService.add({severity:'error', summary:'New Article', detail:'Error creating new article'});});
   }
-  creatDirectory(folderName:string){
+  createDirectory(folderName:string){
 
   }
   saveFile(){
     this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
+      this.detail.edited = false;
       this.messageService.add({severity:'success', summary:'Saved Article', detail:'Successfully saved article'})
          }, error=>{
           this.messageService.add({severity:'error', summary:'Saved Article', detail:'Error saving article'});});
+  }
+  public getCurrentId():string{
+      return this.currentId;
+  }
+  public edited():boolean{
+      return this.detail.edited;
   }
   private setAllSingleFileDetails(id:string, file:ServerFile){
     this.setSingleFileDetail(id,file);

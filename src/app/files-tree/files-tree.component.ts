@@ -126,15 +126,29 @@ export class FilesTreeComponent implements OnInit {
     console.log("Delete file - Not yet implemented");
   }
   fileSelect(event){
-    var encoded :string = btoa(event.node.data.id);
-    var url: string= "files?detail=" + encodeURIComponent(encoded);
-    this.router.navigateByUrl(url);
+    if(this.parent.edited()  && this.idHasChanged(event)){
+       this.confirmationService.confirm({message: 'You have unsaved edits. Save article?',
+                                        accept: () => {this.parent.saveFile();
+                                                       this.selectFile(event);},
+                                        reject: () => {this.selectFile(event);}
+                                      });
+    }else{
+      this.selectFile(event);
+    }
+  }
+  idHasChanged(event):boolean{
+    return (event.node.data.id != this.parent.getCurrentId());
   }
   disable_editing(event:any){
     this.helpDisableEditing.show(event.originalEvent);
   }
   enable_editing(event:any){
     this.helpEnableEditing.show(event.originalEvent);
+  }
+  private selectFile(event){
+    var encoded :string = btoa(event.node.data.id);
+    var url: string= "files?detail=" + encodeURIComponent(encoded);
+    this.router.navigateByUrl(url);
   }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
     var treeNode :TreeNode = { label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}

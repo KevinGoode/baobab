@@ -8,7 +8,7 @@
     <p-tabPanel leftIcon="fa-file-text" header="Contents" >
       
         <div [style.display]="editorVisible" >
-            <p-editor #editor [(ngModel)]="tabContentText" [style]="{'height':'640px'}"></p-editor>
+            <p-editor #editor [(ngModel)]="tabContentText" (onTextChange)="onUpdate($event)" [style]="{'height':'640px'}"></p-editor>
         </div>
         
         <div [style.display]="directoryContentsVisible"  >

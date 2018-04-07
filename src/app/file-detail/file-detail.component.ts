@@ -10,6 +10,7 @@ import { AuthorisationService } from '../authenticator/authorisation.service';
 })
 export class FileDetailComponent implements OnInit {
   @ViewChild('editor') editor: Editor;
+  edited:boolean =false;
   editorVisible:string;
   directoryContentsVisible:string;
   tabContentText: string;
@@ -38,8 +39,11 @@ export class FileDetailComponent implements OnInit {
     //Set using login/logout state
     this.enableEditor(this.loginlogoutService.isUserLoggedIn());
   }
-
+  public onUpdate(event){
+    this.edited = true;
+  }
   public setFileContent(content:string){
+    this.edited = false;
     this.showFile();
     this.tabContentText=content;
   }
