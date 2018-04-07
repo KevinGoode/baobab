@@ -103,7 +103,6 @@ export class FilesTreeComponent implements OnInit {
       accept: () => {
           //Actual logic to perform a confirmation
           this.parent.saveFile();
-          console.log("Save file - Not yet implemented")
       }
   });
   }
