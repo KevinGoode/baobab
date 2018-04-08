@@ -25,6 +25,9 @@ export class FilesServiceService {
   deleteFile(id:string):Observable<string>{
     return this.http.delete(this.getUrlFromid(id), {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }
+  deleteDir(id:string):Observable<string>{
+    return this.http.delete(this.getUrlFromid(id), {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
+  }
   private getUrlFromid(id:string):string{
     var url : string ="api/files.php?detail=" + btoa(id);
     return url;

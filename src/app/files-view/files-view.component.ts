@@ -68,8 +68,17 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
         this.setFileTree();
      }
   }
+  deleteDir(){
+    this.filesService.deleteDir(this.currentId).subscribe(output=>{
+      //Send message and refresh tree
+      this.messageService.add({severity:'success', summary:'Delete Directory', detail:'Successfully deleted directory'});
+      this.setFileTree();
+         }, error=>{
+          this.currentId="";
+          this.messageService.add({severity:'error', summary:'Delete Directory', detail:'Error deleting directory'});});
+  }
   deleteFile(){
-    this.filesService.deleteFile(this.currentId,).subscribe(output=>{
+    this.filesService.deleteFile(this.currentId).subscribe(output=>{
       //Send message and refresh tree
       this.messageService.add({severity:'success', summary:'Delete Article', detail:'Successfully deleted article'});
       this.setFileTree();

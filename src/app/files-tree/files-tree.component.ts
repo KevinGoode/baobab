@@ -114,7 +114,11 @@ export class FilesTreeComponent implements OnInit {
     console.log("New dir  - Not yet implemented");
   }
   delete_directory(){
-    console.log("Delete  dir - Not yet implemented");
+    this.confirmationService.confirm({message: this.DELETE_DIR,
+      accept: () => {//Save then allow navigate
+                     this.parent.deleteDir();
+                     }
+    });
   }
   copy_file(){
     console.log("Copy file - Not yet implemented");
@@ -233,9 +237,9 @@ export class FilesTreeComponent implements OnInit {
     return fullChildName.slice(index+1);
  }
   DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
-                                    {label: 'New Article', icon: 'fa-file', command:()=>{this.new_file();}},
-                                    {label: 'New Directory', icon: 'fa-plus', command:()=>{this.new_directory();}},
-                                    {label: 'Delete Directory', icon: 'fa-trash', command:()=>{this.delete_directory();}}
+                                    {label: 'New Article', icon: 'fa-file', command:(event)=>{this.new_file();}},
+                                    {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();}},
+                                    {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();}}
                                     ]
   DIRECTORY_MENU_ITEMS_DISABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
                                              {label: 'New Article', icon: 'fa-file', command:(event)=>{this.new_file();} ,disabled:true}, 
@@ -253,5 +257,6 @@ export class FilesTreeComponent implements OnInit {
                                         ]
  private SAVE_EDITS: string = 'You have unsaved edits. Save article?';
  private DELETE_FILE: string = 'Are you sure you want to delete article?';
+ private DELETE_DIR: string = 'Are you sure you want to delete directory and all articles inside?';
 }
 

@@ -101,7 +101,7 @@ if ( $verb == 'GET')
             if(is_dir($id))
             {
             }
-            else if(file_exists($id))
+            elseif(file_exists($id))
             {
                 $handle = fopen($id, "w");
                 $file_contents = file_get_contents("php://input");
@@ -133,18 +133,23 @@ if ( $verb == 'GET')
         }
         else if ($verb=='DELETE')
         {
-            if(file_exists($id))
+            if(is_dir($id))
+            {
+                system("rm -rf ".$id);
+                header("HTTP/1.1 200 OK");
+            }
+            elseif(file_exists($id))
             {
                 unlink($id);
                 header("HTTP/1.1 200 OK");
             }
             else
-            {
+            { 
                 return $bad_http_request;
             }
         }
         else
-        {
+        {  
             return $bad_http_request;
         }
     }
