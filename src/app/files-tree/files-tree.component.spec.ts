@@ -102,6 +102,16 @@ describe('FilesTreeComponent', () => {
     var file: ServerFile=component.getFileDataById('./contest');
     expect(file).toBeNull();
   });
+  it('should save file', () => {
+    component.setAllFiles([root]);
+    var file: ServerFile=component.getFileDataById('./content/folder1/file1');
+    component.save_file();
+  });
+  it('confirm save edits', () => {
+    component.setAllFiles([root]);
+    var file: ServerFile=component.getFileDataById('./content/folder1/file1');
+    component.confirmSaveEdits();
+  });
   it('should log to console all context menu items tbd', () => {
     component.new_file();
     component.new_directory();
