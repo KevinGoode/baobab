@@ -119,11 +119,12 @@ export class FilesTreeComponent implements OnInit {
   copy_file(){
     console.log("Copy file - Not yet implemented");
   }
-  edit_file(){
-    console.log("Edit file - Not yet implemented");
-  }
   delete_file(){
-    console.log("Delete file - Not yet implemented");
+    this.confirmationService.confirm({message: this.DELETE_FILE,
+      accept: () => {//Save then allow navigate
+                     this.parent.deleteFile();
+                     }
+    });
   }
   fileSelect(event){
     if(this.idHasChanged(event)){
@@ -242,16 +243,15 @@ export class FilesTreeComponent implements OnInit {
                                              {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();},disabled:true}]
   FILE_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
                                {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}},
-                               {label: 'Copy Article', icon: 'fa-copy', command:this.copy_file},
-                               {label: 'Edit Article', icon: 'fa-edit', command:this.edit_file},
-                               {label: 'Delete Article', icon: 'fa-trash', command:this.delete_file},
+                               {label: 'Copy Article', icon: 'fa-copy', command:(event)=>{this.copy_file();}},
+                               {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}}
                                ]
   FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
                                          {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}, disabled:true},
                                          {label: 'Copy Article', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
-                                         {label: 'Edit Article', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
                                          {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
                                         ]
  private SAVE_EDITS: string = 'You have unsaved edits. Save article?';
+ private DELETE_FILE: string = 'Are you sure you want to delete article?';
 }
 

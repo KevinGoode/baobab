@@ -119,7 +119,6 @@ if ( $verb == 'GET')
         {
             if(!file_exists($id))
             {
-                echo 'IN';
                 $handle = fopen($id, "w+");
                 $file_contents = file_get_contents("php://input");
                 echo 'Received:**'.$file_contents.'**';
@@ -134,7 +133,15 @@ if ( $verb == 'GET')
         }
         else if ($verb=='DELETE')
         {
-            
+            if(file_exists($id))
+            {
+                unlink($id);
+                header("HTTP/1.1 200 OK");
+            }
+            else
+            {
+                return $bad_http_request;
+            }
         }
         else
         {

@@ -117,7 +117,6 @@ describe('FilesTreeComponent', () => {
     component.new_directory();
     component.delete_directory();
     component.copy_file();
-    component.edit_file();
     component.delete_file();
   });
 

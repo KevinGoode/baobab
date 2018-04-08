@@ -28,7 +28,17 @@
             3.) The new article is created straightaway and highlighted in the tree.<br/>
             4.) Start editing the new article and save details regularly (See help topic 'Editing Articles')<br/>
         </p-card>
-</p-overlayPanel> 
+</p-overlayPanel>
+<p-overlayPanel #deletingdocs [showCloseIcon]="true">
+    <p-card title="Help" subtitle="Deleting Articles" styleClass="ui-card-shadow">
+        All BaoBab content is readable by all users, but only registered users can modify<br/>
+        site material. Before deleting articles you must login to the site. <br/>
+        To delete an article:<br/>
+        1.) View an article by selecting it in the navigation tree<br/>
+        2.) Right click on the article in the tree view and select the  menu item 'Delete Article'<br/>
+        3.) Press 'Yes' in the confirmation dialog to delete the article<br/>
+    </p-card>
+</p-overlayPanel>
 <p-sidebar [(visible)]="display" position="right">
     <p-card title="Help" subtitle="Topics" styleClass="ui-card-shadow">
         <p-header>
@@ -36,7 +46,8 @@
         </p-header>
         <p>1.) Reading Articles <button (click)="readingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>2.) Editing Articles <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p> 
+        <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>4.) Deleting Articles <button (click)="deletingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p> 
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>
