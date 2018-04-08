@@ -126,13 +126,7 @@ export class FilesTreeComponent implements OnInit {
     console.log("Delete file - Not yet implemented");
   }
   fileSelect(event){
-    if(this.parent.edited()  && this.idHasChanged(event)){
-       this.confirmationService.confirm({message: this.SAVE_EDITS,
-                                        accept: () => {this.parent.saveFile();
-                                                       this.selectFile(event);},
-                                        reject: () => {this.selectFile(event);}
-                                      });
-    }else{
+    if(this.idHasChanged(event)){
       this.selectFile(event);
     }
   }
