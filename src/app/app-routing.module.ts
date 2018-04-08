@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FilesViewComponent } from './files-view/files-view.component';
+import { DeactivateFilesView } from './files-view/files-deactivate-guard';
 import { DashboardComponent }      from './dashboard/dashboard.component';
 @NgModule({
   imports: [
@@ -10,7 +11,7 @@ import { DashboardComponent }      from './dashboard/dashboard.component';
       {path:'',component: DashboardComponent},
       //{path:'files',component: FilesViewComponent},
       //{path:'files/:id',component: FilesViewComponent},
-      {path:'files',component: FilesViewComponent}
+      {path:'files',component: FilesViewComponent, canDeactivate: [DeactivateFilesView]}
       
 
 		])
@@ -18,6 +19,7 @@ import { DashboardComponent }      from './dashboard/dashboard.component';
   exports: [
 		RouterModule
 	],
-  declarations: []
+  declarations: [],
+  providers: [DeactivateFilesView],
 })
 export class AppRoutingModule { }

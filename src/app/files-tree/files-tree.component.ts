@@ -127,7 +127,7 @@ export class FilesTreeComponent implements OnInit {
   }
   fileSelect(event){
     if(this.parent.edited()  && this.idHasChanged(event)){
-       this.confirmationService.confirm({message: 'You have unsaved edits. Save article?',
+       this.confirmationService.confirm({message: this.SAVE_EDITS,
                                         accept: () => {this.parent.saveFile();
                                                        this.selectFile(event);},
                                         reject: () => {this.selectFile(event);}
@@ -135,6 +135,18 @@ export class FilesTreeComponent implements OnInit {
     }else{
       this.selectFile(event);
     }
+  }
+  confirmSaveEdits():Promise<boolean>{
+    return new Promise<boolean>((resolve, reject) => {
+      this.confirmationService.confirm({message: this.SAVE_EDITS,
+        accept: () => {//Save then allow navigate
+                       this.parent.saveFile();
+                       resolve(true);},
+        reject: () => {//Allow navigate
+                       resolve(true);}
+      });
+  }
+  );
   }
   idHasChanged(event):boolean{
     return (event.node.data.id != this.parent.getCurrentId());
@@ -149,6 +161,7 @@ export class FilesTreeComponent implements OnInit {
     var encoded :string = btoa(event.node.data.id);
     var url: string= "files?detail=" + encodeURIComponent(encoded);
     this.router.navigateByUrl(url);
+    
   }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
     var treeNode :TreeNode = { label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
@@ -245,5 +258,6 @@ export class FilesTreeComponent implements OnInit {
                                          {label: 'Edit Article', icon: 'fa-edit', command:(event)=>{this.edit_file();}, disabled:true},
                                          {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
                                         ]
+ private SAVE_EDITS: string = 'You have unsaved edits. Save article?';
 }
 

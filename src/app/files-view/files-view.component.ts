@@ -38,7 +38,12 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   ngOnInit() {
     console.log("INIT");
     this.activatedRoute.url.subscribe(url =>{
-      this.route(decodeURIComponent(this.router.url));
+      //If navigating by browser buttons and last file was not saved then ask to save before navigating
+      if(this.edited()){
+         this.confirmSaveEdits().then(response=>{this.route(decodeURIComponent(this.router.url));});
+      }else{
+        this.route(decodeURIComponent(this.router.url));
+      }
     });
   }
   ngAfterViewInit() {
@@ -76,9 +81,13 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   createDirectory(folderName:string){
 
   }
+  confirmSaveEdits():Promise<boolean>{
+    return this.navTree.confirmSaveEdits();
+  }
   saveFile(){
+    this.detail.edited = false;
+    
     this.filesService.editFile(this.currentId,this.detail.tabContentText).subscribe(output=>{
-      this.detail.edited = false;
       this.messageService.add({severity:'success', summary:'Saved Article', detail:'Successfully saved article'})
          }, error=>{
           this.messageService.add({severity:'error', summary:'Saved Article', detail:'Error saving article'});});
