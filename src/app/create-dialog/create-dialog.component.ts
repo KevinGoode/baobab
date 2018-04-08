@@ -9,20 +9,34 @@ export class CreateDialogComponent implements OnInit {
 
   constructor() { }
   display: boolean = false;
+  isDir:boolean = false;
   name: string;
-  message:string = "Enter name of new article";
+  message:string ="";
   private manager:FilesViewManager;
   ngOnInit() {
   }
-  public showDialog(manager:FilesViewManager) {
+  public showDialog(manager:FilesViewManager, isDir:boolean=false) {
+    this.isDir=isDir;
     this.manager=manager;
+    if(this.isDir)
+    {
+        this.message = this.NEW_DIR;
+    }else{
+      this.message = this.NEW_FILE;
+    }
     this.display = true;
   }
   public OnOk(){
     this.OnCancel();
-    this.manager.createFile(this.name);
+    if(this.isDir){
+        this.manager.createDirectory(this.name);
+    }else{
+      this.manager.createFile(this.name);
+    }
   }
   public OnCancel(){
     this.display=false;
   }
+  private NEW_FILE: string = "Enter name of new article";
+  private NEW_DIR: string = "Enter name of new directory";
 }

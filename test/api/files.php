@@ -1,6 +1,7 @@
 <?php
 include_once 'SimpleSessionManager.php';
 $DETAIL_VAR='detail';
+$DIR_VAR='dir';
 $ROOT_PATH = './content';
 //$bad_http_request = 'Bad request';
 //$request_method = 'GET';
@@ -16,11 +17,21 @@ function getTimeStr($unixtime)
 }
 function get_id($array_variables)
 {
-    global $ROOT_PATH, $DETAIL_VAR;
+    global $DETAIL_VAR;
     $id = null;
     if(array_key_exists($DETAIL_VAR, $array_variables))
     {
         $id=base64_decode($array_variables[$DETAIL_VAR]);
+    }
+    return $id;
+}
+function get_is_dir($array_variables)
+{
+    global $DIR_VAR;
+    $id = false;
+    if(array_key_exists($DIR_VAR, $array_variables))
+    {
+        $id=$array_variables[$DIR_VAR];
     }
     return $id;
 }
@@ -116,18 +127,29 @@ if ( $verb == 'GET')
             }
         }
         else if ($verb=='POST')
-        {
+        {   
             if(!file_exists($id))
             {
-                $handle = fopen($id, "w+");
-                $file_contents = file_get_contents("php://input");
-                echo 'Received:**'.$file_contents.'**';
-                fwrite($handle,$file_contents);
-                fclose($handle);
-                header("HTTP/1.1 200 OK");
+                $dir=get_is_dir($request_variables);
+                if(!$dir)
+                {
+                    //Create file
+                    $handle = fopen($id, "w+");
+                    $file_contents = file_get_contents("php://input");
+                    echo 'Received:**'.$file_contents.'**';
+                    fwrite($handle,$file_contents);
+                    fclose($handle);
+                    header("HTTP/1.1 200 OK");
+                }
+                else
+                {
+                  //Create directory
+                  mkdir($id);
+                  header("HTTP/1.1 200 OK");
+                }
             }
             else
-            {   echo 'OUT';
+            {  
                 return $bad_http_request;
             }
         }

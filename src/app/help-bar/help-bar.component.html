@@ -39,6 +39,16 @@
         3.) Press 'Yes' in the confirmation dialog to delete the article<br/>
     </p-card>
 </p-overlayPanel>
+<p-overlayPanel #creatingdir [showCloseIcon]="true">
+    <p-card title="Help" subtitle="Deleting Directories" styleClass="ui-card-shadow">
+        All BaoBab content is readable by all users, but only registered users can modify<br/>
+        site material. Before deleting directories you must login to the site. <br/>
+        To create a new directory:<br/>
+        1.) Right click on a directory and select menu item 'New Directory'<br/>
+        2.) In the 'Create' dialog enter a unique name of the new directory and press 'Ok'<br/>
+        3.) The new directory is created<br/>
+    </p-card>
+</p-overlayPanel>
 <p-overlayPanel #deletingdir [showCloseIcon]="true">
     <p-card title="Help" subtitle="Deleting Directories" styleClass="ui-card-shadow">
         All BaoBab content is readable by all users, but only registered users can modify<br/>
@@ -58,7 +68,8 @@
         <p>2.) Editing Articles <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>4.) Deleting Articles <button (click)="deletingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>5.) Deleting Directory <button (click)="deletingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>5.) Creating Directory <button (click)="creatingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>6.) Deleting Directory <button (click)="deletingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>

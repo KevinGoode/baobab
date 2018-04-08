@@ -97,7 +97,14 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
           this.messageService.add({severity:'error', summary:'New Article', detail:'Error creating new article'});});
   }
   createDirectory(folderName:string){
-
+    this.currentId=this.currentId+"/"+folderName;
+    this.filesService.createDirectory(this.currentId).subscribe(output=>{
+      //Send message and refresh tree
+      this.messageService.add({severity:'success', summary:'New Directory', detail:'Successfully created new directory'});
+      this.setFileTree();
+         }, error=>{
+          this.currentId="";
+          this.messageService.add({severity:'error', summary:'New Directory', detail:'Error creating new directory'});});
   }
   confirmSaveEdits():Promise<boolean>{
     return this.navTree.confirmSaveEdits();

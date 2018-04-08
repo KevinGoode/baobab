@@ -111,7 +111,7 @@ export class FilesTreeComponent implements OnInit {
     this.createDialog.showDialog(this.parent);
   }
   new_directory(){
-    console.log("New dir  - Not yet implemented");
+    this.createDialog.showDialog(this.parent, true);
   }
   delete_directory(){
     this.confirmationService.confirm({message: this.DELETE_DIR,

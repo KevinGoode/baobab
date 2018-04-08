@@ -22,6 +22,9 @@ export class FilesServiceService {
   createFile(id:string, body:string):Observable<string>{
     return this.http.post(this.getUrlFromid(id), body, {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }
+  createDirectory(id:string, ):Observable<string>{
+    return this.http.post(this.getUrlFromid(id)+"&dir=true", "", {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
+  }
   deleteFile(id:string):Observable<string>{
     return this.http.delete(this.getUrlFromid(id), {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }
