@@ -62,17 +62,17 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
         //Tree is either empty (User presses f5 with detail set) or file added or deleted
         //In this case get file tree and then set stuff
         //TODO When get here then navigate forwards using browser buttons tree is not updated correctly
-        this.setFileTree();
+        this.refreshFileTree(false);
       }
     }else{
-        this.setFileTree();
+        this.refreshFileTree(false);
      }
   }
   deleteDir(){
     this.filesService.deleteDir(this.currentId).subscribe(output=>{
       //Send message and refresh tree
       this.messageService.add({severity:'success', summary:'Delete Directory', detail:'Successfully deleted directory'});
-      this.setFileTree();
+      this.refreshFileTree();
          }, error=>{
           this.currentId="";
           this.messageService.add({severity:'error', summary:'Delete Directory', detail:'Error deleting directory'});});
@@ -81,7 +81,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     this.filesService.deleteFile(this.currentId).subscribe(output=>{
       //Send message and refresh tree
       this.messageService.add({severity:'success', summary:'Delete Article', detail:'Successfully deleted article'});
-      this.setFileTree();
+      this.refreshFileTree();
          }, error=>{
           this.currentId="";
           this.messageService.add({severity:'error', summary:'Delete Article', detail:'Error deleting article'});});
@@ -91,7 +91,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     this.filesService.createFile(this.currentId, "<p>Empty Article</p>").subscribe(output=>{
       //Send message and refresh tree
       this.messageService.add({severity:'success', summary:'New Article', detail:'Successfully created new article'});
-      this.setFileTree();
+      this.refreshFileTree();
          }, error=>{
           this.currentId="";
           this.messageService.add({severity:'error', summary:'New Article', detail:'Error creating new article'});});
@@ -101,7 +101,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     this.filesService.createDirectory(this.currentId).subscribe(output=>{
       //Send message and refresh tree
       this.messageService.add({severity:'success', summary:'New Directory', detail:'Successfully created new directory'});
-      this.setFileTree();
+      this.refreshFileTree();
          }, error=>{
           this.currentId="";
           this.messageService.add({severity:'error', summary:'New Directory', detail:'Error creating new directory'});});
@@ -144,13 +144,13 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
       );
     
   }
-  private setFileTree(){
+  private refreshFileTree(selectItem:boolean=true){
     this.filesService.getAllFiles().subscribe(serverFiles=>{
       var fileRoot: ServerFile = this.getChild(serverFiles);
       this.navTree.setAllFiles([fileRoot]);
       //If can find currentId then set 
       var  file:ServerFile =this.getFileDataById(this.currentId);
-      if (file) this.setAllSingleFileDetails(this.currentId ,file);
+      if (selectItem && file) this.navTree.selectFile(this.currentId);
       },err=>{
         this.messageService.add({severity:'error', summary:'Error getting article list', detail:'Is file server down?'});}
       );

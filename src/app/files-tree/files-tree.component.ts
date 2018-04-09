@@ -132,8 +132,14 @@ export class FilesTreeComponent implements OnInit {
   }
   fileSelect(event){
     if(this.idHasChanged(event)){
-      this.selectFile(event);
+      this.selectFile(event.node.data.id);
     }
+  }
+  selectFile(id:string){
+    var encoded :string = btoa(id);
+    var url: string= "files?detail=" + encodeURIComponent(encoded);
+    this.router.navigateByUrl(url);
+    
   }
   confirmSaveEdits():Promise<boolean>{
     return new Promise<boolean>((resolve, reject) => {
@@ -155,12 +161,6 @@ export class FilesTreeComponent implements OnInit {
   }
   enable_editing(event:any){
     this.helpEnableEditing.show(event.originalEvent);
-  }
-  private selectFile(event){
-    var encoded :string = btoa(event.node.data.id);
-    var url: string= "files?detail=" + encodeURIComponent(encoded);
-    this.router.navigateByUrl(url);
-    
   }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
     var treeNode :TreeNode = { label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
