@@ -104,6 +104,7 @@ class FilesTreeComponent {
 })
 class FileDetailComponent {
   public showSideBar() {}
+  public initDetails() {}
   public setFileContent(content:string){}
   public setTitle(title:string){}
   public setFileSummary(file:ServerFile){}

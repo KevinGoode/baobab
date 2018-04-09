@@ -150,7 +150,11 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
       this.navTree.setAllFiles([fileRoot]);
       //If can find currentId then set 
       var  file:ServerFile =this.getFileDataById(this.currentId);
-      if (selectItem && file) this.navTree.selectFile(this.currentId);
+      if (selectItem && file){
+        this.navTree.selectFile(this.currentId);
+      }else{
+        this.detail.initDetails();
+      }
       },err=>{
         this.messageService.add({severity:'error', summary:'Error getting article list', detail:'Is file server down?'});}
       );

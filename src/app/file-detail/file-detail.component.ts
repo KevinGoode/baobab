@@ -22,11 +22,7 @@ export class FileDetailComponent implements OnInit {
   constructor(private router:Router, private loginlogoutService:AuthorisationService) { this.router= router}
 
   ngOnInit() {
-    this.showFile();
-    this.tabContentText = this.NO_FILE;
-    this.tabInfoText = this.NO_FILE;
-    this.directoryContents = [];
-    
+       this.initDetails();
   }
   ngAfterViewInit() {
     //Register interest in future login/logout events
@@ -38,6 +34,13 @@ export class FileDetailComponent implements OnInit {
     });
     //Set using login/logout state
     this.enableEditor(this.loginlogoutService.isUserLoggedIn());
+  }
+  public initDetails(){
+    this.showFile();
+    this.tabContentText = this.NO_FILE;
+    this.tabInfoText = this.NO_FILE;
+    this.directoryContents = [];
+    this.title="";
   }
   public onUpdate(event){
     this.edited = true;
