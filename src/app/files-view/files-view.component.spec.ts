@@ -74,6 +74,9 @@ describe('FilesViewComponent', () => {
   it('should create dir', () =>{
     component.createDirectory("./content/brandnewdir");
   });
+  it('should move dir', () =>{
+    component.moveFile("./content/subdir/subfile", "./content/subfile");
+  });
 });
 
 //Mock new components in this project

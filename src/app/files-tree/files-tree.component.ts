@@ -9,10 +9,12 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import {FilesViewManager } from '../files-view/files-manager.interface'
 import {CreateDialogComponent } from '../create-dialog/create-dialog.component'
+import {TreeDragDropService} from 'primeng/api';
 @Component({
   selector: 'app-files-tree',
   templateUrl: './files-tree.component.html',
-  styleUrls: ['./files-tree.component.css']
+  styleUrls: ['./files-tree.component.css'],
+  providers:[TreeDragDropService]
 })
 export class FilesTreeComponent implements OnInit {
   constructor(private router:Router, private loginlogoutService:AuthorisationService, private confirmationService: ConfirmationService) {
@@ -22,7 +24,7 @@ export class FilesTreeComponent implements OnInit {
   @ViewChild('helpDisableEditing') helpDisableEditing :OverlayPanel;
   @ViewChild('createDialog') createDialog: CreateDialogComponent;
   @Input() parent : FilesViewManager;
-
+  draggableNodes:boolean =false;
   files : TreeNode[];
   selectedFile : TreeNode;
   contextMenuItems: MenuItem[];
@@ -31,16 +33,19 @@ export class FilesTreeComponent implements OnInit {
     this.contextMenuItems = [];
     //Register interest in future login/logout events
     this.loginlogoutService.loginEvents.subscribe(userName=>{
+      this.enableDragandDrop(true);
       this.loggedIn = true;
       this.setContextMenu();
     });
     this.loginlogoutService.logoutEvents.subscribe(()=>{
+      this.enableDragandDrop(false);
       this.loggedIn = false;
       this.setContextMenu();
     });
     //Get current login status
     this.loggedIn = this.loginlogoutService.isUserLoggedIn();
     this.setContextMenu();
+    this.enableDragandDrop(this.loggedIn);
   }  
  
   setAllFiles(serverFiles: ServerFile[]){
@@ -150,6 +155,11 @@ export class FilesTreeComponent implements OnInit {
                      }
     });
   }
+  onNodeDrop(event){
+    var dragNodeName=this.getLabelFromId(event.dragNode.data.id);
+    var dropDir=event.dropNode.data.id;
+    this.parent.moveFile(event.dragNode.data.id,dropDir+"/"+dragNodeName);
+  }
   fileSelect(event){
     if(this.idHasChanged(event)){
       this.selectFile(event.node.data.id);
@@ -190,8 +200,12 @@ export class FilesTreeComponent implements OnInit {
     if(serverFile.isDir){
       treeNode.expandedIcon = "fa-folder-open";
       treeNode.collapsedIcon = "fa-folder";
+      treeNode.draggable=false;
+      treeNode.droppable=true;
     }else{
       treeNode.icon = "fa-file-text";
+      treeNode.draggable=true;
+      treeNode.droppable=false;
     }
     for (var i=0 ;i<serverFile.children.length;i++){
        var childNode: TreeNode=this.convertToTreeNode(serverFile.children[i]);
@@ -243,6 +257,9 @@ export class FilesTreeComponent implements OnInit {
         }
     }
     return childNode;
+ }
+ private enableDragandDrop(enabled:boolean){
+    this.draggableNodes=enabled;
  }
  private getLabelFromId(id:string){
     var lastIndex=id.lastIndexOf("/")+1;

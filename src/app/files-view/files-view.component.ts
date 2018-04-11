@@ -69,6 +69,17 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
         this.refreshFileTree(false);
      }
   }
+  moveFile(fromId:string, toId:string ){
+    this.filesService.renameFile(fromId, toId).subscribe(output=>{
+      //Send message and refresh tree
+      this.messageService.add({severity:'success', summary:'Moved Article', detail:'Successfully moved article'});
+      this.currentId=toId;
+      this.refreshFileTree();
+         }, error=>{
+          this.currentId=fromId;
+          this.refreshFileTree();
+          this.messageService.add({severity:'error', summary:'Moved Article', detail:'Error moving article'});});
+  }
   renameFile(newName:string){
     this.filesService.renameFile(this.currentId, this.getRenamedId(newName)).subscribe(output=>{
       //Send message and refresh tree
