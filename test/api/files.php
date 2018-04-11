@@ -2,6 +2,7 @@
 include_once 'SimpleSessionManager.php';
 $DETAIL_VAR='detail';
 $DIR_VAR='dir';
+$RENAME_VAR='rename';
 $ROOT_PATH = './content';
 //$bad_http_request = 'Bad request';
 //$request_method = 'GET';
@@ -25,13 +26,12 @@ function get_id($array_variables)
     }
     return $id;
 }
-function get_is_dir($array_variables)
+function get_boolean_variable($array_variables, $name)
 {
-    global $DIR_VAR;
     $id = false;
-    if(array_key_exists($DIR_VAR, $array_variables))
+    if(array_key_exists($name, $array_variables))
     {
-        $id=$array_variables[$DIR_VAR];
+        $id=$array_variables[$name];
     }
     return $id;
 }
@@ -114,12 +114,22 @@ if ( $verb == 'GET')
             }
             elseif(file_exists($id))
             {
-                $handle = fopen($id, "w");
-                $file_contents = file_get_contents("php://input");
-                echo 'Received:**'.$file_contents.'**';
-                fwrite($handle,$file_contents);
-                fclose($handle);
-                header("HTTP/1.1 200 OK");
+                $rename=get_boolean_variable($request_variables, $RENAME_VAR);
+                if($rename)
+                {
+                    $file_name= file_get_contents("php://input");
+                    rename($id,$file_name);
+                    header("HTTP/1.1 200 OK");
+                }
+                else
+                {
+                    $handle = fopen($id, "w");
+                    $file_contents = file_get_contents("php://input");
+                    echo 'Received:**'.$file_contents.'**';
+                    fwrite($handle,$file_contents);
+                    fclose($handle);
+                    header("HTTP/1.1 200 OK");
+                }
             }
             else
             {
@@ -130,7 +140,7 @@ if ( $verb == 'GET')
         {   
             if(!file_exists($id))
             {
-                $dir=get_is_dir($request_variables);
+                $dir=get_boolean_variable($request_variables, $DIR_VAR);
                 if(!$dir)
                 {
                     //Create file

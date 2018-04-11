@@ -46,7 +46,7 @@ TODO For v 0.2
 ##################################################################
 Theme for v 0.3
 ###############
-Create new folders, delete files, delete folder
+Create new folders, delete files, delete folder,  rename file(inline edit of node), move file (drag and drop)
 
 TODO For v 0.3
 1.) Implement php code for Create new folders, delete files, delete folder operations (original code does not support this)

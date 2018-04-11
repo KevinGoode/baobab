@@ -59,6 +59,16 @@
         3.) Press 'Yes' in the confirmation dialog to delete the directory<br/>
     </p-card>
 </p-overlayPanel>
+<p-overlayPanel #renamefile [showCloseIcon]="true">
+    <p-card title="Help" subtitle="Rename Article" styleClass="ui-card-shadow">
+        All BaoBab content is readable by all users, but only registered users can modify<br/>
+        site material. Before renaming articles you must login to the site. <br/>
+        To rename an article<br/>
+        1.) Select the article in the navigation tree<br/>
+        2.) Right click on the article in the tree view and select the  menu item 'Rename Article'<br/>
+        3.) Rename the article and press the save button<br/>
+    </p-card>
+</p-overlayPanel>
 <p-sidebar [(visible)]="display" position="right">
     <p-card title="Help" subtitle="Topics" styleClass="ui-card-shadow">
         <p-header>
@@ -68,8 +78,9 @@
         <p>2.) Editing Articles <button (click)="editingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>3.) Creating Articles <button (click)="creatingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>4.) Deleting Articles <button (click)="deletingdocs.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>5.) Creating Directory <button (click)="creatingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
-        <p>6.) Deleting Directory <button (click)="deletingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>5.) Renaming Articles <button (click)="renamefile.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>6.) Creating Directory <button (click)="creatingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>7.) Deleting Directory <button (click)="deletingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>

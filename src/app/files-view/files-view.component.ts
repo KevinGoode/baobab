@@ -54,6 +54,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     var ID_IDENTIFIER = "/files?detail=";
     if (url.includes(ID_IDENTIFIER)){
       var encodedId=url.replace(ID_IDENTIFIER,"");
+      this.navTree.clearNodeEditing(this.currentId);
       this.currentId = atob(encodedId);
       var  file:ServerFile =this.getFileDataById(this.currentId);
       if (file){
@@ -67,6 +68,16 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
     }else{
         this.refreshFileTree(false);
      }
+  }
+  renameFile(newName:string){
+    this.filesService.renameFile(this.currentId, this.getRenamedId(newName)).subscribe(output=>{
+      //Send message and refresh tree
+      this.messageService.add({severity:'success', summary:'Rename Article', detail:'Successfully renamed article'});
+      this.currentId=this.getRenamedId(newName);
+      this.refreshFileTree();
+         }, error=>{
+          this.currentId="";
+          this.messageService.add({severity:'error', summary:'Rename Article', detail:'Error renaming article'});});
   }
   deleteDir(){
     this.filesService.deleteDir(this.currentId).subscribe(output=>{
@@ -122,6 +133,10 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
   }
   public edited():boolean{
       return this.detail.edited;
+  }
+  private getRenamedId(name){
+     var lastIndex=this.currentId.lastIndexOf("/")+1;
+     return this.currentId.substring(0, lastIndex) + name;
   }
   private setAllSingleFileDetails(id:string, file:ServerFile){
     this.setSingleFileDetail(id,file);

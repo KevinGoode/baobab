@@ -116,10 +116,13 @@ describe('FilesTreeComponent', () => {
     component.new_file();
     component.new_directory();
     component.delete_directory();
-    component.copy_file();
+    component.rename_file();
     component.delete_file();
   });
-
+  it('confirm clear node', () => {
+    component.setAllFiles([root]);
+    component.clearNodeEditing('./content/folder1/file1');
+  });
 
 });
 @Injectable()

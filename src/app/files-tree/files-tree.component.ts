@@ -74,6 +74,21 @@ export class FilesTreeComponent implements OnInit {
       }
     }
   }
+  clearNodeEditing(id:string){
+    //Need to set last selected node type to blank to switch off editing mode
+    //and reset label in the case that it was edited but not saved
+    var node:TreeNode = null;
+    if(this.files && id !=""){
+      for(var i=0;i<this.files.length;i++){
+           node = this.findItemById(id, this.files[i]);
+           if(node){
+               node.type="";
+               node.label=this.getLabelFromId(id);
+               break;
+           }
+          }
+      }
+  }
   selectItemInTree(id:string){
     var node:TreeNode = null;
     if(this.files){
@@ -120,8 +135,13 @@ export class FilesTreeComponent implements OnInit {
                      }
     });
   }
-  copy_file(){
-    console.log("Copy file - Not yet implemented");
+  rename(){
+    this.parent.renameFile(this.selectedFile.label);
+  }
+  rename_file(){
+    if(this.selectedFile){
+        this.selectedFile.type="editable";
+    }
   }
   delete_file(){
     this.confirmationService.confirm({message: this.DELETE_FILE,
@@ -135,6 +155,7 @@ export class FilesTreeComponent implements OnInit {
       this.selectFile(event.node.data.id);
     }
   }
+  
   selectFile(id:string){
     var encoded :string = btoa(id);
     var url: string= "files?detail=" + encodeURIComponent(encoded);
@@ -157,10 +178,10 @@ export class FilesTreeComponent implements OnInit {
     return (event.node.data.id != this.parent.getCurrentId());
   }
   disable_editing(event:any){
-    this.helpDisableEditing.show(event.originalEvent);
+    this.helpDisableEditing.show(event.originalEvent,event.originalEvent.currentTarget);
   }
   enable_editing(event:any){
-    this.helpEnableEditing.show(event.originalEvent);
+    this.helpEnableEditing.show(event.originalEvent, event.originalEvent.currentTarget);
   }
   private convertToTreeNode(serverFile: ServerFile): TreeNode{
     var treeNode :TreeNode = { label:'', data: null, expandedIcon:'', collapsedIcon:'', icon:'', children:[]}
@@ -223,6 +244,10 @@ export class FilesTreeComponent implements OnInit {
     }
     return childNode;
  }
+ private getLabelFromId(id:string){
+    var lastIndex=id.lastIndexOf("/")+1;
+    return id.substring(lastIndex);
+ }
  private removeRootNodeFromId(id:string):string{
     //Remove leading "./" then root node
     var newId=this.removeOldestAncestor(id);
@@ -246,13 +271,13 @@ export class FilesTreeComponent implements OnInit {
                                              {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();},disabled:true},
                                              {label: 'Delete Directory', icon: 'fa-trash', command:(event)=>{this.delete_directory();},disabled:true}]
   FILE_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
+                               {label: 'Rename Article', icon: 'fa-save', command:(event)=>{this.rename_file();}},
                                {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}},
-                               {label: 'Copy Article', icon: 'fa-copy', command:(event)=>{this.copy_file();}},
                                {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}}
                                ]
   FILE_MENU_ITEMS_DISBABLED: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.enable_editing(event);}},
+                                         {label: 'Rename Article', icon: 'fa-save', command:(event)=>{this.rename_file();}, disabled:true},
                                          {label: 'Save Article', icon: 'fa-save', command:(event)=>{this.save_file();}, disabled:true},
-                                         {label: 'Copy Article', icon: 'fa-copy', command:(event)=>{this.copy_file();}, disabled:true},
                                          {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
                                         ]
  private SAVE_EDITS: string = 'You have unsaved edits. Save article?';

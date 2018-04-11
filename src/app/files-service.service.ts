@@ -28,6 +28,9 @@ export class FilesServiceService {
   deleteFile(id:string):Observable<string>{
     return this.http.delete(this.getUrlFromid(id), {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }
+  renameFile(id:string, name:string):Observable<string>{
+    return this.http.put(this.getUrlFromid(id)+"&rename=true", name, {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
+  }
   deleteDir(id:string):Observable<string>{
     return this.http.delete(this.getUrlFromid(id), {responseType: 'text', headers:new HttpHeaders('Content-Type: text/plain')});
   }

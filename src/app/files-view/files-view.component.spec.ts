@@ -62,6 +62,18 @@ describe('FilesViewComponent', () => {
   it('should create file', () =>{
     component.createFile('newfilename');
   });
+  it('should rename file', () =>{
+    component.renameFile('newfilename');
+  });
+  it('should delete file', () =>{
+    component.deleteFile();
+  });
+  it('should delete dir', () =>{
+    component.deleteDir();
+  });
+  it('should create dir', () =>{
+    component.createDirectory("./content/brandnewdir");
+  });
 });
 
 //Mock new components in this project
@@ -74,6 +86,7 @@ class FilesTreeComponent {
   serverFiles: ServerFile[];
   setContextMenu(){}
   showSelectedNodeInTree(){}
+  clearNodeEditing(id:string){}
   selectItemInTree(id:string){}
   setAllFiles(serverFiles: ServerFile[]){
     this.serverFiles = serverFiles;
@@ -127,6 +140,18 @@ export class MockFilesServiceService{
     return of('');
   }
   createFile(id:string, body:string):Observable<string>{
+    return of('');
+  }
+  renameFile(id:string, name:string):Observable<string>{
+    return of('');
+  }
+  deleteFile(id:string):Observable<string>{
+    return of('');
+  }
+  deleteDir(id:string):Observable<string>{
+    return of('');
+  }
+  createDirectory(id:string):Observable<string>{
     return of('');
   }
 }
