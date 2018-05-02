@@ -1,7 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy,Input } from '@angular/core';
 import { MenuModule} from 'primeng/menu';
 import { MenuItem } from 'primeng/primeng';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscription } from 'rxjs';
 import {Message} from 'primeng/api';
 import { LoginCredentialsProvider, LoginCredentialsSubscriber} from './login-credentials.interface';
 import { AuthenticatorServiceBase} from "./authenticatorservice.model";
@@ -12,14 +12,20 @@ import { MessageService} from 'primeng/components/common/messageservice';
   templateUrl: './authenticator.component.html',
   styleUrls: ['./authenticator.component.css']
 })
-export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscriber{
+export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredentialsSubscriber{
 
   constructor(private messageService: MessageService, private loginLogoutEvents: AuthorisationService, private authenticatorService: AuthenticatorServiceBase) { }
   logMenuItems: MenuItem[];
   msgs: Message[] = [];
   private userName: string = "";
+  private timer = undefined;
+  private sub: Subscription;
   @Input() credentialsGatherer:LoginCredentialsProvider;
   ngOnInit() {
+    this.timer = Observable.timer(0, 10000);//0, 10 seconds 
+    if(this.timer){
+        this.sub = this.timer.subscribe((t) => this.onheartBeat());
+    }
     this.logMenuItems = this.logOnMenuItems;
     this.loginLogoutEvents.loginEvents.subscribe(userName=>{
       this.logMenuItems = this.logOffMenuItems;
@@ -27,6 +33,25 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
     this.loginLogoutEvents.logoutEvents.subscribe(()=>{
       this.logMenuItems = this.logOnMenuItems;
     });
+  }
+  ngOnDestroy(){
+    this.sub.unsubscribe();
+  }
+  onheartBeat(){
+    if(this.authenticatorService){
+      this.authenticatorService.loggedin().subscribe(data=>{
+        var obj = JSON.parse(data);
+          if(!this.loginLogoutEvents.isUserLoggedIn()){
+            this.loginLogoutEvents.sendLoginEvent(obj.User);
+          }
+          this.loginLogoutEvents.sendLogoutWarningEvent(obj.expires);
+        },
+        err=>{
+              if(this.loginLogoutEvents.isUserLoggedIn()){
+              this.loginLogoutEvents.sendLogoutEvent();
+              }
+      });
+    }
   }
   logon(){
     this.credentialsGatherer.getCredentials(this);

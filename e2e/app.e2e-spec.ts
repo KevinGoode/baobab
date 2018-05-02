@@ -1,9 +1,16 @@
+import { browser} from 'protractor';
 import { AppPage } from './app.po';
 
 describe('my-app App', () => {
   let page: AppPage;
+  
+
 
   beforeEach(() => {
+    //The Observable.Timer in authneticator.component breaks e2e tests unless have the following line
+    //https://www.bountysource.com/issues/35908814-how-to-implement-intervals-polling-in-angular2-to-work-with-protractor
+    //For more sophisticated tests may need to toggle this flag but the moment it is fine
+    browser.waitForAngularEnabled(false);
     page = new AppPage();
   });
 

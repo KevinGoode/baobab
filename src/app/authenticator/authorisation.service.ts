@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import {Observable} from 'rxjs/Rx';
-import { AuthenticatorServiceBase} from "./authenticatorservice.model";
 //Sending events between un-related components is best done using a service .See link below
 //https://angularfirebase.com/lessons/sharing-data-between-angular-components-four-methods/#data-service-ts
 
@@ -11,7 +10,6 @@ export class AuthorisationService{
   private logoutEvent = new BehaviorSubject<string>("");
   private logoutWarningEvent = new BehaviorSubject<string>("");
   private currentUser: string = undefined;
-  private timer = undefined;
   private started=false
   /*
   Used by clients who are interested in login events.
@@ -28,35 +26,11 @@ export class AuthorisationService{
   Call subscribe on this object
   */
   logoutWarningEvents = this.logoutWarningEvent.asObservable();
-  constructor(private authenticatorService: AuthenticatorServiceBase) { 
-    //TODO Unit tests and e2e tests break when start is called.
-   //this.start();
+  constructor() { 
+
   }
-  start(){
-    if(!this.started){
-      this.started=true;
-      this.timer = Observable.timer(1000, 10000);//1, 10 seconds 
-      if(this.timer){
-          this.timer.subscribe((t) => this.onheartBeat());
-      }
-    }
-  }
-  onheartBeat(){
-    if(this.authenticatorService){
-      this.authenticatorService.loggedin().subscribe(data=>{
-        var obj = JSON.parse(data);
-          if(!this.isUserLoggedIn()){
-            this.sendLoginEvent(obj.User);
-          }
-          this.sendLogoutWarningEvent(obj.expires);
-        },
-        err=>{
-              if(this.isUserLoggedIn()){
-              this.sendLogoutEvent();
-              }
-      });
-    }
-  }
+
+  
   /*
    Used by clients who want to know current login state
   */
@@ -90,7 +64,7 @@ export class AuthorisationService{
   /*
   Used privately to send heartbeat events. Sends out number of seconds before expiry
   */
-  private sendLogoutWarningEvent(expiry) {
+  sendLogoutWarningEvent(expiry) {
     this.logoutWarningEvent.next(expiry);
   }
 
