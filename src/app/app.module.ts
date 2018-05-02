@@ -33,6 +33,7 @@ import { FilesTreeComponent } from './files-tree/files-tree.component';
 import { FileDetailComponent } from './file-detail/file-detail.component';
 import { FilesServiceService } from './files-service.service'
 import { HttpClientModule } from '@angular/common/http';
+import {TooltipModule} from 'primeng/tooltip';
 import {EditorModule} from 'primeng/editor';
 import {PasswordModule} from 'primeng/password';
 import { AuthenticatorComponent } from './authenticator/authenticator.component';
@@ -73,7 +74,8 @@ import { CreateDialogComponent } from './create-dialog/create-dialog.component';
     EditorModule,
     PasswordModule,
     GrowlModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    TooltipModule
     
   ],
   providers: [ConfirmationService, AuthorisationService,FilesServiceService, MessageService, {provide: AuthenticatorServiceBase, useClass: AuthenticatorService}],

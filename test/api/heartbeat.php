@@ -13,6 +13,6 @@ if($loggedin!=TRUE)
 }
 else
 {
-    echo  "User:".$man->GetUserName();
+    echo  '{"User":"'.$man->GetUserName().'", "expires": "'.$man->GetExpires().'"}';
 }
 ?>

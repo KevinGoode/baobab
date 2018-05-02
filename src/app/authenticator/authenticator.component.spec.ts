@@ -73,6 +73,9 @@ export class MockCredentialsGather implements LoginCredentialsProvider {
 @Injectable()
 export class AuthorisationServiceMock {
   constructor() { }
+  loginEvents = of('');
+  logoutEvents = of('');
+  logoutWarningEvents = of('');
   sendLoginEvent(userName: string) {
     //Do nothing
   }

@@ -129,7 +129,7 @@ export class FilesViewComponent implements OnInit, FilesViewManager{
           this.messageService.add({severity:'error', summary:'New Directory', detail:'Error creating new directory'});});
   }
   confirmSaveEdits():Promise<boolean>{
-    return this.navTree.confirmSaveEdits();
+    return this.navTree.confirmSaveEdits("");
   }
   saveFile(){
     this.detail.edited = false;

@@ -110,7 +110,7 @@ describe('FilesTreeComponent', () => {
   it('confirm save edits', () => {
     component.setAllFiles([root]);
     var file: ServerFile=component.getFileDataById('./content/folder1/file1');
-    component.confirmSaveEdits();
+    component.confirmSaveEdits("");
   });
   it('should log to console all context menu items tbd', () => {
     component.new_file();
@@ -130,6 +130,7 @@ export class AuthorisationServiceMock {
   constructor() { }
   loginEvents = of('');
   logoutEvents = of('');
+  logoutWarningEvents = of('');
   isUserLoggedIn(){return true;};
   getCurrentUserName(){return "";};
 }

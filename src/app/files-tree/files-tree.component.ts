@@ -42,6 +42,16 @@ export class FilesTreeComponent implements OnInit {
       this.loggedIn = false;
       this.setContextMenu();
     });
+    this.loginlogoutService.logoutWarningEvents.subscribe((expiry)=>{
+     var expires = parseInt(expiry);
+     if(!isNaN(expires)){
+       if(expires < 60){
+           if(this.parent.edited){
+             this.confirmSaveEdits(this.AUTO_LOGOUT);
+           }
+       }
+      }
+    });
     //Get current login status
     this.loggedIn = this.loginlogoutService.isUserLoggedIn();
     this.setContextMenu();
@@ -172,9 +182,9 @@ export class FilesTreeComponent implements OnInit {
     this.router.navigateByUrl(url);
     
   }
-  confirmSaveEdits():Promise<boolean>{
+  confirmSaveEdits(prefix):Promise<boolean>{
     return new Promise<boolean>((resolve, reject) => {
-      this.confirmationService.confirm({message: this.SAVE_EDITS,
+      this.confirmationService.confirm({message: prefix + this.SAVE_EDITS,
         accept: () => {//Save then allow navigate
                        this.parent.saveFile();
                        resolve(true);},
@@ -298,6 +308,7 @@ export class FilesTreeComponent implements OnInit {
                                          {label: 'Delete Article', icon: 'fa-trash', command:(event)=>{this.delete_file();}, disabled:true},
                                         ]
  private SAVE_EDITS: string = 'You have unsaved edits. Save article?';
+ private AUTO_LOGOUT: string = 'Auto logout imminent. ';
  private DELETE_FILE: string = 'Are you sure you want to delete article?';
  private DELETE_DIR: string = 'Are you sure you want to delete directory and all articles inside?';
 }

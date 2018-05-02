@@ -21,6 +21,12 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
   @Input() credentialsGatherer:LoginCredentialsProvider;
   ngOnInit() {
     this.logMenuItems = this.logOnMenuItems;
+    this.loginLogoutEvents.loginEvents.subscribe(userName=>{
+      this.logMenuItems = this.logOffMenuItems;
+    });
+    this.loginLogoutEvents.logoutEvents.subscribe(()=>{
+      this.logMenuItems = this.logOnMenuItems;
+    });
   }
   logon(){
     this.credentialsGatherer.getCredentials(this);
@@ -33,19 +39,16 @@ export class AuthenticatorComponent implements OnInit, LoginCredentialsSubscribe
     this.userName = userName;
     this.authenticatorService.login(userName,passWord).subscribe(data=>{
       this.loginLogoutEvents.sendLoginEvent(userName);
-      this.messageService.add({severity:'success', summary:'Authentication', detail:'User ' + userName + " logged in"})
-      this.logMenuItems = this.logOffMenuItems;
+      this.messageService.add({severity:'success', summary:'Authentication', detail:'User ' + userName + " logged in"})    
     },err=>{
       this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging in user ' + userName + " . Check username and password and try again"})
     });
   }
   logoff(){
     this.authenticatorService.logout().subscribe(data=>{
-      
       this.loginLogoutEvents.sendLogoutEvent();
       this.messageService.add({severity:'success', summary:'Authentication', detail:'User ' + this.userName + " logged out"})
       this.userName = "";
-      this.logMenuItems = this.logOnMenuItems;
     },err=>{
      this.messageService.add({severity:'error', summary:'Authentication', detail:'Error logging out user ' + this.userName})
     });

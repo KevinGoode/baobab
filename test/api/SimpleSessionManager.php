@@ -33,8 +33,8 @@ class SimpleSessionManager
                 $time=$xpath->query("@time",$userlist->item(0));
                 if($time->length==1)
                 {
-                    $currenttime=time();
-                    $okay=((intval($time->item(0)->nodeValue)+intval($this->SimpleSessionTimeout)) > $currenttime); //Stay alive for 30 mins
+                    $this->SetExpires($time->item(0)->nodeValue);
+                    $okay=($this->Expires > 0); //Stay alive for 2 hrs
                 }
             }
         }
@@ -109,6 +109,14 @@ class SimpleSessionManager
     {
         return $this->User;
     }
+    function  GetExpires()
+    {
+        return $this->Expires;
+    }
+    private function SetExpires($tim)
+    {
+        $this->Expires= intval($tim)+intval($this->SimpleSessionTimeout)-time();
+    }
     function  ReturnError()
     {
         header("HTTP/1.0 401 Unauthorized");
@@ -134,6 +142,7 @@ class SimpleSessionManager
         $element->setAttribute("ip",$ip);
         $element->setAttribute("user",$this->User);
         $element->setAttribute("time",$time);
+        $this->SetExpires($time);
         $userlist->item(0)->appendChild($element);
         $doc->save(USERSFILE);
     }
@@ -156,7 +165,8 @@ class SimpleSessionManager
         setcookie ("user", "", time() - 3600);
     }
     private $User="";
-    private $SimpleSessionTimeout = 3600 ; //1 hour
+    private $SimpleSessionTimeout = 7200 ; //2 hours 7200
+    private $Expires = 0;
 }
 
 ?>

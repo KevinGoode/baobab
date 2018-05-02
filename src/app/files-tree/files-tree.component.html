@@ -1,10 +1,15 @@
 <p-panel  header="Articles">
+<div class="ui-toolbar-group-left" style="float:left;">
+<p-button  icon="fa fa-cog" pTooltip="Settings"></p-button>
+</div>
+<div style="clear: left;">
 <p-tree [style]="{'height':'750px', 'width': '100%'}" [(draggableNodes)]="draggableNodes" droppableNodes="true" selectionMode="single" propagateSelectionUp="true" [(selection)]="selectedFile" [(value)]="files" (onNodeDrop)="onNodeDrop($event)" (onNodeContextMenuSelect)="fileSelect($event)" (onNodeSelect)="fileSelect($event)" [contextMenu]="cm">
         <ng-template let-node  pTemplate="editable">
                 <input [(ngModel)]="node.label" type="text">
                 <button (click)="rename()"><i class="fa fa-save"></i></button>
         </ng-template>
 </p-tree>
+</div>
 <p-contextMenu #cm [model]="contextMenuItems"></p-contextMenu>
 </p-panel>
 <p-overlayPanel #helpEnableEditing [showCloseIcon]="true" [style]="{'background-color' : '#ffff66'}">
@@ -23,5 +28,6 @@
         a.) From the 'Logon' menu select the menu item 'Logoff'<br/>
         <br/>
 </p-overlayPanel>
+
 <app-create-dialog #createDialog></app-create-dialog>
 <p-confirmDialog [closable]="false" header="Confirmation" icon="fa fa-question-circle" width="425"></p-confirmDialog>
