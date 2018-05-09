@@ -1,6 +1,7 @@
 
 <?php
  include_once 'SimpleSessionManager.php';
+ include_once 'UserSettings.php';
  $man = new SimpleSessionManager();
  $loggedin=FALSE;
 if($man->IsUserLoggedIn(false))
@@ -13,6 +14,7 @@ if($loggedin!=TRUE)
 }
 else
 {
-    echo  '{"User":"'.$man->GetUserName().'", "expires": "'.$man->GetExpires().'"}';
+    $settings = new UserSettings($man->GetUserName());
+    echo  '{"User":"'.$man->GetUserName().'", "expires": "'.$man->GetExpires().'", "settings": '.$settings->asJson().'}';
 }
 ?>
