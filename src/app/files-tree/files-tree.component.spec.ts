@@ -10,11 +10,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ServerFile } from '../server-file';
 import { Injectable } from '@angular/core';
 import { AuthorisationService } from '../authenticator/authorisation.service';
+import { HeartbeatDetails} from '../authenticator/authorisation.service';
+import { FilesViewComponent } from '../files-view/files-view.component';
 import { of } from 'rxjs/observable/of';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { DialogModule} from 'primeng/primeng'
 import { FormsModule } from '@angular/forms'
+import {FilesViewManager } from '../files-view/files-manager.interface'
 import {CreateDialogComponent} from '../create-dialog/create-dialog.component';
 const  file1: ServerFile =  new ServerFile({id: './content/folder1/file1', name: 'file1', isDir:false,  sizeOnDisk: 0, lastReadAt: "2018-03-14T08:01:03+0000",
                                           lastUpdated: "2018-03-14T08:01:03+0000"});
@@ -44,6 +47,7 @@ describe('FilesTreeComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(FilesTreeComponent);
     component = fixture.componentInstance;
+    component.parent= new MockFilesManager();
     fixture.detectChanges();
   });
   it('should create', () => {
@@ -130,7 +134,19 @@ export class AuthorisationServiceMock {
   constructor() { }
   loginEvents = of('');
   logoutEvents = of('');
-  logoutWarningEvents = of('');
+  logoutWarningEvents = of(new HeartbeatDetails());
   isUserLoggedIn(){return true;};
   getCurrentUserName(){return "";};
+}
+class MockFilesManager implements FilesViewManager
+{
+  saveFile(){}
+  createFile(fileName:string){}
+  deleteFile(){}
+  renameFile(newName:string){}
+  moveFile(fromId:string, toId:string ){}
+  deleteDir(){}
+  createDirectory(fileName:string){}
+  edited():boolean{return false;}
+  getCurrentId():string{return "";}
 }

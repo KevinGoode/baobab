@@ -6,6 +6,7 @@ import {Message} from 'primeng/api';
 import { LoginCredentialsProvider, LoginCredentialsSubscriber} from './login-credentials.interface';
 import { AuthenticatorServiceBase} from "./authenticatorservice.model";
 import { AuthorisationService } from './authorisation.service'
+import { HeartbeatDetails } from './authorisation.service'
 import { MessageService} from 'primeng/components/common/messageservice';
 @Component({
   selector: 'app-authenticator',
@@ -44,7 +45,13 @@ export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredential
           if(!this.loginLogoutEvents.isUserLoggedIn()){
             this.loginLogoutEvents.sendLoginEvent(obj.User);
           }
-          this.loginLogoutEvents.sendLogoutWarningEvent(obj.expires);
+          var expires: number = obj.expires;
+          var autoSaveFlag: boolean = obj.settings.autoSaveArticle;
+          var timeBeforeLogoutSave: number = obj.settings.autoSaveArticleBeforeLogOutTime;
+          var autoSaveBeforeLogout: boolean  = obj.settings.autoSaveArticleBeforeLogOut;
+          var autoSaveArticleFrequency: number  =  obj.settings.autoSaveArticleFrequency;
+          var details = new HeartbeatDetails(expires, autoSaveFlag, autoSaveArticleFrequency, autoSaveBeforeLogout, timeBeforeLogoutSave);
+          this.loginLogoutEvents.sendLogoutWarningEvent(details);
         },
         err=>{
               if(this.loginLogoutEvents.isUserLoggedIn()){

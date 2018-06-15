@@ -15,9 +15,10 @@ Contents:
 2.) Getting current baobab code (from Git hub) and running project
 ---2.1) Install git
 ---2.2) Install php
----2.3) Get code
----2.4) Running code
----2.5) Running tests 
+---2.3) Install chromium
+---2.4) Get code
+---2.5) Running code
+---2.6) Running tests 
 
 
 Appendix - Creating primeng projects (such as baobab) and angular tips and tricks
@@ -77,19 +78,21 @@ Startup.main();
 sudo apt-get install git
 ---2.2) Install php
 sudo apt-get install php5 (etc)
----2.3) To get login/logoff to work need read access to /etc/shadow (eg sudo chmod a+r /etc/shadow)
+---2.3) Install chromium
+https://www.itzgeek.com/how-tos/linux/ubuntu-how-tos/install-google-chrome-on-ubuntu-16-04.html
+---2.4) To get login/logoff to work need read access to /etc/shadow (eg sudo chmod a+r /etc/shadow)
 and need to install mkpasswd (on ubuntu this is sudo apt-get install whois) 
----2.4) Get code
+---2.5) Get code
 git clone  https://github.com/KevinGoode/baobab
 cd baobab
 git checkout master
 npm install
----2.5) Running code
+---2.6) Running code
 Run angular server proxying rest calls to php script
 In baobab directory: ng serve --host 0.0.0.0 --proxy-config proxy.conf.json
 In baobab/test directory: php -S localhost:8000
 In browser (Recommend Chromium): http://localhost:4200/
----2.5) Running Tests
+---2.7) Running Tests
 To run unit tests: ng test --code-coverage
 To run e2e tests: ng e2e --proxy-config proxy.conf.json
 

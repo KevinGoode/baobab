@@ -1,2 +1,2 @@
 <?xml version="1.0"?>
-<users><user UserName="goode_k" LockMoveArticle=true AutoSaveArticle="" AutoSaveArticleFrequency="60" AutoSaveArticleBeforeLogOut=true AutoSaveArticleBeforeLogOutFrequency="120"/><user UserName="goode_k" LockMoveArticle="1" AutoSaveArticle="" AutoSaveArticleFrequency="5000" AutoSaveArticleBeforeLogOut=true AutoSaveArticleBeforeLogOutFrequency="120"/></users>
+<users><user UserName="goode_k" LockMoveArticle="true" AutoSaveArticle="false" AutoSaveArticleFrequency="20" AutoSaveArticleBeforeLogOut="true" AutoSaveArticleBeforeLogOutTime="240"/></users>

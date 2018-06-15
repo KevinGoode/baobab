@@ -13,7 +13,7 @@ class SimpleSessionManager
     function IsUserLoggedIn($reset)
     {
         $okay=FALSE;
-        $currenttime=0;
+        $currenttime=time();
         if (!array_key_exists('id', $_COOKIE)) return $okay;
         $cookie=$_COOKIE['id'];
         $client=$_SERVER["REMOTE_ADDR"];
@@ -82,7 +82,7 @@ class SimpleSessionManager
             $last=$userlist->length-1;
             for($i=$last;$i>=0;$i--)
             {
-              
+
 
                 $time=$xpath->query("@time",$userlist->item($i));
                 if($time->length==1)

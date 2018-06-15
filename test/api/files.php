@@ -125,10 +125,11 @@ if ( $verb == 'GET')
                 {
                     $handle = fopen($id, "w");
                     $file_contents = file_get_contents("php://input");
+                    header("HTTP/1.1 200 OK");
                     echo 'Received:**'.$file_contents.'**';
                     fwrite($handle,$file_contents);
                     fclose($handle);
-                    header("HTTP/1.1 200 OK");
+                    
                 }
             }
             else
@@ -146,10 +147,10 @@ if ( $verb == 'GET')
                     //Create file
                     $handle = fopen($id, "w+");
                     $file_contents = file_get_contents("php://input");
+                    header("HTTP/1.1 200 OK");
                     echo 'Received:**'.$file_contents.'**';
                     fwrite($handle,$file_contents);
-                    fclose($handle);
-                    header("HTTP/1.1 200 OK");
+                    fclose($handle);                 
                 }
                 else
                 {

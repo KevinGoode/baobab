@@ -15,6 +15,6 @@ if($loggedin!=TRUE)
 else
 {
     $settings = new UserSettings($man->GetUserName());
-    echo  '{"User":"'.$man->GetUserName().'", "expires": "'.$man->GetExpires().'", "settings": '.$settings->asJson().'}';
+    echo  '{"User":"'.$man->GetUserName().'", "expires": '.$man->GetExpires().', "settings": '.$settings->asJson().'}';
 }
 ?>

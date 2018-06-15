@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { TreeNode} from 'primeng/api';
 import { MenuItem} from 'primeng/api';
 import { ServerFile } from '../server-file';
-import { AuthorisationService } from '../authenticator/authorisation.service';
+import { AuthorisationService, HeartbeatDetails } from '../authenticator/authorisation.service';
 import {OverlayPanel} from 'primeng/overlaypanel'
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
@@ -42,15 +42,12 @@ export class FilesTreeComponent implements OnInit {
       this.loggedIn = false;
       this.setContextMenu();
     });
-    this.loginlogoutService.logoutWarningEvents.subscribe((expiry)=>{
-     var expires = parseInt(expiry);
-     if(!isNaN(expires)){
-       if(expires < 60){
-           if(this.parent.edited){
-             this.confirmSaveEdits(this.AUTO_LOGOUT);
-           }
-       }
-      }
+    this.loginlogoutService.logoutWarningEvents.subscribe((heartbeatDetails)=>{
+      var expiry: number = heartbeatDetails.getExpiry();
+      this.autoSave(heartbeatDetails)
+      this.autoSaveBeforeLogout(heartbeatDetails);
+      this.confirmAutoSaveBeforeLogout(expiry);
+      
     });
     //Get current login status
     this.loggedIn = this.loginlogoutService.isUserLoggedIn();
@@ -281,6 +278,38 @@ export class FilesTreeComponent implements OnInit {
     newId=this.removeOldestAncestor(newId);
     return newId;
  }
+ private confirmAutoSaveBeforeLogout(expiry:number){
+  //User always get asked on minute before logout.
+  //This could be too late so user can configure auto save (without confirmation) before logout
+  if(!isNaN(expiry)){
+    if(expiry < 60){
+        if(this.parent.edited()){
+          this.confirmSaveEdits(this.AUTO_LOGOUT);
+        }
+    }
+  }
+}
+private autoSave(details:HeartbeatDetails){
+  if (details.doAutoSave() && this.parent.edited()){
+    var currentTime: number = new Date().getTime();
+    var nextSave: number = currentTime + details.getAutoSaveFrequency();
+      if (this.nextSaveTime){
+        if (this.nextSaveTime < currentTime){
+          this.parent.saveFile();
+          this.nextSaveTime = nextSave;
+        }
+      }else{
+        this.nextSaveTime = nextSave;
+      }
+  }
+}
+private autoSaveBeforeLogout(details: HeartbeatDetails){
+    if (details.doAutoSaveBeforeLogout() && this.parent.edited()){
+      if (details.getExpiry() < details.getTimeBeforeLogoutSave()){
+        this.parent.saveFile();
+      }
+    }
+}
  /* 
  For example "grandparent/parent/child" returns "parent/child"
  */
@@ -288,6 +317,7 @@ export class FilesTreeComponent implements OnInit {
     var index=fullChildName.indexOf("/");
     return fullChildName.slice(index+1);
  }
+ private nextSaveTime :number = 0;
   DIRECTORY_MENU_ITEMS: MenuItem[]=[{label: '   Help   ', icon: 'fa-question', command:(event)=>{this.disable_editing(event);}},
                                     {label: 'New Article', icon: 'fa-file', command:(event)=>{this.new_file();}},
                                     {label: 'New Directory', icon: 'fa-plus', command:(event)=>{this.new_directory();}},

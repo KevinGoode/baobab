@@ -17,7 +17,7 @@ class UserSettings
         $json = $json.'"autoSaveArticle": '.$this->booltostr($this->AutoSaveArticle).',';
         $json = $json.'"autoSaveArticleFrequency": '.strval($this->AutoSaveArticleFrequency).',';
         $json = $json.'"autoSaveArticleBeforeLogOut": '.$this->booltostr($this->AutoSaveArticleBeforeLogOut).',';
-        $json = $json.'"autoSaveArticleBeforeLogOutFrequency": '.strval($this->AutoSaveArticleBeforeLogOutFrequency).'}';
+        $json = $json.'"autoSaveArticleBeforeLogOutTime": '.strval($this->AutoSaveArticleBeforeLogOutTime).'}';
         return $json;
     }
     function setFromJson($json)
@@ -47,8 +47,8 @@ class UserSettings
                 case "autoSaveArticleBeforeLogOut":
                     $this->SetAutoSaveArticleBeforeLogOut($this->boolval($value));
                     break;
-                case "autoSaveArticleBeforeLogOutFrequency":
-                    $this->SetAutoSaveArticleBeforeLogOutFrequency(intval($value));
+                case "autoSaveArticleBeforeLogOutTime":
+                    $this->SetAutoSaveArticleBeforeLogOutTime(intval($value));
                     break;
             }
        }
@@ -73,9 +73,9 @@ class UserSettings
     {
         return $this->AutoSaveArticleBeforeLogOut;
     }
-    function GetAutoSaveArticleBeforeLogOutFrequency()
+    function GetAutoSaveArticleBeforeLogOutTime()
     {
-        return $this->AutoSaveArticleBeforeLogOutFrequency;
+        return $this->AutoSaveArticleBeforeLogOutTime;
     }
     function SetUserName($Username)
     {
@@ -97,9 +97,9 @@ class UserSettings
     {
         $this->AutoSaveArticleBeforeLogOut = $AutoSaveArticleBeforeLogOut;
     }
-    function SetAutoSaveArticleBeforeLogOutFrequency($AutoSaveArticleBeforeLogOutFrequency)
+    function SetAutoSaveArticleBeforeLogOutTime($AutoSaveArticleBeforeLogOutTime)
     {
-        $this->AutoSaveArticleBeforeLogOutFrequency = $AutoSaveArticleBeforeLogOutFrequency;
+        $this->AutoSaveArticleBeforeLogOutTime = $AutoSaveArticleBeforeLogOutTime;
     }
     function saveSettings()
     {
@@ -107,7 +107,7 @@ class UserSettings
         $doc->load(SETTINGSFILE);
         $xpath = new DOMXPath($doc);
         //Delete old record
-        $userlist=$xpath->query("/users/user[@name='".$this->UserName."']");
+        $userlist=$xpath->query("/users/user[@UserName='".$this->UserName."']");
         if($userlist->length==1)
         {
             $doc->documentElement->removeChild($userlist->item(0));
@@ -120,7 +120,7 @@ class UserSettings
         $element->setAttribute("AutoSaveArticle",$this->AutoSaveArticle);
         $element->setAttribute("AutoSaveArticleFrequency",$this->AutoSaveArticleFrequency);
         $element->setAttribute("AutoSaveArticleBeforeLogOut",$this->AutoSaveArticleBeforeLogOut);
-        $element->setAttribute("AutoSaveArticleBeforeLogOutFrequency",$this->AutoSaveArticleBeforeLogOutFrequency);
+        $element->setAttribute("AutoSaveArticleBeforeLogOutTime",$this->AutoSaveArticleBeforeLogOutTime);
 
         $userlist->item(0)->appendChild($element);
         $doc->save(SETTINGSFILE);
@@ -133,21 +133,25 @@ class UserSettings
         $doc->load(SETTINGSFILE);
 	    $xpath = new DOMXPath($doc);
 
-        $userlist=$xpath->query("/users/user[@name='".$name."']");
+        $userlist=$xpath->query("/users/user[@UserName='".$name."']");
         //Can't find just use defaults
         if($userlist->length!=1) return;
         //Found so store current values
-        $this->LockMoveArticle=$this->boolval($xpath->query("@LockMoveArticle",$userlist->item(0)));
-        $this->AutoSaveArticle=$this->boolval($xpath->query("@AutoSaveArticle",$userlist->item(0)));
-        $this->AutoSaveArticleFrequency=intval($xpath->query("@AutoSaveArticleFrequency",$userlist->item(0)));
-        $this->AutoSaveArticleBeforeLogOut=$this->boolval($xpath->query("@AutoSaveArticleBeforeLogOut",$userlist->item(0)));
-        $this->AutoSaveArticleBeforeLogOutFrequency=intval($xpath->query("@AutoSaveArticleBeforeLogOutFrequency",$userlist->item(0)));
+        $this->LockMoveArticle=$this->boolval($xpath->query("@LockMoveArticle",$userlist->item(0))->item(0)->nodeValue);
+        $this->AutoSaveArticle=$this->boolval($xpath->query("@AutoSaveArticle",$userlist->item(0))->item(0)->nodeValue);
+        $this->AutoSaveArticleFrequency=intval($xpath->query("@AutoSaveArticleFrequency",$userlist->item(0))->item(0)->nodeValue);
+        $this->AutoSaveArticleBeforeLogOut=$this->boolval($xpath->query("@AutoSaveArticleBeforeLogOut",$userlist->item(0))->item(0)->nodeValue);
+        $this->AutoSaveArticleBeforeLogOutTime=intval($xpath->query("@AutoSaveArticleBeforeLogOutTime",$userlist->item(0))->item(0)->nodeValue);
         
     }
     private function boolval($boolStr)
     {
-        $bool_val = $boolStr === 'true'? true: false;
+        $bool_val = ($boolStr === 'true') ? true: false;
         return $bool_val;
+    }
+    private function intval($intstr)
+    {
+        
     }
     private function booltostr($bool)
     {
@@ -159,7 +163,7 @@ class UserSettings
     private $AutoSaveArticle = false ;
     private $AutoSaveArticleFrequency = 60 ;
     private $AutoSaveArticleBeforeLogOut = true ;
-    private $AutoSaveArticleBeforeLogOutFrequency = 120 ;
+    private $AutoSaveArticleBeforeLogOutTime = 240 ;
 }
 
 ?>
