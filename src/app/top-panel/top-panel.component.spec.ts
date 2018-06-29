@@ -12,7 +12,7 @@ describe('TopPanelComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TopPanelComponent , HelpDialogComponent, HelpBarComponent,LoginDialogComponent, AuthenticatorComponent],
+      declarations: [ TopPanelComponent , HelpDialogComponent, HelpBarComponent,LoginDialogComponent, AuthenticatorComponent, SettingsDialogComponent],
       imports: [BrowserAnimationsModule, RouterTestingModule, SplitButtonModule, ButtonModule]
     })
     .compileComponents();
@@ -39,6 +39,7 @@ describe('TopPanelComponent', () => {
 
 //Mock new components in this project
 interface LoginCredentialsProvider{}
+interface UserSettingsProvider{}
 @Component({
   selector: 'app-help-dialog',
   template: ''
@@ -66,11 +67,20 @@ class LoginDialogComponent implements OnInit, LoginCredentialsProvider{
   ngOnInit() {}
 }
 @Component({
+  selector: 'app-settings-dialog',
+  template: ''
+})
+class SettingsDialogComponent implements OnInit, UserSettingsProvider {
+  constructor() { }
+  ngOnInit() {}
+}
+@Component({
   selector: 'app-authenticator',
   template: ''
 })
 class AuthenticatorComponent implements OnInit{
   constructor() { }
   @Input() credentialsGatherer:LoginCredentialsProvider;
+  @Input() settingsDlg: UserSettingsProvider;
   ngOnInit() {}
 }

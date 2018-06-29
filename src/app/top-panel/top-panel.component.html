@@ -5,7 +5,8 @@
     <p-button routerLink="" icon="fa fa-home" label="Home"></p-button>
     <p-splitButton icon="fa-book" label="Help" [model]="helpMenuItems"></p-splitButton>
     <app-login-dialog #loginDialog></app-login-dialog>
-    <app-authenticator [credentialsGatherer]="loginDialog"></app-authenticator>
+    <app-settings-dialog #settingsDialog></app-settings-dialog>
+    <app-authenticator [credentialsGatherer]="loginDialog" [settingsDlg]="settingsDialog"></app-authenticator>
 </div>
 
 

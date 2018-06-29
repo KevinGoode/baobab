@@ -149,7 +149,8 @@ commands add components to current app and are executed in top level dir
 C.) Angular/primeng tips and tricks
 ###################################
 ###############################
-# TIP-1-Generate new component
+# TIP-1-Generate new component. 
+In top level directory (baobab):
 ng generate component TopPanel
 ###############################
 # TIP-2-Parent

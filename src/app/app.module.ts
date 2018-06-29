@@ -36,6 +36,8 @@ import { HttpClientModule } from '@angular/common/http';
 import {TooltipModule} from 'primeng/tooltip';
 import {EditorModule} from 'primeng/editor';
 import {PasswordModule} from 'primeng/password';
+import {SliderModule} from 'primeng/slider';
+import {InputSwitchModule} from 'primeng/inputswitch';
 import { AuthenticatorComponent } from './authenticator/authenticator.component';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { AuthenticatorService } from './authenticator.service';
@@ -45,8 +47,9 @@ import { MessageService} from 'primeng/components/common/messageservice';
 import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
+import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
 @NgModule({
-  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent, CreateDialogComponent],
+  declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent, CreateDialogComponent, SettingsDialogComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -73,6 +76,8 @@ import { CreateDialogComponent } from './create-dialog/create-dialog.component';
     HttpClientModule,
     EditorModule,
     PasswordModule,
+    SliderModule,
+    InputSwitchModule,
     GrowlModule,
     ConfirmDialogModule,
     TooltipModule

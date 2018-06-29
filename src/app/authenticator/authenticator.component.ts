@@ -3,7 +3,7 @@ import { MenuModule} from 'primeng/menu';
 import { MenuItem } from 'primeng/primeng';
 import { Observable, Subscription } from 'rxjs';
 import {Message} from 'primeng/api';
-import { LoginCredentialsProvider, LoginCredentialsSubscriber} from './login-credentials.interface';
+import { LoginCredentialsProvider, LoginCredentialsSubscriber, UserSettingsProvider} from './login-credentials.interface';
 import { AuthenticatorServiceBase} from "./authenticatorservice.model";
 import { AuthorisationService } from './authorisation.service'
 import { HeartbeatDetails } from './authorisation.service'
@@ -22,6 +22,7 @@ export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredential
   private timer = undefined;
   private sub: Subscription;
   @Input() credentialsGatherer:LoginCredentialsProvider;
+  @Input() settingsDlg: UserSettingsProvider;
   ngOnInit() {
     this.timer = Observable.timer(0, 10000);//0, 10 seconds 
     if(this.timer){
@@ -63,6 +64,9 @@ export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredential
   logon(){
     this.credentialsGatherer.getCredentials(this);
   }
+  showSettings(){
+    this.settingsDlg.show();
+  }
   /*
   Callback when credentials have been gathered
   */
@@ -87,7 +91,9 @@ export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredential
 
   }
   private logOnMenuItems =[{label: 'Logon' , icon: 'fa-user', command: () => {this.logon();}},
+                           {label: 'Settings', icon:'fa fa-cog', disabled:true, command: () => {this.showSettings();}},
                            {label: 'Logoff', icon: 'fa-user-times', disabled:true, command: () => {this.logoff();}}];
   private logOffMenuItems =[{label: 'Logon' , icon: 'fa-user', disabled:true, command: () => {this.logon();}},
-                           {label: 'Logoff', icon: 'fa-user-times',  command: () => {this.logoff();}}];
+                            {label: 'Settings', icon:'fa fa-cog', command: () => {this.showSettings();}},
+                            {label: 'Logoff', icon: 'fa-user-times',  command: () => {this.logoff();}}];
 }

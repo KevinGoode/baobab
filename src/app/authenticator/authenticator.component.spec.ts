@@ -5,7 +5,7 @@ import { AuthenticatorComponent } from './authenticator.component';
 import { SplitButtonModule} from 'primeng/splitbutton';
 import { GrowlModule} from 'primeng/growl';
 import { AuthenticatorServiceBase} from "./authenticatorservice.model";
-import { LoginCredentialsProvider, LoginCredentialsSubscriber} from './login-credentials.interface';
+import { LoginCredentialsProvider, LoginCredentialsSubscriber, UserSettingsProvider} from './login-credentials.interface';
 import { AuthorisationService } from './authorisation.service'
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
@@ -29,7 +29,7 @@ describe('AuthenticatorComponent', () => {
     fixture = TestBed.createComponent(AuthenticatorComponent);
     component = fixture.componentInstance;
     component.credentialsGatherer = new MockCredentialsGather();
-
+    component.settingsDlg= new MockSettingsDialog();
     fixture.detectChanges();
   });
 
@@ -69,6 +69,11 @@ export class MockCredentialsGather implements LoginCredentialsProvider {
     subscriber.gotCredentials(this.userName, this.password);
   }
  
+}
+export class MockSettingsDialog implements   UserSettingsProvider{
+  public show(){
+    
+  }
 }
 @Injectable()
 export class AuthorisationServiceMock {

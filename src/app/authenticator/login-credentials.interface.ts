@@ -3,6 +3,9 @@ export interface LoginCredentialsProvider {
     password: string;
     getCredentials(subcriber:LoginCredentialsSubscriber);
 }
+export interface UserSettingsProvider {
+    show();
+}
 export interface LoginCredentialsSubscriber {
     gotCredentials(userName: string, password: string);
 }
