@@ -33,7 +33,6 @@ export class FilesTreeComponent implements OnInit {
     this.contextMenuItems = [];
     //Register interest in future login/logout events
     this.loginlogoutService.loginEvents.subscribe(userName=>{
-      this.enableDragandDrop(true);
       this.loggedIn = true;
       this.setContextMenu();
     });
@@ -47,6 +46,7 @@ export class FilesTreeComponent implements OnInit {
       this.autoSave(heartbeatDetails)
       this.autoSaveBeforeLogout(heartbeatDetails);
       this.confirmAutoSaveBeforeLogout(expiry);
+      this.enableDragandDrop(!heartbeatDetails.isMoveLocked());
       
     });
     //Get current login status

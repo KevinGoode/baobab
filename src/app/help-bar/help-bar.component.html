@@ -72,10 +72,29 @@
 <p-overlayPanel #movefile [showCloseIcon]="true">
     <p-card title="Help" subtitle="Move Article" styleClass="ui-card-shadow">
         All BaoBab content is readable by all users, but only registered users can modify<br/>
-        site material. Before moving articles you must login to the site. <br/>
+        site material. Before moving articles you must login to the site. Also note that by default<br/>
+        the ability to move articles is disabled. To allow articles to be moved see 'Configuring User Settings'<br/>
         To move an article<br/>
         1.) Select the article in the navigation tree<br/>
         2.) Drag the article and drop it in a different directory<br/>
+        <br/>
+    </p-card>
+</p-overlayPanel>
+<p-overlayPanel #usersettings [showCloseIcon]="true">
+    <p-card title="Help" subtitle="Configuring User Settings" styleClass="ui-card-shadow">
+        Before configuring user settings you must login to the site.<br/>
+        To display and configure user settings, select 'Settings' from the 'Logon' menu.<br/>
+        Each user has the ability to configure the following settings:<br/>
+        <b>'Allow articles to be moved' (No)</b>- Switch to 'Yes' to allow articles to be
+         moved via drag and drop. <br/>
+         <b>'Auto save article' (No) </b>- Switch to 'Yes' for current article to be automatically<br/>
+        saved without prompting. Set <b>'Save article every ? seconds'</b> to set the <br/>
+        approximate frequency that articles will be automatically saved <br/>
+        <b>'Auto save article before logout' (Yes)</b>- Switch to 'Yes' to automatically save article<br/>
+        without prompting just before logout.   Set <b>'Save ? seconds before logout'</b> to set the<br/>
+        approxmimate time before logout that the article will be saved.<br/>
+        To save settings close the dialog by pressing the 'Save' button.<br/>
+        To view settings only and lose any changed settings, close the dialog by pressing the 'Cancel' button.<br/>
         <br/>
     </p-card>
 </p-overlayPanel>
@@ -92,6 +111,7 @@
         <p>6.) Moving Articles <button (click)="movefile.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>7.) Creating Directory <button (click)="creatingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
         <p>8.) Deleting Directory <button (click)="deletingdir.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
+        <p>9.) Configuring User Settings <button (click)="usersettings.show($event, actualTarget)"><i class="fa fa-angle-double-right"></i></button></p>
     <p-footer>
         <button pButton type="button" label="Ok" icon="fa-check" (click)="display=false"> </button>
         <button pButton type="button" label="Cancel" icon="fa-close" class="ui-button-secondary" (click)="display=false"></button>

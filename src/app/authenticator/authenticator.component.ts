@@ -51,7 +51,8 @@ export class AuthenticatorComponent implements OnInit, OnDestroy,LoginCredential
           var timeBeforeLogoutSave: number = obj.settings.autoSaveArticleBeforeLogOutTime;
           var autoSaveBeforeLogout: boolean  = obj.settings.autoSaveArticleBeforeLogOut;
           var autoSaveArticleFrequency: number  =  obj.settings.autoSaveArticleFrequency;
-          var details = new HeartbeatDetails(expires, autoSaveFlag, autoSaveArticleFrequency, autoSaveBeforeLogout, timeBeforeLogoutSave);
+          var lockMoveArticle: boolean = obj.settings.lockMoveArticle;
+          var details = new HeartbeatDetails(expires, autoSaveFlag, autoSaveArticleFrequency, autoSaveBeforeLogout, timeBeforeLogoutSave, lockMoveArticle);
           this.loginLogoutEvents.sendLogoutWarningEvent(details);
         },
         err=>{

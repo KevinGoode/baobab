@@ -105,7 +105,7 @@ if ( $verb == 'GET')
     if (!$id) return $bad_http_request;
     //For all non GET calls, a user needs to be logged in
     $man = new SimpleSessionManager();
-    if($man->IsUserLoggedIn(true))
+    if($man->IsUserLoggedIn(false))
     {
         if ($verb=='PUT')
         {
