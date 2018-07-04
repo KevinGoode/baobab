@@ -48,6 +48,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import {ConfirmationService} from 'primeng/api';
 import { CreateDialogComponent } from './create-dialog/create-dialog.component';
 import { SettingsDialogComponent } from './settings-dialog/settings-dialog.component';
+import {ProgressSpinnerModule} from 'primeng/progressspinner';
 @NgModule({
   declarations: [AppComponent, TopPanelComponent, HelpDialogComponent, HelpBarComponent, DashboardComponent, FilesViewComponent, FilesTreeComponent, FileDetailComponent, AuthenticatorComponent, LoginDialogComponent, CreateDialogComponent, SettingsDialogComponent],
   imports: [
@@ -80,7 +81,8 @@ import { SettingsDialogComponent } from './settings-dialog/settings-dialog.compo
     InputSwitchModule,
     GrowlModule,
     ConfirmDialogModule,
-    TooltipModule
+    TooltipModule,
+    ProgressSpinnerModule
     
   ],
   providers: [ConfirmationService, AuthorisationService,FilesServiceService, MessageService, {provide: AuthenticatorServiceBase, useClass: AuthenticatorService}],

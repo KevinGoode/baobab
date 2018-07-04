@@ -7,7 +7,11 @@ import { AuthenticatorServiceBase} from './authenticator/authenticatorservice.mo
 export class AuthenticatorService implements AuthenticatorServiceBase{
 
   constructor( private http: HttpClient) {}
-
+  
+  setSettings(lockMoveArticle: boolean,autoSaveArticle: boolean,autoSaveArticleFrequency: number,autoSaveArticleBeforeLogOut: boolean,autoSaveArticleBeforeLogOutTime: number,): Observable<string>{
+    var url : string ="api/settings.php";
+    return this.http.put(url, {lockMoveArticle:lockMoveArticle,autoSaveArticle:autoSaveArticle,autoSaveArticleFrequency:autoSaveArticleFrequency,autoSaveArticleBeforeLogOut:autoSaveArticleBeforeLogOut,autoSaveArticleBeforeLogOutTime:autoSaveArticleBeforeLogOutTime}, {responseType: 'text'});
+  }
   login(userName:string, password:string): Observable<string>{
     var url : string ="api/login.php";
     return this.http.post(url, {id: userName + ':' + password}, {responseType: 'text'});

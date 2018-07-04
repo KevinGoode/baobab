@@ -1,6 +1,14 @@
-<p-dialog header="Settings" [resizable]="false" [draggable]="true" [(visible)]="display" modal="modal" width="450" [responsive]="true">
+<p-dialog header="{{name}}" [resizable]="false" [draggable]="true" [(visible)]="display" modal="modal" width="450" [responsive]="true">
   
     <input [style.display]="'none'" />
+    <div *ngIf="!gotCurrentSettings">
+        <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">
+            
+            <p-progressSpinner [style]="{width: '50px', height: '50px'}" strokeWidth="8" fill="#EEEEEE"></p-progressSpinner>
+      </div >  
+    </div>
+
+    <div *ngIf="gotCurrentSettings">
     <div class="ui-g ui-fluid">
     <div>Allow articles to be moved?: &nbsp;</div> <p-inputSwitch onLabel="Yes" offLabel="No" [(ngModel)]="moveArticle"></p-inputSwitch>
   </div>
@@ -17,31 +25,32 @@
         <span style='margin-left: 75px'>
           <div *ngIf="autoSave">
             <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">  
-              <p-slider [(ngModel)]="autoSaveSeconds" [min]="0" [max]="100" [style]="{'width':'200px'}" [animate]="true"></p-slider>
+              <p-slider [(ngModel)]="autoSaveSeconds" [min]="0" [max]="1000" [style]="{'width':'200px'}" [animate]="true"></p-slider>
             </div>
           </div>
       </span>
       <br/>
       <div >Auto save before auto logout?: &nbsp;</div> <p-inputSwitch onLabel="Yes" offLabel="No" [(ngModel)]="logOutSave"></p-inputSwitch>         
       
-      
+
           <span style='margin-left: 75px'>
               <div *ngIf="logOutSave" > Save &nbsp;{{autoSaveBeforeLogOutSeconds}} seconds before logout</div>
           </span> 
           <span style='margin-left: 75px'>
               <div *ngIf="logOutSave" >
                 <div style="display:flex; flex-direction: row; justify-content: center; align-items: center">  
-                    <p-slider [(ngModel)]="autoSaveBeforeLogOutSeconds" [min]="0" [max]="100" [style]="{'width':'200px'}" [animate]="true"></p-slider>
+                    <p-slider [(ngModel)]="autoSaveBeforeLogOutSeconds" [min]="0" [max]="1000" [style]="{'width':'200px'}" [animate]="true"></p-slider>
                 </div>
               </div>
         </span>
         
   </div>
   
- 
+ </div>
 
   <p-footer>
-        <button type="button" pButton icon="fa-check" (click)="OnOk()" label="Ok"></button>
+        <button type="button" pButton icon="fa-check" (click)="OnSave()" label="Save"></button>
         <button type="button" pButton icon="fa-close" (click)="OnCancel()" class="ui-button-secondary" label="Cancel"></button>
   </p-footer>
+
 </p-dialog>

@@ -116,10 +116,10 @@ class UserSettings
 		$userlist=$xpath->query("/users");
         $element = $doc->createElement("user");
         $element->setAttribute("UserName",$this->UserName);
-        $element->setAttribute("LockMoveArticle",$this->LockMoveArticle);
-        $element->setAttribute("AutoSaveArticle",$this->AutoSaveArticle);
+        $element->setAttribute("LockMoveArticle",$this->booltostr($this->LockMoveArticle));
+        $element->setAttribute("AutoSaveArticle",$this->booltostr($this->AutoSaveArticle));
         $element->setAttribute("AutoSaveArticleFrequency",$this->AutoSaveArticleFrequency);
-        $element->setAttribute("AutoSaveArticleBeforeLogOut",$this->AutoSaveArticleBeforeLogOut);
+        $element->setAttribute("AutoSaveArticleBeforeLogOut",$this->booltostr($this->AutoSaveArticleBeforeLogOut));
         $element->setAttribute("AutoSaveArticleBeforeLogOutTime",$this->AutoSaveArticleBeforeLogOutTime);
 
         $userlist->item(0)->appendChild($element);
@@ -145,13 +145,10 @@ class UserSettings
         
     }
     private function boolval($boolStr)
-    {
+    {   
+        $boolStr = str_replace(' ', '', $boolStr);
         $bool_val = ($boolStr === 'true') ? true: false;
         return $bool_val;
-    }
-    private function intval($intstr)
-    {
-        
     }
     private function booltostr($bool)
     {

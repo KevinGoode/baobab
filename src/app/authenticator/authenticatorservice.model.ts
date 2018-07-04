@@ -5,4 +5,6 @@ export abstract class AuthenticatorServiceBase implements AuthenticatorServicePr
     abstract login(userName:string, password:string): Observable<string>;
     abstract logout():Observable<string>;
     abstract loggedin():Observable<string>;
+    abstract setSettings(lockMoveArticle: boolean,autoSaveArticle: boolean,autoSaveArticleFrequency: number,autoSaveArticleBeforeLogOut: boolean,autoSaveArticleBeforeLogOutTime: number): Observable<string>;
+        
 }

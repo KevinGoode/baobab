@@ -55,6 +55,10 @@ export class AuthenticatorServiceMock extends AuthenticatorServiceBase {
   loggedin():Observable<string>{
   return of('');
   }
+  setSettings(lockMoveArticle: boolean,autoSaveArticle: boolean,autoSaveArticleFrequency: number,autoSaveArticleBeforeLogOut: boolean,autoSaveArticleBeforeLogOutTime: number): Observable<string>{
+    return of('');
+  }
+      
 }
 export class MockCredentialsGather implements LoginCredentialsProvider {
 
@@ -72,7 +76,7 @@ export class MockCredentialsGather implements LoginCredentialsProvider {
 }
 export class MockSettingsDialog implements   UserSettingsProvider{
   public show(){
-    
+
   }
 }
 @Injectable()
