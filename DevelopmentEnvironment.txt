@@ -97,8 +97,30 @@ To run unit tests: ng test --code-coverage
 To run e2e tests: ng e2e --proxy-config proxy.conf.json
 
 
+3.) Building (See https://angular.io/guide/deployment)
+ng build --prod ng build --base-href=/baobab/ - This puts all code in dist directory
 
-
+4.) Notes on deploying on rapsberry pi.
+dev> tar -czf baobab.tar.gz ./dist
+dev> scp  baobab.tar.gz pi@192.168.1.5:/var/www/
+dev> ssh pi@192.168.1.5
+pi> cd /var/www/
+pi>tar -xzf  baobab.tar.gz
+pi>mv dist baobab
+pi> exit
+dev> cd tests
+dev> tar -xzf -czf api.tar.gz ./api
+dev> scp api.tar.gz  pi@192.168.1.5:/var/www/baobab
+scp  user_settings.xml   pi@192.168.1.5:/var/www/baobab
+scp  users.xml   pi@192.168.1.5:/var/www/baobab
+dev> ssh pi@192.168.1.5
+pi> cd /var/www/baobab
+pi>tar -xzf  api.tar.gz
+pi> chmod a+rw users.xml
+pi> chmod a+rw user_settings.xml
+pi> cd api
+pi> chmod a+rw -R content
+pi> cp Authenticator-pi.php Authenticator.php
 
 
 ##################################################################
